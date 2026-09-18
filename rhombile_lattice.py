@@ -614,6 +614,63 @@ def state2_and_violations_via_mincut(lattice, D3, scale=10000):
     return n_state2, n_violated
 
 
+def full_state_via_mincut(lattice, D3, scale=10000):
+    """Same exact optimum as state2_and_violations_via_mincut, but
+    returning the full per-site state assignment and the actual list of
+    violated (still-matching, active r2-r3) bonds, rather than just their
+    counts -- what you need to draw the ground state, not just quote its
+    energy.
+
+    Returns (states, violated_bonds).
+    """
+    edges, side_a, side_b, non_bipartite = conflict_graph_bipartition(lattice)
+    if non_bipartite:
+        raise ValueError(
+            f"conflict graph has {non_bipartite} non-bipartite component(s); "
+            "the min-cut reduction here assumes bipartite (no odd cycles)."
+        )
+    idx_a = {v: i + 1 for i, v in enumerate(side_a)}
+    idx_b = {v: i + 1 + len(side_a) for i, v in enumerate(side_b)}
+    n = len(side_a) + len(side_b) + 2
+    source, sink = 0, n - 1
+    rows, cols, caps = [], [], []
+    cap_d3 = int(round(D3 * scale))
+    for v in side_a:
+        rows.append(source); cols.append(idx_a[v]); caps.append(cap_d3)
+    for v in side_b:
+        rows.append(idx_b[v]); cols.append(sink); caps.append(cap_d3)
+    for a, b in edges:
+        u, w = (a, b) if a in idx_a else (b, a)
+        rows.append(idx_a[u]); cols.append(idx_b[w]); caps.append(scale)
+        rows.append(idx_b[w]); cols.append(idx_a[u]); caps.append(scale)
+    capacity = csr_matrix((caps, (rows, cols)), shape=(n, n))
+    result = maximum_flow(capacity, source, sink)
+    residual = (capacity - result.flow).tocsr()
+
+    reachable = {source}
+    queue = deque([source])
+    while queue:
+        u = queue.popleft()
+        row = residual.getrow(u)
+        for v, c in zip(row.indices, row.data):
+            if c > 1e-9 and v not in reachable:
+                reachable.add(v)
+                queue.append(v)
+
+    pos, sub_of = lattice.site_positions()
+    states = np.where(sub_of == "r1", 0, 1).astype(int)
+    for v in side_a:
+        if idx_a[v] not in reachable:
+            states[v] = 2
+    for v in side_b:
+        if idx_b[v] in reachable:
+            states[v] = 2
+
+    violated_bonds = [b for b in lattice.bonds
+                       if b["type"] == "r2r3" and b["J"] != 0.0 and states[b["i"]] == states[b["j"]]]
+    return states, violated_bonds
+
+
 def heat_bath_sweep(lattice, states, D, T, rng):
     """One sweep = resample every site's state from the Gibbs distribution
     p(k) ~ exp(-state_energies(...)[k] / T), in random order, in place."""
