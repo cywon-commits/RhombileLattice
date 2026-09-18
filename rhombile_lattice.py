@@ -3,6 +3,8 @@
 Lattice: 3-site basis (r1, r2, r3) per unit cell, bond offsets and geometry
 follow rhombile_topo_report.md / rhombile_classical_proposal.md.
 """
+from collections import deque
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -54,8 +56,9 @@ class RhombileLattice:
                     for dn, dm in offsets:
                         j = self._site_index(n + dn, m + dm, s2)
                         p2 = self._position(n + dn, m + dm, s2)
+                        wraps = not (0 <= n + dn < self.nx and 0 <= m + dm < self.ny)
                         self.bonds.append({
-                            "i": i, "j": j, "type": s1 + s2,
+                            "i": i, "j": j, "type": s1 + s2, "wraps": wraps,
                             "J": self.j0[s1 + s2], "p1": p1, "p2": p2,
                         })
 
@@ -156,6 +159,255 @@ def matched_bonds(lattice, states):
     contributing +|J| to total_energy (the real physical cost), as opposed
     to bonds that were merely toggled when a string defect was drawn."""
     return [b for b in lattice.bonds if b["J"] != 0.0 and states[b["i"]] == states[b["j"]]]
+
+
+def enumerate_triangles(lattice):
+    """Every elementary (r1, r2, r3) triangle whose 3 edges all stay
+    inside the box (regardless of J), keyed by edge type. Each triangle
+    has exactly one r1-r2 edge, one r1-r3 edge (the two default-active
+    "outer" edges of a rhombus), and one r2-r3 edge (the default-inactive
+    "diagonal" of that rhombus).
+
+    Triangles that touch a periodic-wraparound bond are left out: with
+    PBC, a bond crossing the box edge is a real short bond on the torus,
+    but its stored p1/p2 uses one endpoint's *unwrapped* position (see
+    RhombileLattice._build), so such a triangle's naive centroid can land
+    a full box-width away from where it physically is. That's harmless
+    for frustrated_triangles (which never averages positions across
+    triangles), but build_rhombi/build_triangle_hop_graph do, so string
+    routing is restricted to the box's interior, away from that seam.
+
+    Returns a list of dicts {"sites", "r1r2", "r1r3", "r2r3", "centroid"};
+    the 3 edge entries are bond dicts shared by reference with
+    lattice.bonds, so toggling their "J" is visible everywhere else.
+    """
+    bond_by_pair = {frozenset((b["i"], b["j"])): b for b in lattice.bonds}
+    triangles = []
+    for m in range(lattice.ny):
+        for n in range(lattice.nx):
+            r1_idx = lattice._site_index(n, m, "r1")
+            r1_pos = lattice._position(n, m, "r1")
+            nbrs = []
+            for other_idx, b in lattice.neighbor_table()[r1_idx]:
+                other_pos = b["p2"] if b["i"] == r1_idx else b["p1"]
+                ang = np.arctan2(*(other_pos - r1_pos)[::-1])
+                nbrs.append((ang, other_idx, other_pos, b))
+            nbrs.sort(key=lambda x: x[0])
+            k = len(nbrs)
+            for i in range(k):
+                _, idx1, pos1, b1 = nbrs[i]
+                _, idx2, pos2, b2 = nbrs[(i + 1) % k]
+                closing = bond_by_pair.get(frozenset((idx1, idx2)))
+                if closing is None or closing["type"] != "r2r3":
+                    continue
+                edges = {b1["type"]: b1, b2["type"]: b2, "r2r3": closing}
+                if "r1r2" not in edges or "r1r3" not in edges:
+                    continue
+                if edges["r1r2"]["wraps"] or edges["r1r3"]["wraps"] or closing["wraps"]:
+                    continue
+                centroid = (r1_pos + pos1 + pos2) / 3
+                triangles.append({
+                    "sites": (r1_idx, idx1, idx2), "r1r2": edges["r1r2"],
+                    "r1r3": edges["r1r3"], "r2r3": edges["r2r3"], "centroid": centroid,
+                })
+    return triangles
+
+
+def build_rhombi(triangles):
+    """Pair triangles that share a diagonal (r2-r3 edge) into rhombi, and
+    connect rhombi that share an outer edge (r1-r2 or r1-r3) into an
+    adjacency graph -- the dual graph a "string" is routed through.
+
+    Returns (rhombi, adjacency): rhombi[i] = {"halves": (tri_a, tri_b),
+    "diagonal": bond, "centroid"}; adjacency[i] = [(j, shared_outer_bond), ...].
+    """
+    by_diagonal = {}
+    for ti, tri in enumerate(triangles):
+        by_diagonal.setdefault(id(tri["r2r3"]), []).append(ti)
+
+    rhombi = []
+    tri_to_rhombus = {}
+    for tri_ids in by_diagonal.values():
+        if len(tri_ids) != 2:
+            continue  # only possible with a too-small non-periodic patch
+        rid = len(rhombi)
+        centroid = np.mean([triangles[t]["centroid"] for t in tri_ids], axis=0)
+        rhombi.append({
+            "halves": tuple(tri_ids), "diagonal": triangles[tri_ids[0]]["r2r3"],
+            "centroid": centroid,
+        })
+        for t in tri_ids:
+            tri_to_rhombus[t] = rid
+
+    by_outer = {}
+    for ti, tri in enumerate(triangles):
+        if ti not in tri_to_rhombus:
+            continue
+        for key in ("r1r2", "r1r3"):
+            by_outer.setdefault(id(tri[key]), []).append((ti, tri[key]))
+
+    adjacency = [[] for _ in rhombi]
+    for entries in by_outer.values():
+        if len(entries) != 2:
+            continue
+        (t1, b1), (t2, _) = entries
+        r1_id, r2_id = tri_to_rhombus[t1], tri_to_rhombus[t2]
+        if r1_id != r2_id:
+            adjacency[r1_id].append((r2_id, b1))
+            adjacency[r2_id].append((r1_id, b1))
+    return rhombi, adjacency
+
+
+def nearest_rhombus(rhombi, point):
+    """Index of the rhombus whose centroid is closest to `point`."""
+    point = np.asarray(point, dtype=float)
+    dists = [np.linalg.norm(r["centroid"] - point) for r in rhombi]
+    return int(np.argmin(dists))
+
+
+def nearest_triangle(triangles, point):
+    """Index of the triangle (rhombus half) whose centroid is closest to
+    `point` -- the fine-grained counterpart of nearest_rhombus, needed
+    because a string's routing must pick a specific half, not just a
+    rhombus (see build_triangle_hop_graph)."""
+    point = np.asarray(point, dtype=float)
+    dists = [np.linalg.norm(t["centroid"] - point) for t in triangles]
+    return int(np.argmin(dists))
+
+
+def build_triangle_hop_graph(triangles):
+    """The graph a string is actually routed through, one level finer than
+    build_rhombi's rhombus graph: nodes are triangle halves, and crossing
+    a rhombus's diagonal to its sibling half is forced, not a free choice.
+
+    Naively routing on rhombi (pick any of a rhombus's up to 4 outer
+    edges to enter/exit by) can enter and leave through the *same* half,
+    leaving the other, untouched half with a bare diagonal flip and no
+    compensating outer-edge change -- a spurious frustrated triangle in
+    the middle of the path. Forcing every hop to land on the sibling half
+    (this function) rules that out structurally: every interior half ends
+    up with exactly one outer edge toggled plus the (shared) diagonal
+    toggle, i.e. still 2-active/1-inactive, just with a different edge
+    inactive -- the domain-wall picture -- so frustration is confined to
+    the two ends of the path regardless of its shape.
+
+    Returns (sibling, hop): sibling[t] = t's diagonal partner; hop[t] =
+    [(next_far_half, outer_bond, entered_near_half), ...], where
+    next_far_half is already the sibling of whatever near half the outer
+    bond leads to (the forced cross is baked in).
+    """
+    sibling = {}
+    diag_groups = {}
+    for ti, tri in enumerate(triangles):
+        diag_groups.setdefault(id(tri["r2r3"]), []).append(ti)
+    for tis in diag_groups.values():
+        if len(tis) == 2:
+            a, b = tis
+            sibling[a], sibling[b] = b, a
+
+    outer_groups = {}
+    outer_bond_of = {}
+    for ti, tri in enumerate(triangles):
+        for key in ("r1r2", "r1r3"):
+            bond = tri[key]
+            outer_groups.setdefault(id(bond), []).append(ti)
+            outer_bond_of[id(bond)] = bond
+
+    hop = [[] for _ in triangles]
+    for bond_id, tis in outer_groups.items():
+        if len(tis) != 2:
+            continue
+        ta, tb = tis
+        if ta not in sibling or tb not in sibling:
+            continue
+        bond = outer_bond_of[bond_id]
+        hop[ta].append((sibling[tb], bond, tb))
+        hop[tb].append((sibling[ta], bond, ta))
+    return sibling, hop
+
+
+def route_string(sibling, hop, t_start, t_end):
+    """Shortest path from t_start to t_end through the triangle hop graph.
+
+    t_start and t_end are left as the two path *endpoints* (the ones that
+    end up frustrated); the walk itself starts at sibling[t_start] (the
+    half that is immediately ready to hop onward) and must arrive
+    exactly at t_end. Returns (nodes, bonds): nodes = every rhombus-half
+    visited (whose diagonal gets toggled once each, including the
+    endpoints), bonds = the outer edges crossed between them.
+    """
+    start_node = sibling[t_start]
+    if start_node == t_end:
+        return [t_end], []
+    prev, prev_bond = {start_node: None}, {}
+    queue = deque([start_node])
+    while queue:
+        cur = queue.popleft()
+        if cur == t_end:
+            break
+        for nxt, bond, _near_half in hop[cur]:
+            if nxt not in prev:
+                prev[nxt] = cur
+                prev_bond[nxt] = bond
+                queue.append(nxt)
+    if t_end not in prev:
+        raise ValueError("no path between the two triangles (graph disconnected?)")
+    nodes, bonds, node = [t_end], [], t_end
+    while prev[node] is not None:
+        bonds.append(prev_bond[node])
+        node = prev[node]
+        nodes.append(node)
+    nodes.reverse()
+    bonds.reverse()
+    return nodes, bonds
+
+
+def route_string_between_points(rhombi, sibling, hop, p_start, p_end):
+    """Convenience wrapper around route_string for two arbitrary points.
+
+    Each rhombus's 2 triangle halves have opposite up/down parity, and
+    route_string can only connect same-parity endpoints (crossing a
+    diagonal then an outer edge always returns to the starting parity),
+    so only 2 of the 4 (half-of-start, half-of-end) combinations are
+    actually reachable. This tries all 4 and keeps the shortest that
+    works. Returns (t_start, t_end, nodes, bonds).
+    """
+    rid_s = nearest_rhombus(rhombi, p_start)
+    rid_e = nearest_rhombus(rhombi, p_end)
+    best = None
+    for ts in rhombi[rid_s]["halves"]:
+        for te in rhombi[rid_e]["halves"]:
+            try:
+                nodes, bonds = route_string(sibling, hop, ts, te)
+            except ValueError:
+                continue
+            if best is None or len(nodes) < len(best[2]):
+                best = (ts, te, nodes, bonds)
+    if best is None:
+        raise ValueError("no valid string between these two rhombi")
+    return best
+
+
+def _toggle_bond(b):
+    b["J"] = 0.0 if b["J"] != 0.0 else -1.0
+
+
+def apply_dual_string_defect(triangles, nodes, bonds):
+    """Toggle ON the diagonal of every rhombus-half in `nodes` (one
+    toggle per rhombus, since a diagonal is shared by both its halves)
+    and toggle OFF every outer edge in `bonds` connecting consecutive
+    halves. See route_string / build_triangle_hop_graph for why this
+    confines the resulting frustration to exactly nodes[0] and nodes[-1].
+    """
+    flipped = []
+    for t in nodes:
+        d = triangles[t]["r2r3"]
+        _toggle_bond(d)
+        flipped.append(d)
+    for b in bonds:
+        _toggle_bond(b)
+        flipped.append(b)
+    return flipped
 
 
 def heat_bath_sweep(lattice, states, D, T, rng):
