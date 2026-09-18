@@ -410,6 +410,64 @@ def apply_dual_string_defect(triangles, nodes, bonds):
     return flipped
 
 
+def min_state2_assignment(lattice):
+    """The actual D3=0 ground state for a diluted/reconnected lattice:
+    r1 sites fixed at state 0 (always mismatches every r1-rim bond, active
+    or not); every rim (r2/r3) site defaults to state 1. The only bonds
+    that can still cost anything are *active* r2-r3 (diagonal) edges,
+    since both endpoints default to 1. Recoloring one endpoint of each to
+    the otherwise-unused state 2 clears it for free -- as long as the two
+    recolored endpoints of any two such edges never coincide by being
+    forced onto opposite requirements, which is exactly the 2-coloring
+    (bipartition) of the graph formed by those diagonal edges.
+
+    A naive minimum *vertex cover* of that graph is NOT the same thing --
+    it only guarantees every edge has >=1 endpoint in the cover, not that
+    the two endpoints differ, so 2 cover vertices sharing an edge would
+    silently reintroduce a cost. Bipartition (proper 2-coloring, taking
+    the smaller color class per component as state 2) is both correct and
+    minimal, since each connected component's smaller side is the fewest
+    sites that can possibly cover its edges 1-for-1.
+
+    Returns (states, n_state2, n_non_bipartite_components). A nonzero
+    last value means that component contains an odd cycle of active
+    diagonals -- no zero-cost 2-coloring exists there, and the true D3=0
+    ground state (found separately, e.g. by SA) has residual energy.
+    """
+    edges = [(b["i"], b["j"]) for b in lattice.bonds if b["type"] == "r2r3" and b["J"] != 0.0]
+    adj = {}
+    for a, b in edges:
+        adj.setdefault(a, []).append(b)
+        adj.setdefault(b, []).append(a)
+
+    pos, sub_of = lattice.site_positions()
+    states = np.where(sub_of == "r1", 0, 1).astype(int)
+
+    color, non_bipartite = {}, 0
+    for start in adj:
+        if start in color:
+            continue
+        color[start] = 0
+        comp, queue = [start], deque([start])
+        ok = True
+        while queue:
+            u = queue.popleft()
+            for v in adj[u]:
+                if v not in color:
+                    color[v] = 1 - color[u]
+                    comp.append(v)
+                    queue.append(v)
+                elif color[v] == color[u]:
+                    ok = False
+        if not ok:
+            non_bipartite += 1
+        side0 = [v for v in comp if color[v] == 0]
+        side1 = [v for v in comp if color[v] == 1]
+        for v in (side0 if len(side0) <= len(side1) else side1):
+            states[v] = 2
+    return states, int(np.sum(states == 2)), non_bipartite
+
+
 def heat_bath_sweep(lattice, states, D, T, rng):
     """One sweep = resample every site's state from the Gibbs distribution
     p(k) ~ exp(-state_energies(...)[k] / T), in random order, in place."""

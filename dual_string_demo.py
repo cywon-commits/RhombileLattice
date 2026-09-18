@@ -23,8 +23,11 @@ from rhombile_lattice import (
 NX, NY = 10, 10
 
 
+STATE_COLORS = {0: "#8f2d56", 1: "#2a6f97", 2: "#e8792c"}  # r1-fixed, rim-default, escaped
+
+
 def draw_lattice(ax, lattice, highlight_on=None, highlight_off=None, frustrated=None,
-                  targets=None, title=""):
+                  targets=None, title="", states=None):
     """Same convention as string_defect_demo.draw_lattice (black = active
     bonds, gold stars = frustrated triangle centroids), plus: red solid =
     bonds in `highlight_on` (rhombus diagonals just turned on), orange
@@ -32,7 +35,10 @@ def draw_lattice(ax, lattice, highlight_on=None, highlight_off=None, frustrated=
     drawn explicitly since they're no longer J!=0 and would otherwise
     vanish, breaking the string's visual continuity). `targets`, if
     given, marks the originally requested (possibly off-lattice) points
-    with orange x's."""
+    with orange x's. `states`, if given (array of 0/1/2 per site), colors
+    every site by its Potts *state* instead of by sublattice (r1/r2/r3) --
+    use this to show an actual ground-state assignment (e.g. the minimum
+    state-2 set that zeroes out a string's diagonal conflicts)."""
     on_ids = set(id(b) for b in highlight_on) if highlight_on else set()
     for b in lattice.bonds:
         if b["J"] != 0.0:
@@ -46,10 +52,17 @@ def draw_lattice(ax, lattice, highlight_on=None, highlight_off=None, frustrated=
                  color="darkorange", linewidth=1.8, linestyle="--", zorder=2)
 
     pos, sub_of = lattice.site_positions()
-    colors = {"r1": "tab:red", "r2": "tab:blue", "r3": "tab:green"}
-    for sub, c in colors.items():
-        mask = sub_of == sub
-        ax.scatter(pos[mask, 0], pos[mask, 1], s=18, color=c, zorder=3)
+    if states is None:
+        colors = {"r1": "tab:red", "r2": "tab:blue", "r3": "tab:green"}
+        for sub, c in colors.items():
+            mask = sub_of == sub
+            ax.scatter(pos[mask, 0], pos[mask, 1], s=18, color=c, zorder=3)
+    else:
+        states = np.asarray(states)
+        for k, c in STATE_COLORS.items():
+            mask = states == k
+            ax.scatter(pos[mask, 0], pos[mask, 1], s=18, color=c, zorder=3,
+                       label=f"state {k}")
 
     if frustrated:
         centroids = np.array([f["centroid"] for f in frustrated])
