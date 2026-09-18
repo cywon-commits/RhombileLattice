@@ -27,7 +27,7 @@ STATE_COLORS = {0: "#8f2d56", 1: "#2a6f97", 2: "#e8792c"}  # r1-fixed, rim-defau
 
 
 def draw_lattice(ax, lattice, highlight_on=None, highlight_off=None, frustrated=None,
-                  targets=None, title="", states=None):
+                  targets=None, title="", states=None, box=None):
     """Same convention as string_defect_demo.draw_lattice (black = active
     bonds, gold stars = frustrated triangle centroids), plus: red solid =
     bonds in `highlight_on` (rhombus diagonals just turned on), orange
@@ -38,7 +38,10 @@ def draw_lattice(ax, lattice, highlight_on=None, highlight_off=None, frustrated=
     with orange x's. `states`, if given (array of 0/1/2 per site), colors
     every site by its Potts *state* instead of by sublattice (r1/r2/r3) --
     use this to show an actual ground-state assignment (e.g. the minimum
-    state-2 set that zeroes out a string's diagonal conflicts)."""
+    state-2 set that zeroes out a string's diagonal conflicts). `box`, if
+    given as (nx, ny), sets the axis limits for a lattice of that size
+    instead of the module-level NX, NY (needed for any lattice built at a
+    different size than the rest of this file's demos)."""
     on_ids = set(id(b) for b in highlight_on) if highlight_on else set()
     for b in lattice.bonds:
         if b["J"] != 0.0:
@@ -74,9 +77,10 @@ def draw_lattice(ax, lattice, highlight_on=None, highlight_off=None, frustrated=
         ax.scatter(pts[:, 0], pts[:, 1], marker="x", s=90, color="orange",
                    linewidth=2.2, zorder=4)
 
+    box_nx, box_ny = box if box is not None else (NX, NY)
     ax.set_aspect("equal")
-    ax.set_xlim(-1, NX - 1)
-    ax.set_ylim(-1, NY - 1)
+    ax.set_xlim(-1, box_nx - 1)
+    ax.set_ylim(-1, box_ny - 1)
     ax.set_title(title)
 
 
