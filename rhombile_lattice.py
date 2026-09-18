@@ -6,6 +6,8 @@ follow rhombile_topo_report.md / rhombile_classical_proposal.md.
 from collections import deque
 
 import numpy as np
+from scipy.sparse import csr_matrix
+from scipy.sparse.csgraph import maximum_flow
 import matplotlib.pyplot as plt
 
 A1 = np.array([1.0, 0.0])
@@ -466,6 +468,91 @@ def min_state2_assignment(lattice):
         for v in (side0 if len(side0) <= len(side1) else side1):
             states[v] = 2
     return states, int(np.sum(states == 2)), non_bipartite
+
+
+def conflict_graph_bipartition(lattice):
+    """2-color the graph of active r2-r3 (diagonal) bonds -- the same
+    graph min_state2_assignment works with, but returning the raw edges
+    plus a single global 2-coloring (one side per color, pooled across
+    every connected component) rather than picking the smaller side per
+    component. That per-component choice is what makes D3=0 minimal;
+    a global 2-coloring is what energy_via_mincut needs instead, since
+    it lets the flow solver pick the right combination itself for
+    whatever D3 is asked for.
+
+    Returns (edges, side_a, side_b, non_bipartite) -- same meaning as
+    in min_state2_assignment.
+    """
+    edges = [(b["i"], b["j"]) for b in lattice.bonds if b["type"] == "r2r3" and b["J"] != 0.0]
+    adj = {}
+    for a, b in edges:
+        adj.setdefault(a, []).append(b)
+        adj.setdefault(b, []).append(a)
+    color, non_bipartite = {}, 0
+    for start in adj:
+        if start in color:
+            continue
+        color[start] = 0
+        queue, ok = deque([start]), True
+        while queue:
+            u = queue.popleft()
+            for v in adj[u]:
+                if v not in color:
+                    color[v] = 1 - color[u]
+                    queue.append(v)
+                elif color[v] == color[u]:
+                    ok = False
+        if not ok:
+            non_bipartite += 1
+    side_a = [v for v, c in color.items() if c == 0]
+    side_b = [v for v, c in color.items() if c == 1]
+    return edges, side_a, side_b, non_bipartite
+
+
+def energy_via_mincut(lattice, D3, scale=10000):
+    """Exact ground-state energy at a given D3, for a lattice whose
+    active-diagonal conflict graph is bipartite (checked; raises if not,
+    since the reduction below assumes it).
+
+    Minimizing E(x) = D3*sum(x_v) + sum_edges[x_u == x_v] over x in
+    {0,1}^rim (x_v=1 meaning "site v is state 2") is an antiferromagnetic
+    binary MRF -- NP-hard in general, but exactly solvable in polynomial
+    time here because the conflict graph is bipartite: relabeling one
+    side (y_v = x_v on side A, y_v = 1-x_v on side B) turns it into a
+    *ferromagnetic* (submodular) energy, which reduces to a standard
+    minimum s-t cut: source->v capacity D3 for v in A, v->sink capacity
+    D3 for v in B, and capacity 1 both ways on every original edge
+    (see rhombile_lattice module notes / the research doc for the
+    algebra). The reduction is exact -- min-cut value equals E(D3)
+    with no leftover additive constant -- and was checked against a
+    brute-force search over all state-2 subsets on a small case.
+
+    This is what makes it possible to sweep D3 on conflict graphs with
+    hundreds of vertices (e.g. a dense grid of many strings), where the
+    2^n brute force used for the first single-string check is hopeless.
+    """
+    edges, side_a, side_b, non_bipartite = conflict_graph_bipartition(lattice)
+    if non_bipartite:
+        raise ValueError(
+            f"conflict graph has {non_bipartite} non-bipartite component(s); "
+            "the min-cut reduction here assumes bipartite (no odd cycles)."
+        )
+    idx_a = {v: i + 1 for i, v in enumerate(side_a)}
+    idx_b = {v: i + 1 + len(side_a) for i, v in enumerate(side_b)}
+    n = len(side_a) + len(side_b) + 2
+    source, sink = 0, n - 1
+    rows, cols, caps = [], [], []
+    cap_d3 = int(round(D3 * scale))
+    for v in side_a:
+        rows.append(source); cols.append(idx_a[v]); caps.append(cap_d3)
+    for v in side_b:
+        rows.append(idx_b[v]); cols.append(sink); caps.append(cap_d3)
+    for a, b in edges:
+        u, w = (a, b) if a in idx_a else (b, a)
+        rows.append(idx_a[u]); cols.append(idx_b[w]); caps.append(scale)
+        rows.append(idx_b[w]); cols.append(idx_a[u]); caps.append(scale)
+    capacity = csr_matrix((caps, (rows, cols)), shape=(n, n))
+    return maximum_flow(capacity, source, sink).flow_value / scale
 
 
 def heat_bath_sweep(lattice, states, D, T, rng):
