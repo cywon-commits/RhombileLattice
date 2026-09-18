@@ -555,6 +555,65 @@ def energy_via_mincut(lattice, D3, scale=10000):
     return maximum_flow(capacity, source, sink).flow_value / scale
 
 
+def state2_and_violations_via_mincut(lattice, D3, scale=10000):
+    """Same exact optimum as energy_via_mincut, but split into its two
+    physical pieces instead of just the total: n_state2 (node-type
+    excitations -- sites that took the 3rd Potts state) and n_violated
+    (link-type excitations -- active diagonals whose endpoints still
+    match). E(D3) = D3*n_state2 + n_violated exactly.
+
+    Recovers the actual minimum cut (not just its value) by BFS-ing the
+    residual capacity graph from the source; the reachable set is one
+    side of the optimal cut.
+
+    Returns (n_state2, n_violated).
+    """
+    edges, side_a, side_b, non_bipartite = conflict_graph_bipartition(lattice)
+    if non_bipartite:
+        raise ValueError(
+            f"conflict graph has {non_bipartite} non-bipartite component(s); "
+            "the min-cut reduction here assumes bipartite (no odd cycles)."
+        )
+    idx_a = {v: i + 1 for i, v in enumerate(side_a)}
+    idx_b = {v: i + 1 + len(side_a) for i, v in enumerate(side_b)}
+    n = len(side_a) + len(side_b) + 2
+    source, sink = 0, n - 1
+    rows, cols, caps = [], [], []
+    cap_d3 = int(round(D3 * scale))
+    for v in side_a:
+        rows.append(source); cols.append(idx_a[v]); caps.append(cap_d3)
+    for v in side_b:
+        rows.append(idx_b[v]); cols.append(sink); caps.append(cap_d3)
+    for a, b in edges:
+        u, w = (a, b) if a in idx_a else (b, a)
+        rows.append(idx_a[u]); cols.append(idx_b[w]); caps.append(scale)
+        rows.append(idx_b[w]); cols.append(idx_a[u]); caps.append(scale)
+    capacity = csr_matrix((caps, (rows, cols)), shape=(n, n))
+    result = maximum_flow(capacity, source, sink)
+    residual = (capacity - result.flow).tocsr()
+
+    reachable = {source}
+    queue = deque([source])
+    while queue:
+        u = queue.popleft()
+        row = residual.getrow(u)
+        for v, c in zip(row.indices, row.data):
+            if c > 1e-9 and v not in reachable:
+                reachable.add(v)
+                queue.append(v)
+
+    n_state2 = (sum(1 for v in side_a if idx_a[v] not in reachable)
+                + sum(1 for v in side_b if idx_b[v] in reachable))
+    n_violated = 0
+    for a, b in edges:
+        u, w = (a, b) if a in idx_a else (b, a)
+        x_u = idx_a[u] not in reachable
+        x_w = idx_b[w] in reachable
+        if x_u == x_w:
+            n_violated += 1
+    return n_state2, n_violated
+
+
 def heat_bath_sweep(lattice, states, D, T, rng):
     """One sweep = resample every site's state from the Gibbs distribution
     p(k) ~ exp(-state_energies(...)[k] / T), in random order, in place."""
