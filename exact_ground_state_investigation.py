@@ -63,47 +63,57 @@ Timeline of this investigation, in order, so the dead ends are visible:
 
 6. Cross-checked against simulated annealing (single-site heat bath,
    30 restarts, 3000 sweeps, T from 5.0 to 1e-5) for the simple string
-   at D3 = 0.5, 1.0, 1.5:
-   - D3=0.5, 1.0: SA matches BOTH the original and the "corrected"
-     formula (they happen to coincide there).
-   - D3=1.5: SA found 10.5, matching the ORIGINAL formula (min(D3*7,14)
-     -> 10.5) and contradicting the "corrected" one (which predicts a
-     flat 7 for D3>1).
-   SA is not proof either (it's a heuristic, and the kind of
-   large-region relabeling this problem seems to need is exactly the
-   kind of move single-site heat-bath SA is bad at finding) -- but
-   combined with point 5's failed reconstructions, it currently weighs
-   AGAINST trusting the "corrected" (smaller) numbers.
+   at D3 = 0.5, 1.0, 1.5, 2.0 -- ALL FOUR POINTS NOW COMPLETE:
+     D3=0.5  SA=3.500   original=3.500   corrected=3.500   (tie)
+     D3=1.0  SA=7.000   original=7.000   corrected=7.000   (tie)
+     D3=1.5  SA=10.500  original=10.500  corrected=7.000   -> ORIGINAL
+     D3=2.0  SA=14.000  original=14.000  corrected=7.000   -> ORIGINAL
+   D3=1.5 and 2.0 are the only two points where the formulas actually
+   differ (2.0 is also the original formula's saturation kink), and SA
+   sided decisively with the ORIGINAL (hub-fixed) formula at BOTH,
+   matching it to 3 decimal places every time. Combined with point 5's
+   two failed reconstructions of the "corrected" formula, this is no
+   longer just "weighs against" -- for the plain straight-string case,
+   the original hub-fixed formula should now be treated as CONFIRMED
+   and the Toulouse-distance "correction" as DISPROVEN (not just
+   unverified: it was actually tested against ground truth and lost).
 
 ## Where this leaves things
 
-Net effect: back near the original `energy_via_mincut` formula as the
-best current estimate for D3>0, but without full confidence -- neither
-side of this (original vs. "corrected") has a verified, working
-construction PLUS independent cross-check both agreeing. What's missing
-is a reconstruction algorithm for the Toulouse/Barahona ground state
-that's actually correct (the theory itself is standard and not in
-doubt; the bug is somewhere in translating "shortest path in the dual"
-into "which vertices get which spin", not in the theorem), or a smarter
-search (cluster-move SA / parallel tempering, or genuinely exhaustive
-search on a small-enough full lattice, not just "involved" sites) that
-can find whatever the true optimum is regardless of which formula turns
-out to be right.
+Resolved for the single straight string: `energy_via_mincut`'s formula
+E(D3)=min(D3*L/2, L) is correct there, confirmed independently by SA at
+every tested point including the kink. Still open for anything bent or
+branched: the detour counterexample (point 3 above) proves the same
+hub-fixing restriction is NOT always exact once the path isn't a
+straight line (15 achievable vs. 53 claimed), and no correct general
+method has been found yet -- the Toulouse/Barahona attempt that would
+have been the natural fix is now doubly discredited (two failed
+reconstructions, AND disproof by SA on the one case where it made a
+distinguishable prediction). What's missing is a reconstruction
+algorithm for the bent/branched case that's actually correct (the
+Toulouse/Barahona theory itself is standard and not in doubt; the bug
+is somewhere in translating "shortest path in the dual" into "which
+vertices get which spin", not in the theorem), or a smarter search
+(cluster-move SA / parallel tempering, or genuinely exhaustive search
+on a small-enough full lattice, not just "involved" sites) that can
+find the true optimum for a bent configuration.
 
 ## Concrete next steps for whoever (human or Claude) picks this up
 
 1. Get one FULLY exhaustive ground truth on a lattice small enough that
    literally every site (not just ones "involved" near the string) can
-   be brute-forced -- e.g. a short string on the smallest lattice size
-   RhombileLattice will build correctly (try nx=ny=5 or 6 with a
-   length-2 or length-4 string) and 3^n over the WHOLE lattice if n is
-   small enough, or a smarter DP if not. This is the one thing neither
-   side of the investigation actually has: full-lattice ground truth
-   at an intermediate D3.
+   be brute-forced -- e.g. a short BENT string (the straight case is
+   now closed, see above) on the smallest lattice size RhombileLattice
+   will build correctly (try nx=ny=5 or 6) and 3^n over the WHOLE
+   lattice if n is small enough, or a smarter DP if not. This is the
+   one thing neither side of the investigation actually has for the
+   bent/branched case: full-lattice ground truth at an intermediate D3.
 2. If reconstructing the Toulouse/Barahona coloring: the standard
    reference construction is worth reading directly from Barahona
    (1982) or Bieche et al. (1980) rather than re-deriving from memory
-   -- re-derivation is exactly where this investigation went wrong.
+   -- re-derivation is exactly where this investigation went wrong,
+   and it's now disproven (not just unverified) for the straight-string
+   case, which is a strong signal the same bug affects the bent case.
 3. If falling back to SA: use cluster-type moves (e.g. Wolff-style,
    or explicitly try flipping whole geometric regions at once) since
    single-site heat bath demonstrably cannot find the better solution
@@ -111,8 +121,12 @@ out to be right.
    for certain a better solution exists.
 
 The functions below are kept as working (if not fully verified) code,
-not wired into any demo script -- treat everything past D3=0 in this
-file's outputs as provisional pending step 1 above.
+not wired into any demo script -- the plain-straight-string case is now
+resolved (energy_via_mincut is confirmed correct there, see point 6
+above); treat everything involving a bend, branch, or multiple strings
+in this file's outputs, and in dual_string_demo/density_demo/
+matching_and_excitations_demo/detour_demo's D3>0 sections, as
+provisional pending step 1 above.
 """
 import numpy as np
 from collections import deque
