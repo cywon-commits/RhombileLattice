@@ -28,11 +28,43 @@ region, so the true optimum needs to re-label a big coherent region --
 exactly the kind of global, correlated move that single-site heat-bath
 SA struggles with. Confirmed: D2=-0.1 reproduced the local 3-site
 structure exactly with E=-44.6 (matches the free-bonus prediction);
-D2=+0.1 gave E=31.9 with the same 3 local sites, meaning SA found a
-PARTIAL relabeling of the bulk (not the local defect patch) but likely
-not the fully optimal one within this sweep budget -- see the repo's
-git log / conversation for the region-by-region breakdown that
-confirmed this.
+D2=+0.1 gave E=31.9. Region breakdown of the SA solution: r1-outside
+0% state1 (i.e. ~100% state2, costly, 219 sites), rim-outside 99%
+state1 (cheap, 439 sites), r1-inside 89% state1 (cheap, 37 sites),
+rim-inside 12% state1 (i.e. ~88% state2, costly, 73 sites) -- i.e. SA
+did NOT get stuck; it found a FULL relabeling of both inside and
+outside (compare to the D2=0 baseline: r1-outside was ~99% state1,
+rim-outside ~2%, i.e. the opposite convention). Total costly sites
+~219+0.88*73~283, predicted energy 0.1*283+3(local patch)=31.3,
+matching the actual 31.9 well. This IS the correct global optimum
+among the two topologically-valid choices (the other -- keep the old
+D2=0 labeling -- would cost 0.1*(439+37)+3=50.6, confirmed worse by
+direct calculation). So single-site SA handled this global relabeling
+fine here, likely because the flip doesn't need to happen atomically:
+a domain of the cheaper pattern can nucleate and grow one site at a
+time without a large collective energy barrier.
+
+FOLLOW-UP QUESTION FROM THE USER (not yet tested): as D2 becomes more
+negative than -0.1, will the enforced inside/outside topological
+boundary itself start to "leak" -- i.e. will actual bond violations
+appear along the loop's own path (not just relabeling), trading a
+fixed +1 violation cost for freeing a site to also collect the |D2|
+bonus? And will the same mechanism eventually erode the local defect's
+own state-3 patch, since D_rim_default = min(D1, D2) = D2 for D2<0
+lowers the local state-3-vs-violated threshold (originally D3 < edges
+resolved + D_rim_default) as D2 becomes more negative -- at D2 around
+-(2-D3)=-1 for a 2-edge/"domino" site, the local patch itself should
+flip over to violated links too. Both phenomena are the same
+underlying trade-off (opportunity cost of a forced non-bonus site vs.
+a fixed per-bond violation cost) and should have thresholds in the
+same rough range (order 1-3, matching this project's other established
+thresholds: 1 for isolated/single-edge sites, 2 for bulk "domino"
+sites, 3 for degree-3 branch points) -- exact values depend on local
+bond connectivity and haven't been computed. Proposed next test: sweep
+D2 to larger magnitude (-0.5, -1.0, -1.5, -2.0) and watch for (a) the
+local state-3 count changing, (b) new violated bonds appearing along
+the loop away from the local patch, (c) eventual convergence to a
+single rim=state2 domain that ignores the defects entirely.
 """
 import pickle
 
