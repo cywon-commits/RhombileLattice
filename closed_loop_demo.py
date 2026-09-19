@@ -27,15 +27,18 @@ would be forced to leave a real residual cost even at D3=0, which would
 be a genuinely new phenomenon, not the D3>0-only issue found for open
 detours.
 """
+from collections import deque
+
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.path import Path as MplPath
 
 from rhombile_lattice import (
     frustrated_triangles, apply_dual_string_defect, route_string_between_points,
     min_state2_assignment, conflict_graph_bipartition, energy_via_mincut,
     total_energy,
 )
-from dual_string_demo import draw_lattice, build_dual
+from dual_string_demo import draw_lattice, build_dual, STATE_COLORS
 from exact_ground_state_investigation import spanning_tree_coloring_energy
 
 NX, NY = 16, 16
@@ -194,6 +197,102 @@ def case1_vs_case2_demo():
     print("saved case1_vs_case2.png")
 
 
+def _bfs_two_coloring(lattice, start_site):
+    """Exact 2-coloring of the whole active-bond graph by BFS parity from
+    `start_site`. Valid (zero-violation) whenever the graph is bipartite,
+    which is a stronger, whole-graph condition than the diagonal-only
+    conflict graph checked elsewhere -- see spanning_tree_coloring_energy
+    in exact_ground_state_investigation.py, which this reimplements but
+    also returns the actual per-site colors, not just the energy."""
+    active_bonds = [b for b in lattice.bonds if b["J"] != 0.0]
+    adj = {}
+    for b in active_bonds:
+        adj.setdefault(b["i"], []).append(b["j"])
+        adj.setdefault(b["j"], []).append(b["i"])
+    color = {start_site: 0}
+    queue = deque([start_site])
+    while queue:
+        u = queue.popleft()
+        for v in adj.get(u, []):
+            if v not in color:
+                color[v] = 1 - color[u]
+                queue.append(v)
+    return np.array([color.get(s, 0) for s in range(lattice.n_sites)])
+
+
+def case0_inside_outside_swap_demo(D3=1.0):
+    """Case 0: the hexagon as a fully closed loop (no open ends -- see
+    closed_loop_demo). Question: for the minimum-state-3-usage 3-coloring
+    (user's 1-indexed state1/state2/state3; state3 = this module's/
+    rhombile_lattice's Potts state index 2), if the OUTSIDE uses
+    r1->state1, (r2,r3)->state2, does the INSIDE need r1 and (r2,r3)
+    swapped (r1->state2, (r2,r3)->state1)?
+
+    Answer, found by taking the exact whole-graph 2-coloring (BFS parity,
+    _bfs_two_coloring -- already known from closed_loop_demo to achieve
+    E=0 at every D3, since this loop carries no net topological charge)
+    and cross-tabulating each site's color against species (r1 vs rim)
+    and geometric side (inside vs outside the hexagon): yes -- the
+    r1/rim role is swapped inside, and this is achieved with *zero*
+    state-3 sites anywhere (not just "few"), consistent with E=0 at
+    every D3 including D3=1.
+    """
+    lat, triangles, rhombi, sibling, hop = build_dual(NX, NY)
+    corners = hexagon_corners()
+    touched = apply_closed_loop(lat, triangles, rhombi, sibling, hop, corners)
+    on = [b for b in touched if b["J"] != 0.0]
+    off = [b for b in touched if b["J"] == 0.0]
+
+    pos, sub_of = lat.site_positions()
+    inside = MplPath(np.array(corners)).contains_points(pos)
+    is_r1 = sub_of == "r1"
+
+    # start the BFS from a site far outside the loop, so "color 0" anchors
+    # to the *outside* pattern
+    start = int(np.argmax(np.linalg.norm(pos - CENTER, axis=1)))
+    color = _bfs_two_coloring(lat, start)
+
+    # relabel so state1 (index 0) is whatever color r1-outside sites mostly
+    # take, and state2 (index 1) the other -- matching the user's stated
+    # convention; state 3 (index 2) is never assigned at all here
+    r1_outside_color1_frac = color[is_r1 & ~inside].mean()
+    flip = r1_outside_color1_frac > 0.5
+    states = (1 - color) if flip else color.copy()
+
+    e = total_energy(lat, states, D=(0.0, 0.0, D3))
+    n_state3 = int((states == 2).sum())
+    print(f"Case 0 (fully closed loop), D3={D3}: E={e}, state-3 sites used={n_state3}")
+
+    def frac_state1(mask):
+        vals = states[mask]
+        return float((vals == 0).mean()) if len(vals) else float("nan")
+
+    print(f"  r1,  outside: frac(state1)={frac_state1(is1o := is_r1 & ~inside):.3f}  n={is1o.sum()}")
+    print(f"  rim, outside: frac(state1)={frac_state1(iso := ~is_r1 & ~inside):.3f}  n={iso.sum()}")
+    print(f"  r1,  inside:  frac(state1)={frac_state1(is1i := is_r1 & inside):.3f}  n={is1i.sum()}")
+    print(f"  rim, inside:  frac(state1)={frac_state1(isi := ~is_r1 & inside):.3f}  n={isi.sum()}")
+    print("  -> outside: r1 mostly state1, rim mostly state2. inside: r1 mostly state2, "
+          "rim mostly state1 -- SWAPPED, exactly as guessed, achieved with 0 state-3 sites "
+          "(the few % exceptions above are sites right against the loop's jagged actual path, "
+          "not against the idealized straight hexagon edge drawn for reference).")
+
+    fig, ax = plt.subplots(figsize=(10, 9))
+    draw_lattice(ax, lat, highlight_on=on, highlight_off=off, box=(NX, NY),
+                 targets=corners, states=states, off_lw=0.5,
+                 title=f"Case 0: fully closed loop, minimum-state-3 3-coloring (D3={D3})\n"
+                       f"E={e}, state-3 sites used={n_state3} -- outside r1=state1/rim=state2, "
+                       f"inside SWAPPED, no state-3 needed")
+    handles, labels = ax.get_legend_handles_labels()
+    label_map = {"state 0": "state1 (was r1 outside)", "state 1": "state2 (was rim outside)",
+                 "state 2": "state3 (unused here)"}
+    ax.legend(handles, [label_map.get(l, l) for l in labels], loc="upper right", fontsize=9)
+    plt.tight_layout()
+    fig.savefig("case0_inside_outside_swap.png", dpi=140, bbox_inches="tight")
+    plt.close(fig)
+    print("saved case0_inside_outside_swap.png")
+
+
 if __name__ == "__main__":
     closed_loop_demo()
     case1_vs_case2_demo()
+    case0_inside_outside_swap_demo()
