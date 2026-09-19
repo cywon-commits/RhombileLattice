@@ -19,6 +19,7 @@ the whole sweep -- see the __main__ block.
 """
 import csv
 import os
+import pickle
 
 import numpy as np
 
@@ -27,26 +28,57 @@ from closed_loop_demo import CENTER, _bfs_two_coloring
 from case2_sa_check import build_case2
 
 CSV_PATH = "case2_d3_sweep_results.csv"
+CHECKPOINT_PATH = "case2_sweep_checkpoint.pkl"
 D3_GRID = [0.0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5,
            2.75, 3.0, 3.5, 4.0, 5.0, 7.0, 10.0]
 
 
-def sweep(n_refine_sweeps=1200, n_fresh_restarts=2, n_fresh_sweeps=2500, seed=0):
+def _completed_count():
+    """How many D3 points already have a row in the CSV (excluding header),
+    so a fresh process invocation can pick up where a previous one (which
+    may have been killed by the environment mid-sweep) left off."""
+    if not os.path.exists(CSV_PATH):
+        return 0
+    with open(CSV_PATH) as f:
+        rows = list(csv.reader(f))
+    return max(0, len(rows) - 1)
+
+
+def sweep(n_refine_sweeps=1200, n_fresh_restarts=2, n_fresh_sweeps=2500, seed=0,
+          max_points=None):
+    """Runs the sweep starting after however many D3 points are already in
+    the CSV (resumable across process restarts -- this environment has
+    been killing long-lived background jobs between turns). `max_points`
+    caps how many NEW points this call computes, so it can be invoked
+    repeatedly in short, timeout-safe batches instead of one long run."""
     lat, touched, corners, (i_left, i_right) = build_case2()
     pos, _ = lat.site_positions()
     start_site = int(np.argmax(np.linalg.norm(pos - CENTER, axis=1)))
     free_coloring = _bfs_two_coloring(lat, start_site)
 
     rng = np.random.default_rng(seed)
-    current_states = free_coloring.copy()
+    n_done = _completed_count()
+    if n_done > 0 and os.path.exists(CHECKPOINT_PATH):
+        with open(CHECKPOINT_PATH, "rb") as f:
+            current_states = pickle.load(f)
+        print(f"resuming after {n_done} completed D3 points from checkpoint", flush=True)
+    else:
+        current_states = free_coloring.copy()
 
-    write_header = not os.path.exists(CSV_PATH)
+    remaining = D3_GRID[n_done:]
+    if max_points is not None:
+        remaining = remaining[:max_points]
+    if not remaining:
+        print("nothing left to do -- sweep already complete", flush=True)
+        return
+
+    write_header = not os.path.exists(CSV_PATH) or n_done == 0 and os.path.getsize(CSV_PATH) == 0
     with open(CSV_PATH, "a", newline="") as f:
         writer = csv.writer(f)
         if write_header:
             writer.writerow(["D3", "best_E", "n_state3", "n_violated"])
 
-        for D3 in D3_GRID:
+        for D3 in remaining:
             D = (0.0, 0.0, D3)
             candidates = []
 
@@ -73,7 +105,11 @@ def sweep(n_refine_sweeps=1200, n_fresh_restarts=2, n_fresh_sweeps=2500, seed=0)
                   f"n_violated={n_violated}", flush=True)
             writer.writerow([D3, best_e, n_state3, n_violated])
             f.flush()
+            with open(CHECKPOINT_PATH, "wb") as cf:
+                pickle.dump(current_states, cf)
 
 
 if __name__ == "__main__":
-    sweep()
+    import sys
+    n = int(sys.argv[1]) if len(sys.argv) > 1 else None
+    sweep(max_points=n)
