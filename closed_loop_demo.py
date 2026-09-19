@@ -39,8 +39,8 @@ from dual_string_demo import draw_lattice, build_dual
 from exact_ground_state_investigation import spanning_tree_coloring_energy
 
 NX, NY = 16, 16
-CENTER = np.array([8.0, 7.0])
-RADIUS = 4.0
+CENTER = np.array([6.0, 6.5])
+RADIUS = 3.5
 N_CORNERS = 6
 
 
@@ -96,13 +96,13 @@ def closed_loop_demo():
             hub_fixed = energy_via_mincut(lat, D3)
             free = spanning_tree_coloring_energy(lat, D3)
             print(f"  {D3:<9} {hub_fixed:<19.2f} {free:.2f}")
-        print("  -> the closed loop's full active-bond graph (not just the diagonal-only\n"
-              "     conflict graph) is itself exactly 2-colorable with ZERO violations, at\n"
-              "     every D3 -- a topologically trivial (zero-net-charge) domain wall never\n"
-              "     needs the 3rd Potts state at all. hub-fixed's nonzero, D3=2-saturating\n"
-              "     curve above is therefore not just imprecise here but flatly WRONG: the\n"
-              "     same bend-induced failure mode as the open detour case, just total this\n"
-              "     time (34 claimed vs. 0 actual, instead of 53 vs. 15).")
+        print(f"  -> the closed loop's full active-bond graph (not just the diagonal-only\n"
+              f"     conflict graph) is itself exactly 2-colorable with ZERO violations, at\n"
+              f"     every D3 -- a topologically trivial (zero-net-charge) domain wall never\n"
+              f"     needs the 3rd Potts state at all. hub-fixed's nonzero, D3=2-saturating\n"
+              f"     curve above is therefore not just imprecise here but flatly WRONG: the\n"
+              f"     same bend-induced failure mode as the open detour case, just total this\n"
+              f"     time ({len(edges)} claimed vs. 0 actual, instead of 53 vs. 15).")
     else:
         print("  NON-BIPARTITE -- energy_via_mincut cannot be used; this is a genuinely "
               "new (non-bipartite-conflict-graph) case, first one found in this project.")
@@ -111,7 +111,7 @@ def closed_loop_demo():
     draw_lattice(axes[0], lat0, box=(NX, NY), targets=corners,
                  title="original (pristine) lattice\nhexagon shown as the intended loop boundary")
     draw_lattice(axes[1], lat, highlight_on=on, highlight_off=off, frustrated=ft, box=(NX, NY),
-                 targets=corners,
+                 targets=corners, off_lw=0.5,
                  title=f"closed hexagonal loop applied\n"
                        f"{len(ft)} topological defects, "
                        f"{len(edges)} active diagonals in the ring")

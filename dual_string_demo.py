@@ -27,7 +27,7 @@ STATE_COLORS = {0: "#8f2d56", 1: "#2a6f97", 2: "#e8792c"}  # r1-fixed, rim-defau
 
 
 def draw_lattice(ax, lattice, highlight_on=None, highlight_off=None, frustrated=None,
-                  targets=None, title="", states=None, box=None):
+                  targets=None, title="", states=None, box=None, off_lw=1.8):
     """Same convention as string_defect_demo.draw_lattice (black = active
     bonds, gold stars = frustrated triangle centroids), plus: red solid =
     bonds in `highlight_on` (rhombus diagonals just turned on), orange
@@ -52,7 +52,7 @@ def draw_lattice(ax, lattice, highlight_on=None, highlight_off=None, frustrated=
                      color=color, linewidth=lw, zorder=2 if is_hl else 1)
     for b in (highlight_off or []):
         ax.plot([b["p1"][0], b["p2"][0]], [b["p1"][1], b["p2"][1]],
-                 color="darkorange", linewidth=1.8, linestyle="--", zorder=2)
+                 color="darkorange", linewidth=off_lw, linestyle="--", zorder=2)
 
     pos, sub_of = lattice.site_positions()
     if states is None:
