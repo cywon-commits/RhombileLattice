@@ -510,7 +510,24 @@ def conflict_graph_bipartition(lattice):
 
 
 def energy_via_mincut(lattice, D3, scale=10000):
-    """Exact ground-state energy at a given D3, for a lattice whose
+    """D3=0 always gives the true exact energy (0), which is provably
+    optimal regardless of anything below. For D3>0, treat the result as
+    an UPPER BOUND, not a confirmed exact minimum: this function fixes
+    every r1 site to Potts state 0 and only lets rim sites choose
+    between 1 and 2, and a later investigation
+    (exact_ground_state_investigation.py) found configurations where
+    letting r1 vary too gives a strictly lower energy at large D3 (a
+    bent/detour string: 15 found vs. 53 claimed here). An attempted fix
+    via Toulouse/Barahona planar-matching theory produced smaller
+    numbers but could not be verified with a working reconstruction,
+    and simulated annealing sided with THIS function's numbers at one
+    clearly-discriminating test point. Net effect: this is the best
+    verified upper bound at D3>0, but neither this nor the "fix" has a
+    fully confirmed lower bound to match it -- see that file's docstring
+    before trusting D3>0 numbers from this function in anything meant
+    to be exact.
+
+    Exact ground-state energy at a given D3, for a lattice whose
     active-diagonal conflict graph is bipartite (checked; raises if not,
     since the reduction below assumes it).
 
@@ -556,7 +573,12 @@ def energy_via_mincut(lattice, D3, scale=10000):
 
 
 def state2_and_violations_via_mincut(lattice, D3, scale=10000):
-    """Same exact optimum as energy_via_mincut, but split into its two
+    """See energy_via_mincut's docstring first: for D3>0 this shares its
+    r1-fixed restriction and the same open reliability question (exact
+    at D3=0 only; an upper bound, not a confirmed exact value, above
+    that). exact_ground_state_investigation.py has the details.
+
+    Same exact optimum as energy_via_mincut, but split into its two
     physical pieces instead of just the total: n_state2 (node-type
     excitations -- sites that took the 3rd Potts state) and n_violated
     (link-type excitations -- active diagonals whose endpoints still
@@ -615,7 +637,11 @@ def state2_and_violations_via_mincut(lattice, D3, scale=10000):
 
 
 def full_state_via_mincut(lattice, D3, scale=10000):
-    """Same exact optimum as state2_and_violations_via_mincut, but
+    """See energy_via_mincut's docstring first: for D3>0 this shares its
+    r1-fixed restriction and the same open reliability question. Exact
+    at D3=0 only.
+
+    Same exact optimum as state2_and_violations_via_mincut, but
     returning the full per-site state assignment and the actual list of
     violated (still-matching, active r2-r3) bonds, rather than just their
     counts -- what you need to draw the ground state, not just quote its
