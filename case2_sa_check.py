@@ -3,16 +3,28 @@ at D3=1: does the true low-energy state beat the naive free-2-coloring
 (E=17, 0 state-3) by paying with a few state-3 sites instead, closer to
 Case 1's own D3=1 answer (E=4) for the identical two defect points?
 
-Early result (partial run, see git history/commit message for the run
-this file accompanies): seeding SA from the free-2-coloring and cooling
-further at D3=1 repeatedly converged to E=3.0 -- BETTER than Case 1's
-E=4 for the same two defects, and much better than the naive E=17.
-That's notable on its own: it means the long way around can, after
-state reorganization, end up net *cheaper* than the direct edge at this
-D3, presumably because part of the interior swap (free, needed anyway
-per Case 0) also helps pay down some of what would otherwise be a pure
-defect-pair cost in Case 1. Not yet proven optimal, but consistent
-across multiple independent SA restarts from the same seed.
+CONFIRMED RESULT (case2_sa_result.pkl, committed alongside this file):
+seeding SA from the free-2-coloring and cooling further at D3=1
+reproducibly converges to E=3.0 (2 of 3 restarts in the confirming run;
+the 1 outlier at E=13 is a stuck SA run, not a competing minimum) --
+BETTER than Case 1's E=4 for the identical two defect points, and far
+better than the naive free-coloring's E=17. Inspecting that E=3 state
+directly:
+  - the bulk interior undergoes exactly the same r1<->rim swap as
+    Case 0 (fractions match Case 0's to within noise: r1 outside/inside
+    ~0.99/0.11 state1, rim outside/inside ~0.01/0.88 state1 -- same
+    numbers as closed_loop_demo.case0_inside_outside_swap_demo's run),
+  - the two real defects are resolved with only 3 state-3 sites sitting
+    on the SHORT direct path between them (x=5,6,7 at y=3.46) -- i.e.
+    the physically-drawn long way around is irrelevant to the ground
+    state; it fully reorganizes to look like Case 0's swap plus a local
+    patch resembling Case 1's own fix (which needed 4 sites; needing
+    only 3 here is a real, if modest, difference worth another look),
+  - 0 violated links anywhere.
+This is the cleanest evidence yet in this project for the "defects only
+care about final position, not the string that created them" principle
+extending all the way to the D3>0, non-bipartite-graph regime that the
+rest of exact_ground_state_investigation.py could not previously reach.
 """
 import pickle
 
