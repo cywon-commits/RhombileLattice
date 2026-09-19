@@ -36,7 +36,7 @@ from matplotlib.path import Path as MplPath
 from rhombile_lattice import (
     frustrated_triangles, apply_dual_string_defect, route_string_between_points,
     min_state2_assignment, conflict_graph_bipartition, energy_via_mincut,
-    total_energy,
+    total_energy, full_state_via_mincut,
 )
 from dual_string_demo import draw_lattice, build_dual, STATE_COLORS
 from exact_ground_state_investigation import spanning_tree_coloring_energy
@@ -292,7 +292,62 @@ def case0_inside_outside_swap_demo(D3=1.0):
     print("saved case0_inside_outside_swap.png")
 
 
+def case1_state3_demo(D3=1.0):
+    """Case 1 (the hexagon's direct bottom edge, an OPEN string with 2 real
+    topological defects -- unlike Case 0's closed loop). Unlike the closed
+    loop, this one carries real net topological charge at its two ends, so
+    it should NOT be free: at D3=1, the user expects state-3 sites to show
+    up strung along the short straight path itself, since hub-fixing is
+    known-reliable here (a plain single straight string, same regime
+    already confirmed against SA elsewhere in this project).
+
+    Confirmed: full_state_via_mincut at D3=1 gives E=4 with exactly 4
+    state-3 sites, all lying on the path between the two defects, and
+    zero violated bonds -- i.e. at D3=1 the ground state is still purely
+    "pay with state-3 sites", not yet trading any of them for a violated
+    bond (see energy_vs_D3 in the main report: that only starts once D3
+    passes the L=10 case's own kink, around D3~2.5 here).
+    """
+    corners = hexagon_corners()
+    bottom = sorted(range(len(corners)), key=lambda i: corners[i][1])[:2]
+    i_left, i_right = sorted(bottom, key=lambda i: corners[i][0])
+    p_left, p_right = corners[i_left], corners[i_right]
+
+    lat, triangles, rhombi, sibling, hop = build_dual(NX, NY)
+    _, _, nodes, bonds = route_string_between_points(rhombi, sibling, hop, p_left, p_right)
+    flipped = apply_dual_string_defect(triangles, nodes, bonds)
+    on = [b for b in flipped if b["J"] != 0.0]
+    off = [b for b in flipped if b["J"] == 0.0]
+    ft = frustrated_triangles(lat)
+    edges, _, _, nb = conflict_graph_bipartition(lat)
+
+    states, violated = full_state_via_mincut(lat, D3)
+    e = total_energy(lat, states, D=(0.0, 0.0, D3))
+    n_state3 = int((states == 2).sum())
+    pos, _ = lat.site_positions()
+    print(f"Case 1, D3={D3}: L={len(edges)}, defects={len(ft)}, E={e}, "
+          f"state-3 sites={n_state3}, violated bonds={len(violated)}")
+    for p in pos[states == 2]:
+        print(f"  state-3 site at {tuple(np.round(p, 2))}")
+
+    fig, ax = plt.subplots(figsize=(10, 5.5))
+    draw_lattice(ax, lat, highlight_on=on, highlight_off=off, frustrated=ft, box=(NX, NY),
+                 targets=[p_left, p_right], states=states, off_lw=0.5,
+                 title=f"Case 1 (direct edge), D3={D3}: E={e}, {n_state3} state-3 sites "
+                       f"strung along the path, {len(violated)} violated bonds")
+    handles, labels = ax.get_legend_handles_labels()
+    label_map = {"state 0": "state1", "state 1": "state2", "state 2": "state3"}
+    ax.legend(handles, [label_map.get(l, l) for l in labels], loc="upper right", fontsize=9)
+    ax.set_xlim(0, 12)
+    ax.set_ylim(1, 6)
+    plt.tight_layout()
+    fig.savefig("case1_state3_at_D3_1.png", dpi=140, bbox_inches="tight")
+    plt.close(fig)
+    print("saved case1_state3_at_D3_1.png")
+
+
 if __name__ == "__main__":
     closed_loop_demo()
     case1_vs_case2_demo()
     case0_inside_outside_swap_demo()
+    case1_state3_demo()
