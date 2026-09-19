@@ -346,8 +346,59 @@ def case1_state3_demo(D3=1.0):
     print("saved case1_state3_at_D3_1.png")
 
 
+def case1_frustrated_links_demo(D3=3.0):
+    """Case 1 (direct edge), past its own saturation point: the user's
+    prediction is that at D3=3 it's cheaper to stop paying with state-3
+    sites entirely and instead just leave the path's links frustrated
+    (mismatched under only 2 colors) between the two defects.
+
+    Confirmed: full_state_via_mincut at D3=3 gives E=10=L, with 0 state-3
+    sites and all 10 links along the path violated -- full switch-over.
+    The crossover isn't a single jump, though: D3=2.0 is still mixed (3
+    state-3 sites + 2 violated links) and D3=2.5 even more so (2 + 4)
+    before D3=3 completes the switch to all-link.
+    """
+    corners = hexagon_corners()
+    bottom = sorted(range(len(corners)), key=lambda i: corners[i][1])[:2]
+    i_left, i_right = sorted(bottom, key=lambda i: corners[i][0])
+    p_left, p_right = corners[i_left], corners[i_right]
+
+    lat, triangles, rhombi, sibling, hop = build_dual(NX, NY)
+    _, _, nodes, bonds = route_string_between_points(rhombi, sibling, hop, p_left, p_right)
+    flipped = apply_dual_string_defect(triangles, nodes, bonds)
+    on = [b for b in flipped if b["J"] != 0.0]
+    off = [b for b in flipped if b["J"] == 0.0]
+    ft = frustrated_triangles(lat)
+    edges, _, _, nb = conflict_graph_bipartition(lat)
+
+    states, violated = full_state_via_mincut(lat, D3)
+    e = total_energy(lat, states, D=(0.0, 0.0, D3))
+    n_state3 = int((states == 2).sum())
+    print(f"Case 1, D3={D3}: L={len(edges)}, E={e}, state-3 sites={n_state3}, "
+          f"violated (frustrated) links={len(violated)}")
+
+    fig, ax = plt.subplots(figsize=(10, 5.5))
+    draw_lattice(ax, lat, highlight_on=on, highlight_off=off, frustrated=ft, box=(NX, NY),
+                 targets=[p_left, p_right], states=states, off_lw=0.5,
+                 title=f"Case 1 (direct edge), D3={D3}: E={e}, {n_state3} state-3 sites, "
+                       f"{len(violated)} frustrated links between the defects (magenta)")
+    for b in violated:
+        ax.plot([b["p1"][0], b["p2"][0]], [b["p1"][1], b["p2"][1]],
+                 color="magenta", linewidth=3.2, zorder=6)
+    handles, labels = ax.get_legend_handles_labels()
+    label_map = {"state 0": "state1", "state 1": "state2", "state 2": "state3"}
+    ax.legend(handles, [label_map.get(l, l) for l in labels], loc="upper right", fontsize=9)
+    ax.set_xlim(0, 12)
+    ax.set_ylim(1, 6)
+    plt.tight_layout()
+    fig.savefig("case1_frustrated_links_D3_3.png", dpi=140, bbox_inches="tight")
+    plt.close(fig)
+    print("saved case1_frustrated_links_D3_3.png")
+
+
 if __name__ == "__main__":
     closed_loop_demo()
     case1_vs_case2_demo()
     case0_inside_outside_swap_demo()
     case1_state3_demo()
+    case1_frustrated_links_demo()
