@@ -123,5 +123,77 @@ def closed_loop_demo():
     print("saved closed_loop_before_after.png")
 
 
+def case1_vs_case2_demo():
+    """Same two frustrated plaquettes (the hexagon's bottom two corners),
+    connected two different ways:
+      Case 1 (L1): the direct straight edge between them (the hexagon's
+        own bottom side) -- one segment.
+      Case 2 (L2): the detour around the other five sides of the hexagon
+        -- five chained segments, going the long way around through the
+        remaining four corners.
+    Both are OPEN strings (unlike the closed loop), so both should land
+    exactly 2 real topological defects at the same two spots -- this
+    isolates "does routing the long way around cost more" from the
+    closed-loop's zero-net-charge case just examined."""
+    corners = hexagon_corners()
+    bottom = sorted(range(len(corners)), key=lambda i: corners[i][1])[:2]
+    i_left, i_right = sorted(bottom, key=lambda i: corners[i][0])
+    p_left, p_right = corners[i_left], corners[i_right]
+    other_order = [i_right] + [i for i in range(len(corners)) if i not in (i_left, i_right)] + [i_left]
+
+    # Case 1: direct edge
+    lat1, tri1, rho1, sib1, hop1 = build_dual(NX, NY)
+    _, _, nodes1, bonds1 = route_string_between_points(rho1, sib1, hop1, p_left, p_right)
+    flipped1 = apply_dual_string_defect(tri1, nodes1, bonds1)
+    on1 = [b for b in flipped1 if b["J"] != 0.0]
+    off1 = [b for b in flipped1 if b["J"] == 0.0]
+    ft1 = frustrated_triangles(lat1)
+    edges1, _, _, nb1 = conflict_graph_bipartition(lat1)
+
+    # Case 2: the other five sides, chained corner-to-corner
+    lat2, tri2, rho2, sib2, hop2 = build_dual(NX, NY)
+    touched2 = []
+    for a, b in zip(other_order[:-1], other_order[1:]):
+        _, _, nodes, bonds = route_string_between_points(rho2, sib2, hop2, corners[a], corners[b])
+        touched2.extend(apply_dual_string_defect(tri2, nodes, bonds))
+    on2 = [b for b in touched2 if b["J"] != 0.0]
+    off2 = [b for b in touched2 if b["J"] == 0.0]
+    ft2 = frustrated_triangles(lat2)
+    edges2, _, _, nb2 = conflict_graph_bipartition(lat2)
+
+    print(f"Case 1 (direct bottom edge):  L={len(edges1)} active diagonals, "
+          f"{len(ft1)} defects, non_bipartite={nb1}")
+    print(f"Case 2 (5-segment detour):    L={len(edges2)} active diagonals, "
+          f"{len(ft2)} defects, non_bipartite={nb2}")
+    print(f"ratio L2/L1 = {len(edges2) / len(edges1):.2f}  (naive expectation ~5)")
+
+    if nb1 == 0:
+        print("Case 1  D3     hub-fixed   free-2-coloring")
+        for D3 in (0.0, 0.5, 1.0, 1.5, 2.0, 5.0, 1e6):
+            print(f"        {D3:<9} {energy_via_mincut(lat1, D3):<12.2f} "
+                  f"{spanning_tree_coloring_energy(lat1, D3):.2f}")
+    if nb2 == 0:
+        print("Case 2  D3     hub-fixed   free-2-coloring")
+        for D3 in (0.0, 0.5, 1.0, 1.5, 2.0, 5.0, 1e6):
+            print(f"        {D3:<9} {energy_via_mincut(lat2, D3):<12.2f} "
+                  f"{spanning_tree_coloring_energy(lat2, D3):.2f}")
+
+    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
+    draw_lattice(axes[0], lat1, highlight_on=on1, highlight_off=off1, frustrated=ft1,
+                 box=(NX, NY), targets=[p_left, p_right], off_lw=0.5,
+                 title=f"Case 1: direct edge (L1)\nL={len(edges1)}, {len(ft1)} defects")
+    draw_lattice(axes[1], lat2, highlight_on=on2, highlight_off=off2, frustrated=ft2,
+                 box=(NX, NY), targets=[p_left, p_right], off_lw=0.5,
+                 title=f"Case 2: 5-segment detour around the other sides (L2)\n"
+                       f"L={len(edges2)}, {len(ft2)} defects")
+    plt.suptitle("Same two defect locations (hexagon's bottom corners): "
+                  "direct edge vs. the long way around", y=1.02, fontsize=13)
+    plt.tight_layout()
+    fig.savefig("case1_vs_case2.png", dpi=140, bbox_inches="tight")
+    plt.close(fig)
+    print("saved case1_vs_case2.png")
+
+
 if __name__ == "__main__":
     closed_loop_demo()
+    case1_vs_case2_demo()
