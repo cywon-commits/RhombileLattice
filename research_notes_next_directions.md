@@ -257,6 +257,30 @@ temperature averaged away at T=infinity along with everything else). A
 nice closed-form endpoint for Part V's whole entropic-force story,
 computable without any Monte Carlo.
 
+## 9. D2 threshold vs area/curvature: first attempt was confounded, needs redesign
+
+D2_threshold_vs_area.py tested 4 hexagon-detour geometries (small
+r=2.0/area=10.4, medium r=3.5/area=31.8 -- the project's usual
+reference, large r=5.5/area=78.6, and an elongated shape matched to
+medium's own area 31.8) via the same D1=0, D3=1, D2-sweep methodology.
+
+RESULT WAS CONFOUNDED, not directly usable: scaling up a regular hexagon
+uniformly also scales up the direct-edge separation between the two real
+defects (the hexagon's own "bottom two corners"), and elongating it at
+fixed total area ALSO changes that same separation (large: D2=0 already
+gives n3=33 instead of the expected ~3; elongated: n3=7 instead of 3) --
+so the already-known L/2-type distance-cost result (Parts I-II) is mixed
+in with whatever the area/curvature effect might be, and the raw D2*
+transition-point data can't cleanly separate the two.
+
+Correct redesign (not yet implemented): keep the two real defect
+positions (and their direct separation) FIXED across all sizes/shapes,
+and vary ONLY how far the detour loop bulges out to enclose different
+areas -- e.g. an asymmetric polygon whose "bottom" two points are pinned
+but whose "top" extends further out for larger sizes. Then D2* vs
+enclosed area (and vs shape at fixed area) would be a clean test of the
+1/Area scaling and curvature-independence predictions from item 3 above.
+
 ## Context: is this publication-worthy?
 
 Discussed with the user: the D3=0 endpoint, the zero-energy closed-loop
