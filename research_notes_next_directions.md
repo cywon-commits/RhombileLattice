@@ -194,6 +194,23 @@ convention, or only isomorphic in graph structure; worth double-checking
 the exact Syozi/Codello-type reference formula's edge convention if the
 simulated T_c disagrees non-trivially.
 
+## 6. D3-dependence of both the O transition and the A/B confinement crossover
+
+Two predictions made before running (both awaiting verification as of
+this note): raising D3 makes the state-3 "safety valve" more expensive,
+so (a) O's own empirical hub/rim order-disorder T_c (currently ~0.79 at
+D3=1, vs. the pure-2-state dice-lattice theory value 1.203) should rise
+toward the theory value as D3 increases (hub_rim_order_transition_D3.py
+is testing D3=3 now), since less thermal state-3 population means the
+system behaves more like the pure 2-state Ising problem the theory
+assumes; (b) the A-vs-B confinement-deconfinement crossover (dB/dA
+ratio dropping from 4 at low T toward ~1 at high T, established for
+D3=1 in finite_T_scan.py) should show the same qualitative shape at
+D3=3 too, but with the crossover itself shifted to a HIGHER T, by the
+same reasoning as (a). Natural next step once the D3=1 rescans finish:
+redo finite_T_scan.py's A/B/C reference-subtraction ratio measurement
+at D3=3 as well.
+
 ## Context: is this publication-worthy?
 
 Discussed with the user: the D3=0 endpoint, the zero-energy closed-loop
