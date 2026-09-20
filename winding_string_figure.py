@@ -72,24 +72,28 @@ def main():
         "Setup: two fixed lattice sites at x=2 and x=27 on a 30-wide periodic (torus) lattice.\n"
         "  DIRECT distance (through the middle) = 25 unit cells.\n"
         "  WINDING distance (through the periodic seam) = 30-25 = 5 unit cells.\n\n"
-        "Both constructions isolate exactly 2 real topological defects at the same 2 sites\n"
-        "(verified: frustrated_triangles == 2 for both). Only WINDING's flipped-bond set\n"
-        "includes an actual wrap-flagged bond (verified directly).\n\n"
-        "Result: extensive SA (exact mincut seed + gentle re-anneal + 10 random restarts,\n"
-        "4000 sweeps each) never closes the gap. DIRECT stays near its own L=25 scaling\n"
-        "(25 -> 48, a small local correction below the naive hub-fixed value of 50),\n"
-        "WINDING stays near its own L=5 scaling (5 -> 10). Local Monte Carlo dynamics\n"
-        "cannot move between the two: exactly the flip-connectivity-only-within-a-flux-\n"
-        "sector picture from Thurston's theorem for dimer coverings on a torus.\n\n"
-        "Caveat: this is numerical (SA never finding a bridge), not a rigorous inescapability\n"
-        "proof -- but it is the expected signature if the sectors are genuinely disconnected\n"
-        "under any local (single-site) update, matching the theory."
+        "Both isolate exactly 2 real defects at the same 2 sites, and BOTH have a bipartite\n"
+        "conflict graph (simple path: 51v/50e direct, 11v/10e winding) -- no extra odd-cycle\n"
+        "'flux obstruction' shows up at that level for either one.\n\n"
+        "CAVEAT (important, found after this figure's first version): DIRECT and WINDING are\n"
+        "different FIXED bond patterns, not the same background explored two ways -- SA only\n"
+        "resamples states, never the J bonds, so DIRECT structurally cannot reach WINDING's\n"
+        "answer regardless of any topology. So this does NOT yet show a genuine flux-sector\n"
+        "obstruction to local dynamics; it mainly re-confirms the known E~L scaling (a short\n"
+        "wrap-around string is cheaper than a long direct one for the same 2 sites).\n\n"
+        "DIRECT: 25 -> 48 (a small correction below naive hub-fixed's 50 -- unlike Case2's\n"
+        "big collapse, since an open straight line doesn't have Case2's near-closed-loop\n"
+        "structure to exploit). Still open: is 48 truly Direct's floor, or does some other\n"
+        "non-winding dimerization (not this one straight line) reach much lower, maybe even\n"
+        "competitive with WINDING's 5 -- which would mean flux doesn't matter after all and\n"
+        "only defect position does, per the project's original matching principle."
     )
     ax_text.text(0.02, 0.98, text, va="top", ha="left", fontsize=9.5, family="monospace",
                  transform=ax_text.transAxes)
 
-    plt.suptitle("Same two defects, two flux sectors: winding beats direct and SA can't bridge them",
-                  y=1.01, fontsize=13)
+    plt.suptitle("Same two defects, two different fixed bond patterns: short wrap-around beats\n"
+                  "long direct path -- whether this reflects a real flux sector is still open",
+                  y=1.03, fontsize=13)
     plt.tight_layout()
     fig.savefig("winding_string_comparison.png", dpi=140, bbox_inches="tight")
     plt.close(fig)
