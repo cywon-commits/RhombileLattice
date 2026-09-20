@@ -69,6 +69,44 @@ through as free parameters and the whole D3=0 zero-energy story
 (min_state2_assignment, the bipartition machinery) re-derived for
 general (D1,D2) since it currently silently assumes D1=D2=0.
 
+## 3. Does the direct<->detour transition point depend on the detour's enclosed area/curvature?
+
+Raised by the user while re-verifying the D2>0 sweep (see below): Part VI's
+D1=0, D3=1, D2-sweep threshold sits at |D2|~1 for the specific hexagon
+used throughout this project (radius 3.5, ~720-site lattice). If the
+droplet-nucleation framing (perimeter tension sigma*L vs. enclosed-area
+bulk cost Delta_f*A, critical radius R* ~ sigma/Delta_f) is the right
+picture, a hexagon of DIFFERENT size or a detour of different SHAPE
+(different curvature, not just area) should in general shift where the
+"cheaper to swap the whole enclosed region" transition happens, since a
+bigger enclosed area amplifies the D2-driven bulk term relative to the
+fixed local-defect (D3) cost near the two real endpoints.
+
+Concretely worth testing later (not urgent, user explicitly said this
+can wait): build 2-3 different hexagon sizes (or non-hexagonal detour
+shapes with different curvature at fixed enclosed area) and re-run the
+same D1=0, D3=1, D2-sweep methodology on each, checking whether the
+direct-vs-detour crossover (and the D2~D3 collapse threshold from Part
+VI) shifts with area/curvature or stays pinned at the same |D2|.
+
+## Correction in progress (as of the latest session): the D2>0 "gradual precursor" may have been an SA artifact
+
+D2_sweep_positive.py's original coarse grid (step 0.2) reported n_state3
+growing gradually 3->11->15->17 as D2 went from 0 to 0.9, which made it
+into the artifact's Part VI. A finer re-sweep (D2_sweep_fine_positive.py,
+step 0.025, MORE SA effort) found n_state3 stays flat at 3 across the
+ENTIRE D2=0.00-0.35 range, only stepping to 4 by D2=0.4 -- and critically,
+this run's D2=0.4 energy (118.8) is LOWER than the original coarse run's
+own D2=0.4 result (119.6, n3=15), meaning the original run was stuck in a
+worse local optimum, not at the true ground state. The true D2>0 trend
+looks much more like a long flat plateau with small discrete steps than
+a smooth gradual ramp. D2_sweep_fine_positive_part2.py is re-verifying
+0.4-1.0 with the same (extra) rigor; the D2<0 branch (D2_sweep_gradual.py's
+original three-stage-collapse claim, jump at -0.6, full collapse by -1.1)
+needs the same re-verification treatment next -- flagged by the user,
+not yet started. The artifact's Part VI text will need correcting once
+both branches are re-verified.
+
 ## Context: is this publication-worthy?
 
 Discussed with the user: the D3=0 endpoint, the zero-energy closed-loop
