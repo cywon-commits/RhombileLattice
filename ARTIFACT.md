@@ -24,7 +24,13 @@ organized thematically rather than chronologically:
    with zero local (frustrated-triangle) defects still costs real energy
    for any D3>0, invisible to both frustrated-triangle counting and
    conflict-graph bipartiteness (ties into Thurston's flip-connectivity
-   theorem and Kasteleyn/Fisher–Wu's four-Pfaffian toroidal dimer count)
+   theorem and Kasteleyn/Fisher–Wu's four-Pfaffian toroidal dimer count).
+   Follow-up added: the flux group is confirmed Z2×Z2 (winding the same
+   generator twice cancels; (2,1)≡(0,1), (3,1)≡(1,1)), and the matching
+   principle itself survives within a fixed nontrivial sector (two very
+   different constructions of the same (1,1) sector converge under SA) —
+   plus a literature check (Kenyon et al.) on how flux-sector probability
+   scales with torus size under random dimerization.
 10. Experimental and real-material connections (artificial spin ice
     dislocations, NiO domain-wall pinning, delafossite/kagome endpoint
     realizations — with an explicit caveat on what's analogy vs. what's
