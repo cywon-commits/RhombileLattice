@@ -153,6 +153,47 @@ independent of its neighbors' (a rim site switching to state3 never
 violates any bond regardless of what others do), not a nucleation/
 percolation process anchored at the defect.
 
+## 5. Theoretical T_c for O's hub/rim order-disorder transition (dice-lattice Ising mapping)
+
+Before running hub_rim_order_transition.py's Monte Carlo scan, derived an
+EXACT theoretical prediction to check it against. The pristine (no
+defects) lattice O only has active hub-rim bonds (bipartite, rim-rim
+diagonal is off), so restricting to the 2 states actually used in bulk
+(state1/state2, state3 unpopulated away from any string) and writing
+sigma_i = 2*s_i - 1 in {-1,+1}:
+
+  e_bond = delta(s_i,s_j) = (1 + sigma_i*sigma_j) / 2
+
+so the AF Potts energy is an AF Ising model with |J_Ising| = 1/2 on the
+hub-rim graph. Gauge-transforming sigma -> -sigma on the rim sublattice
+(always possible on a bipartite graph, standard AF<->FM Ising duality)
+turns this into a FERROMAGNETIC Ising model, same coupling magnitude
+1/2. The hub(coordination 6)/rim(coordination 3, 2 sites per cell)
+graph is exactly the classical "dice lattice", whose Ising T_c is
+EXACTLY known (Syozi decoration-transformation family, same family as
+kagome/honeycomb/triangular):
+
+  T_c(dice, |J|=1) = 2 / arccosh((1+sqrt(3))/2) = 2.405457...
+
+Rescaling by our effective |J_Ising|=1/2:
+
+  **T_c(our units) = 0.5 * 2.405457 = 1.2027**
+
+This lands right in the middle of finite_T_scan.py's own flagged
+"T~0.8-1.5 unusually large fluctuations" region (previously only
+guessed to be "plausibly related to" the Kotecky-Salas-Sokal transition,
+now with a precise number to check against). hub_rim_order_transition.py
+is running a finite-T MC scan of <|m|> vs T (m = hub state1/state2
+imbalance) to test this directly -- a genuine independent-theory-vs-
+simulation cross-check, in the same spirit as this project's other
+multiply-confirmed results (Part II's exact E(D3) formula, etc). NOTE:
+one caveat not yet checked -- whether the *specific* coupling pattern
+here (r1-r2 and r1-r3 both present with equal weight, r2-r3 off) is
+really identical to the standard uniform dice lattice's edge-weighting
+convention, or only isomorphic in graph structure; worth double-checking
+the exact Syozi/Codello-type reference formula's edge convention if the
+simulated T_c disagrees non-trivially.
+
 ## Context: is this publication-worthy?
 
 Discussed with the user: the D3=0 endpoint, the zero-energy closed-loop
