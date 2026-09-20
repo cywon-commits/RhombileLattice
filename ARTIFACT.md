@@ -7,7 +7,7 @@ progresses:
 https://claude.ai/artifact/9jxHSSeFMssZzDUT7Ph4eS
 
 As of this commit it is titled **"Confinement, Matching & Symmetry
-Breaking on a Tunable Potts–Ising Lattice"** (v3 restructure) and is
+Breaking on a Tunable Potts–Ising Lattice"** (v4 restructure) and is
 organized thematically rather than chronologically:
 
 1. Why this is worth doing (novelty/significance framing)
@@ -17,9 +17,19 @@ organized thematically rather than chronologically:
 5. Part III — the hub-fixed trap (methodological lesson)
 6. Part IV — closed loops resolve it: the matching principle survives
    into the non-bipartite D3>0 regime (Case 0/1/2)
-7. Part V — finite temperature (entropic-force crossover, D3=2
-   threshold broadening)
-8. Part VI — breaking D1=D2 (droplet-nucleation-style symmetry breaking)
+7. Part V — finite temperature: the confinement crossover is now traced
+   to O's own hub/rim order-disorder transition (exact dice-lattice
+   Ising T_c=1.2027 theory, empirical T_c=0.79 at D3=1 rising to ~1.07
+   at D3=3 as thermal 3rd-state population shrinks), explained by the
+   Kadanoff-Ceva disorder-operator / Z2 gauge theory duality (this
+   project's "strings" are disorder lines), plus an exact T->infinity
+   endpoint (dA=dB=1/3, a pure bond-counting fact) and the original
+   D3=2 threshold broadening result
+8. Part VI — breaking D1=D2 (droplet-nucleation-style symmetry
+   breaking); D2 sweeps re-verified as a sharp few-stage staircase on
+   both branches (the original coarse sweeps' "gradual precursor" was
+   substantially an SA-optimization artifact), plus a delocalization
+   finding for the D2>=1 bulk collapse
 9. Part VII — flux sectors on the torus: a non-contractible closed loop
    with zero local (frustrated-triangle) defects still costs real energy
    for any D3>0, invisible to both frustrated-triangle counting and
