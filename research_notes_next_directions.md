@@ -211,6 +211,29 @@ same reasoning as (a). Natural next step once the D3=1 rescans finish:
 redo finite_T_scan.py's A/B/C reference-subtraction ratio measurement
 at D3=3 as well.
 
+## 7. What fraction of random dimerizations have trivial vs nontrivial flux? (discussed, not started)
+
+Following on from Part VII (winding/flux sectors) and item 3 above: for
+a genuinely random valid dimerization of a torus with NO defects, what
+is P(trivial Z2xZ2 flux) vs P(nontrivial)? Kenyon et al.'s discrete-
+Gaussian result says this approaches a FIXED (non-vanishing,
+size-independent in the large-torus limit) value, but doesn't by itself
+give a number without the specific aspect-ratio-dependent variance.
+
+Rough (unverified) heuristic via Kasteleyn's 4-Pfaffian structure: if the
+4 periodic/antiperiodic sectors are close to equally weighted (all share
+the same leading bulk free energy, differing only in subleading finite-
+size terms), a naive guess is P(trivial) ~ 1/4, P(nontrivial) ~ 3/4 --
+but this assumes no aspect-ratio-driven bias, which is exactly what the
+real (uncomputed) formula would correct.
+
+User's own suggestion, well-taken: since this ratio should be roughly
+size-independent, brute-force enumeration of ALL valid dimerizations on
+a SMALL torus (before combinatorial explosion) would give an EXACT
+answer, cheaply, and checking a couple of small sizes would show whether
+it's already converged. Not started -- flagged as a good, cheap,
+well-defined future task.
+
 ## Context: is this publication-worthy?
 
 Discussed with the user: the D3=0 endpoint, the zero-energy closed-loop
