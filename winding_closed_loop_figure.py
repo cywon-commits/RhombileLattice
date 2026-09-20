@@ -6,6 +6,8 @@ for the construction and closed_loop_demo.py for Case0's own numbers."""
 import numpy as np
 import matplotlib.pyplot as plt
 
+import pickle
+
 from rhombile_lattice import (
     RhombileLattice, build_rhombi, build_triangle_hop_graph, route_string,
     route_string_between_points, apply_dual_string_defect, frustrated_triangles,
@@ -70,15 +72,37 @@ def main():
     e_loop_mincut = [0.0, 9.5, 19.0, 28.5, 38.0, 54.0, 70.0, 72.0, 72.0]
     e_loop_sa = [0.0, 7.75, 15.5, 25.25, 31.0, 44.5, 56.0, 56.0, 56.0]
 
+    # actual D3=1 ground state (for coloring the lattice panel by state,
+    # not species) -- re-derive the SA-best states since the frozen list
+    # above only kept the energies
+    D3_plot = 1.0
+    seed_states, _ = full_state_via_mincut(lat, D3_plot)
+    best_e, best_states = total_energy(lat, seed_states, D=(0.0, 0.0, D3_plot)), seed_states
+    rng = np.random.default_rng(7)
+    for _ in range(5):
+        st, en = simulated_annealing(lat, (0.0, 0.0, D3_plot), rng, n_sweeps=2500,
+                                      T_start=0.5, T_end=1e-6, states=seed_states, record_energy=True)
+        if en[-1] < best_e:
+            best_e, best_states = en[-1], st
+    for _ in range(4):
+        st, en = simulated_annealing(lat, (0.0, 0.0, D3_plot), rng, n_sweeps=3000,
+                                      T_start=5.0, T_end=1e-6, record_energy=True)
+        if en[-1] < best_e:
+            best_e, best_states = en[-1], st
+    print(f"D3={D3_plot} plotted ground state: E={best_e}")
+
     e_case0 = [0.0 for _ in D3_grid]  # closed_loop_demo.py's established result: E=0 at every D3
 
     fig, axes = plt.subplots(2, 2, figsize=(15, 10))
     ax_lat, ax_curve, ax_text, ax_blank = axes[0, 0], axes[0, 1], axes[1, 0], axes[1, 1]
 
     draw_lattice(ax_lat, lat, highlight_on=on, highlight_off=off, frustrated=ft,
-                 box=(NX, NY), targets=pts, off_lw=0.5,
-                 title=f"Closed loop winding ONCE around the torus (x-direction)\n"
-                       f"0 local (frustrated-triangle) defects -- same as Case0")
+                 box=(NX, NY), targets=pts, off_lw=0.5, states=best_states,
+                 title=f"Closed loop winding ONCE around the torus (x-direction), D3={D3_plot}\n"
+                       f"colored by actual Potts state -- E={best_e:.0f}, 0 local defects")
+    handles, labels = ax_lat.get_legend_handles_labels()
+    label_map = {"state 0": "state1", "state 1": "state2", "state 2": "state3"}
+    ax_lat.legend(handles, [label_map.get(l, l) for l in labels], loc="upper right", fontsize=8)
 
     ax_curve.plot(D3_grid, e_case0, "s-", color="tab:green",
                   label="Case0: contractible hexagon (0 state-3 sites ever)")
