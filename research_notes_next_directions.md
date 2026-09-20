@@ -138,6 +138,21 @@ restriction, to actually measure this without contamination):
 
 Not urgent (user's own framing: discuss now, simulate later if at all).
 
+**Quick empirical check done (cheap, reused existing D2=1.0 state array,
+no new SA):** does the D2>=1 bulk collapse spread outward from the loop
+like a contagion, or appear delocalized? Measured mean distance from
+each state-3 site to the nearest hexagon corner, at D2=0.4/0.45/0.9
+(local plateaus) vs D2=1.0 (the 142-site jump): the local plateaus'
+state-3 sites cluster tightly near the loop (mean dist 1.08-1.14 vs the
+whole lattice's own mean of 3.52), but the 142 sites at D2=1.0 have mean
+distance 3.37 -- essentially IDENTICAL to a uniform/whole-lattice
+distribution. So no, it does NOT spread from the topologically weak
+region outward; the D2>=1 collapse is spatially delocalized from the
+start, consistent with each site's own state2-vs-state3 choice being
+independent of its neighbors' (a rim site switching to state3 never
+violates any bond regardless of what others do), not a nucleation/
+percolation process anchored at the defect.
+
 ## Context: is this publication-worthy?
 
 Discussed with the user: the D3=0 endpoint, the zero-energy closed-loop
