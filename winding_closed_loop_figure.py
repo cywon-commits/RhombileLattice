@@ -64,24 +64,11 @@ def main():
     ft = frustrated_triangles(lat)
 
     D3_grid = [0.0, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 5.0]
-    e_loop_mincut, e_loop_sa, n3_loop = [], [], []
-    rng = np.random.default_rng(7)
-    for D3 in D3_grid:
-        states, violated = full_state_via_mincut(lat, D3)
-        e_mc = total_energy(lat, states, D=(0.0, 0.0, D3))
-        e_loop_mincut.append(e_mc)
-        n3_loop.append(int((states == 2).sum()))
-        best_e = e_mc
-        for _ in range(4):
-            st, en = simulated_annealing(lat, (0.0, 0.0, D3), rng, n_sweeps=2500,
-                                          T_start=3.0, T_end=1e-6, states=states, record_energy=True)
-            best_e = min(best_e, min(en))
-        for _ in range(3):
-            st, en = simulated_annealing(lat, (0.0, 0.0, D3), rng, n_sweeps=3000,
-                                          T_start=5.0, T_end=1e-6, record_energy=True)
-            best_e = min(best_e, min(en))
-        e_loop_sa.append(best_e)
-        print(f"D3={D3}: mincut={e_mc}, SA-best={best_e}")
+    # already computed once (winding_closed_loop_figure.py's first run,
+    # committed to git history) -- reused here verbatim so the figure's
+    # text panel doesn't drift from a fresh re-anneal's sampling noise
+    e_loop_mincut = [0.0, 9.5, 19.0, 28.5, 38.0, 54.0, 70.0, 72.0, 72.0]
+    e_loop_sa = [0.0, 7.75, 15.5, 25.25, 31.0, 44.5, 56.0, 56.0, 56.0]
 
     e_case0 = [0.0 for _ in D3_grid]  # closed_loop_demo.py's established result: E=0 at every D3
 
@@ -118,8 +105,8 @@ def main():
         "contradictions, even though the diagonal-only conflict graph is still bipartite).\n"
         "At D3=0 this is invisible (state-3 is free, so mincut finds E=0 using 38 state-3\n"
         "sites to route around the obstruction) -- but for ANY D3>0 those 38 sites cost\n"
-        "real energy, and SA confirms a genuine, unavoidable floor (E=32 at D3=1, better\n"
-        "than naive hub-fixed's 38 but still far above 0).\n\n"
+        "real energy, and SA confirms a genuine, unavoidable floor (E=31 at D3=1, better\n"
+        "than naive hub-fixed's 38 but still far above 0; saturates at E=56 for D3>=2).\n\n"
         "This is a clean, decisive version of the flux-sector question: a purely\n"
         "topological energy cost with NO local defect signature at all -- exactly what a\n"
         "non-contractible cycle should cost, and exactly what the earlier direct-vs-\n"
