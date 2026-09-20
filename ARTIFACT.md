@@ -20,8 +20,15 @@ organized thematically rather than chronologically:
 7. Part V — finite temperature (entropic-force crossover, D3=2
    threshold broadening)
 8. Part VI — breaking D1=D2 (droplet-nucleation-style symmetry breaking)
-9. What's next
-10. References
+9. Experimental and real-material connections (artificial spin ice
+   dislocations, NiO domain-wall pinning, delafossite/kagome endpoint
+   realizations — with an explicit caveat on what's analogy vs. what's
+   the same physics)
+10. What's next
+11. References
+
+Shared with the whole organization (set via the artifact's own Share
+menu, not something this repo controls).
 
 The artifact's version history retains the earlier, chronologically-
 ordered notes (every dead end and correction as it happened), which
