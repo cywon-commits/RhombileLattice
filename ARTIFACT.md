@@ -7,7 +7,7 @@ progresses:
 https://claude.ai/artifact/9jxHSSeFMssZzDUT7Ph4eS
 
 As of this commit it is titled **"Confinement, Matching & Symmetry
-Breaking on a Tunable Potts–Ising Lattice"** (v2 restructure) and is
+Breaking on a Tunable Potts–Ising Lattice"** (v3 restructure) and is
 organized thematically rather than chronologically:
 
 1. Why this is worth doing (novelty/significance framing)
@@ -20,12 +20,17 @@ organized thematically rather than chronologically:
 7. Part V — finite temperature (entropic-force crossover, D3=2
    threshold broadening)
 8. Part VI — breaking D1=D2 (droplet-nucleation-style symmetry breaking)
-9. Experimental and real-material connections (artificial spin ice
-   dislocations, NiO domain-wall pinning, delafossite/kagome endpoint
-   realizations — with an explicit caveat on what's analogy vs. what's
-   the same physics)
-10. What's next
-11. References
+9. Part VII — flux sectors on the torus: a non-contractible closed loop
+   with zero local (frustrated-triangle) defects still costs real energy
+   for any D3>0, invisible to both frustrated-triangle counting and
+   conflict-graph bipartiteness (ties into Thurston's flip-connectivity
+   theorem and Kasteleyn/Fisher–Wu's four-Pfaffian toroidal dimer count)
+10. Experimental and real-material connections (artificial spin ice
+    dislocations, NiO domain-wall pinning, delafossite/kagome endpoint
+    realizations — with an explicit caveat on what's analogy vs. what's
+    the same physics)
+11. What's next
+12. References
 
 Shared with the whole organization (set via the artifact's own Share
 menu, not something this repo controls).
