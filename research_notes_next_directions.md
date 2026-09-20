@@ -234,6 +234,29 @@ answer, cheaply, and checking a couple of small sizes would show whether
 it's already converged. Not started -- flagged as a good, cheap,
 well-defined future task.
 
+## 8. Exact T->infinity limit of dA, dB: 1/3, exactly, both equal
+
+At T->infinity every site becomes i.i.d. uniform over 3 states
+(Boltzmann weighting becomes trivial), so every ACTIVE bond's average
+matching probability is exactly 1/3 regardless of local frustration
+structure -- meaning <E>_(T->inf) = n_active_bonds/3 exactly (the
+single-site D-term contributes equally to A/B/C and cancels in the
+reference-subtracted dA/dB). Checked bond counts directly (no
+simulation needed): A and B (short/long strings, 4x separation) both
+have EXACTLY 1 more active bond than the pristine reference C (1441 vs
+1440), regardless of string length -- so dA(T->inf) = dB(T->inf) =
+1/3 = 0.333..., exactly equal despite the 4x distance difference. This
+already matches the T=3.0 finite_T_scan_v2 data (dA=0.331+-0.081,
+dB=0.430+-0.124, both consistent with 1/3). Answers a user question
+directly: at high T, distance becomes EXACTLY irrelevant (not just
+approximately, in the T->infinity limit), while defect NUMBER still
+matters, but only because of the topological/combinatorial bond-count
+difference an open string's 2 endpoints create -- NOT because of any
+residual "frustration energy" (which is itself state3, and does become
+temperature averaged away at T=infinity along with everything else). A
+nice closed-form endpoint for Part V's whole entropic-force story,
+computable without any Monte Carlo.
+
 ## Context: is this publication-worthy?
 
 Discussed with the user: the D3=0 endpoint, the zero-energy closed-loop
