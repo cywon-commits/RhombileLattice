@@ -107,6 +107,37 @@ needs the same re-verification treatment next -- flagged by the user,
 not yet started. The artifact's Part VI text will need correcting once
 both branches are re-verified.
 
+## 4. Finite-T rounding of the D2 staircase (discussed, not yet simulated)
+
+The fine re-verified D2>0/D2<0 sweeps (see above) show the T=0 ground
+state jumps discontinuously between distinct locally-optimal structures
+(n_state3 = 3 -> 16/17 -> 142 -> 256 on the positive side) -- genuine
+level crossings, not a smooth ramp. Discussed what a small but nonzero T
+should do to this (T assumed small enough that bulk thermal state-3
+excitations elsewhere in the lattice don't swamp the signal -- would
+need the same reference-subtraction / local-region-restricted counting
+already built for Part V's finite-T work, e.g. `_string_sites`-style
+restriction, to actually measure this without contamination):
+
+- Each sharp jump should round into a smooth (Fermi-function-like)
+  crossover of width ~ T / (slope difference in E(D2) between the two
+  competing branches), same mechanism as Part V's D3=2 threshold
+  broadening.
+- Unlike the D3=2 threshold (which broadened symmetrically, center
+  pinned), THIS transition might also SHIFT with T, not just broaden:
+  the observed 16<->17 alternation near the second plateau hints that
+  branch has extra near-degenerate microstates (more configurational
+  entropy) than the 3-site branch, which would favor it at T>0 beyond
+  what the pure T=0 energy comparison predicts -- an order-by-disorder
+  effect in the same spirit as this project's own D3=0 Kotecký-Salas-
+  Sokal foundation, just now appearing along the D2 axis instead of D3.
+- Framed this way, the D2-staircase question and Part V's finite-T
+  entropic-force question are the same energy-vs-entropy competition
+  explored along two different parameter axes -- worth noting as a
+  unifying theme if/when this gets written up more formally.
+
+Not urgent (user's own framing: discuss now, simulate later if at all).
+
 ## Context: is this publication-worthy?
 
 Discussed with the user: the D3=0 endpoint, the zero-energy closed-loop
