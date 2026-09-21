@@ -17,19 +17,33 @@ organized thematically rather than chronologically:
 5. Part III — the hub-fixed trap (methodological lesson)
 6. Part IV — closed loops resolve it: the matching principle survives
    into the non-bipartite D3>0 regime (Case 0/1/2)
-7. Part V — finite temperature: the confinement crossover is now traced
-   to O's own hub/rim order-disorder transition (exact dice-lattice
-   Ising T_c=1.2027 theory, empirical T_c=0.79 at D3=1 rising to ~1.07
-   at D3=3 as thermal 3rd-state population shrinks), explained by the
-   Kadanoff-Ceva disorder-operator / Z2 gauge theory duality (this
-   project's "strings" are disorder lines), plus an exact T->infinity
-   endpoint (dA=dB=1/3, a pure bond-counting fact) and the original
-   D3=2 threshold broadening result
+7. Part V — finite/zero temperature, now split into two distinct,
+   correctly-separated mechanisms: (a) Moore et al.'s (1999) actual
+   claim — a T=0 ground-state-ENTROPY force within D3=0's own
+   zero-bare-energy manifold — directly replicated here for the first
+   time (reference-subtracted, windowed, finite-size-checked NX=40 vs.
+   NX=80), confirming a real, monotonically-growing, non-saturating
+   signal out to defect separation L=36 (an earlier apparent plateau at
+   L=16-20 turned out to be a small-box boundary artifact); (b) a
+   separate finite-T confinement crossover traced to O's own hub/rim
+   order-disorder transition (exact dice-lattice Ising T_c=1.2027
+   theory, empirical T_c=0.79 at D3=1 rising to ~1.07 at D3=3 as thermal
+   3rd-state population shrinks), explained by the Kadanoff-Ceva
+   disorder-operator / Z2 gauge theory duality (this project's "strings"
+   are disorder lines), plus an exact T->infinity endpoint (dA=dB=1/3,
+   a pure bond-counting fact) and the original D3=2 threshold
+   broadening result
 8. Part VI — breaking D1=D2 (droplet-nucleation-style symmetry
    breaking); D2 sweeps re-verified as a sharp few-stage staircase on
    both branches (the original coarse sweeps' "gradual precursor" was
-   substantially an SA-optimization artifact), plus a delocalization
-   finding for the D2>=1 bulk collapse
+   substantially an SA-optimization artifact), a delocalization
+   finding for the D2>=1 bulk collapse, and — now resolved — the
+   direct<->detour threshold's area/curvature dependence: area
+   dependence confirmed (bigger enclosed area -> lower threshold,
+   bigger swap), but curvature is NOT independent as originally
+   predicted (skewing the detour at fixed area suppresses the swap
+   entirely, traced to the detour path's own D3-proportional length
+   cost, a three-term not two-term competition)
 9. Part VII — flux sectors on the torus: a non-contractible closed loop
    with zero local (frustrated-triangle) defects still costs real energy
    for any D3>0, invisible to both frustrated-triangle counting and
@@ -40,7 +54,11 @@ organized thematically rather than chronologically:
    principle itself survives within a fixed nontrivial sector (two very
    different constructions of the same (1,1) sector converge under SA) —
    plus a literature check (Kenyon et al.) on how flux-sector probability
-   scales with torus size under random dimerization.
+   scales with torus size under random dimerization, and a discrete
+   height-function/Burgers-vector formalism making the "dislocation"
+   language literal (the winding loop is a genuine screw dislocation,
+   B_x=+3 on every row; an open string's two endpoints are a genuine
+   dislocation dipole, +3/-3).
 10. Experimental and real-material connections (artificial spin ice
     dislocations, NiO domain-wall pinning, delafossite/kagome endpoint
     realizations — with an explicit caveat on what's analogy vs. what's
