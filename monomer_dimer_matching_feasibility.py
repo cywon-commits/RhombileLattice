@@ -132,9 +132,10 @@ def greedy_balanced_independent_set(adj, color, target_k, rng):
     return chosen[0] + chosen[1], len(chosen[0]), len(chosen[1])
 
 
-def perfect_matching_exists(adj, color, monomers):
+def perfect_matching_exists(adj, color, monomers, return_matching=False):
     """Max-flow check: does the graph induced on (all triangles minus
-    monomers) admit a perfect matching?"""
+    monomers) admit a perfect matching? With return_matching=True, also
+    extracts the actual matched pairs from the flow's saturated edges."""
     mono = set(monomers)
     left = [i for i, c in enumerate(color) if c == 0 and i not in mono]
     right = [i for i, c in enumerate(color) if c == 1 and i not in mono]
@@ -142,10 +143,11 @@ def perfect_matching_exists(adj, color, monomers):
     right_pos = {v: i for i, v in enumerate(right)}
     n_left, n_right = len(left), len(right)
     if n_left != n_right:
-        return False, n_left, n_right  # shouldn't happen if balanced
+        return (False, n_left, n_right, []) if return_matching else (False, n_left, n_right)
     n_nodes = 2 + n_left + n_right
     source, sink = 0, n_nodes - 1
     rows, cols, caps = [], [], []
+    edge_pairs = []
     for v in left:
         rows.append(source); cols.append(1 + left_pos[v]); caps.append(1)
     for v in right:
@@ -154,9 +156,19 @@ def perfect_matching_exists(adj, color, monomers):
         for u in adj[v]:
             if u in right_pos:
                 rows.append(1 + left_pos[v]); cols.append(1 + n_left + right_pos[u]); caps.append(1)
+                edge_pairs.append((v, u, 1 + left_pos[v], 1 + n_left + right_pos[u]))
     capacity = csr_matrix((caps, (rows, cols)), shape=(n_nodes, n_nodes))
     result = maximum_flow(capacity, source, sink)
-    return result.flow_value == n_left, n_left, n_right
+    ok = result.flow_value == n_left
+    if not return_matching:
+        return ok, n_left, n_right
+    matching = []
+    if ok:
+        flow = result.flow.tocsr()
+        for v, u, iv, iu in edge_pairs:
+            if flow[iv, iu] > 0:
+                matching.append((v, u))
+    return ok, n_left, n_right, matching
 
 
 def main():
