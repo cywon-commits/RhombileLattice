@@ -6,6 +6,12 @@ lattice, measuring the hub 3rd-state thermal fraction directly, to find
 the D3 where it's actually suppressed -- rather than assuming D3=3 was
 already "large enough" (it visibly wasn't: T_c(D3=3, L->inf)~1.05-1.11,
 still well below 1.2027, with observable curvature in T_c(D3) so far).
+
+RESULT (L=10, T=1.5): hub_state3_frac decays roughly exponentially with
+D3: 0.314(D3=1) -> 0.186(3) -> 0.119(4) -> 0.040(6) -> 0.011(8) ->
+0.0032(10) -> 0.0001(15) -> 0.0000(20). D3=10-12 gives sub-0.5% thermal
+state3 population -- a reasonable "sufficiently suppressed" calibration
+point for the follow-up finite-size scan.
 """
 import numpy as np
 
