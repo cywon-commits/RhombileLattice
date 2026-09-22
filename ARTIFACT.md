@@ -7,7 +7,7 @@ progresses:
 https://claude.ai/artifact/9jxHSSeFMssZzDUT7Ph4eS
 
 As of this commit it is titled **"Confinement, Matching & Symmetry
-Breaking on a Tunable Potts–Ising Lattice"** (v5 restructure) and is
+Breaking on a Tunable Potts–Ising Lattice"** (v6 restructure) and is
 organized thematically rather than chronologically:
 
 1. Why this is worth doing (novelty/significance framing)
@@ -50,9 +50,19 @@ organized thematically rather than chronologically:
    is needed to suppress thermal state-3 occupation below 0.5%; (ii) a
    direct test of whether the D3=2 kink (a dilute-limit combinatorial
    fact) survives in a fully-frustrated lattice (every triangle active,
-   the literal triangular-lattice Potts AF) — it doesn't as a sharp
-   kink, replaced by a broader D3~2-3.5 crossover that saturates
-   exactly at Wannier's known exact 1/3-violated-bonds result
+   the literal triangular-lattice Potts AF) — first reported as a broad
+   D3~2-3.5 crossover, then CORRECTED by heavy re-verification: the
+   true transition is sharp (not broad) and sits at an exactly
+   analytically predicted D3=3.0 (the level crossing between the
+   proper-3-coloring line 144*D3 and Wannier's fixed N_bonds/3=432,
+   exact once every site's coordination is 6 with j23 active) — the
+   original light scan's whole [2.0,3.0] region was under-searched,
+   catastrophically so at D3=2.75 (E=533 reported vs. the true 396);
+   heavy SA now matches the exact two-line baseline at every point
+   checked. Also refined: the T=0 entropic-force functional-form fit
+   (5 seeds/point, up from 2) now favors a power law with exponent
+   ~0.99 (essentially linear in L) over Moore et al.'s own claimed
+   log(r) form (reduced chi^2 0.46 vs 1.16)
 8. Part VI — breaking D1=D2 (droplet-nucleation-style symmetry
    breaking); D2 sweeps re-verified as a sharp few-stage staircase on
    both branches (the original coarse sweeps' "gradual precursor" was
