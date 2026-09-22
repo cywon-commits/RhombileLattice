@@ -7,14 +7,22 @@ progresses:
 https://claude.ai/artifact/9jxHSSeFMssZzDUT7Ph4eS
 
 As of this commit it is titled **"Confinement, Matching & Symmetry
-Breaking on a Tunable Potts–Ising Lattice"** (v4 restructure) and is
+Breaking on a Tunable Potts–Ising Lattice"** (v5 restructure) and is
 organized thematically rather than chronologically:
 
 1. Why this is worth doing (novelty/significance framing)
 2. The model
 3. Part I — the exact D3=0 limit
 4. Part II — a single string at D3>0
-5. Part III — the hub-fixed trap (methodological lesson)
+5. Part III — the hub-fixed trap (methodological lesson); now includes
+   a tested greedy state-3-removal heuristic (convert each D3<2 ground
+   state's 3rd-state site to whichever of state0/state1 has fewer
+   active-bond neighbors, to guess the D3=infinity ground state): exact
+   when there's no background-swap freedom (a simple string), but fails
+   on Case 2's bent detour (greedy E=9 vs true optimum E=7) — pinned
+   down to a reversed global antiphase-swap-direction mismatch, not a
+   mutual-adjacency conflict, sharpening what a correct general
+   algorithm still needs to get right
 6. Part IV — closed loops resolve it: the matching principle survives
    into the non-bipartite D3>0 regime (Case 0/1/2)
 7. Part V — finite/zero temperature, now split into two distinct,
@@ -32,7 +40,19 @@ organized thematically rather than chronologically:
    disorder-operator / Z2 gauge theory duality (this project's "strings"
    are disorder lines), plus an exact T->infinity endpoint (dA=dB=1/3,
    a pure bond-counting fact) and the original D3=2 threshold
-   broadening result
+   broadening result. Two capstones added: (i) genuine finite-size
+   scaling (Binder cumulant + order-parameter sharpening on square
+   L=6-14 boxes) now confirms this is a real thermodynamic-limit
+   transition and extrapolates T_c(L->infinity) to 0.72 (D3=1),
+   ~1.05-1.11 (D3=3), and 1.206 at a calibrated D3=10 — converging
+   essentially exactly onto the theoretical 1.2027, with a T=1.5
+   calibration sweep showing D3~10-12 (not the initially-guessed D3=3)
+   is needed to suppress thermal state-3 occupation below 0.5%; (ii) a
+   direct test of whether the D3=2 kink (a dilute-limit combinatorial
+   fact) survives in a fully-frustrated lattice (every triangle active,
+   the literal triangular-lattice Potts AF) — it doesn't as a sharp
+   kink, replaced by a broader D3~2-3.5 crossover that saturates
+   exactly at Wannier's known exact 1/3-violated-bonds result
 8. Part VI — breaking D1=D2 (droplet-nucleation-style symmetry
    breaking); D2 sweeps re-verified as a sharp few-stage staircase on
    both branches (the original coarse sweeps' "gradual precursor" was
