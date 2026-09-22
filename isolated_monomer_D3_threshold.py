@@ -18,7 +18,7 @@ from monomer_dimer_matching_feasibility import (
 
 NX, NY = 16, 16
 TARGET_P = 0.08
-D3_GRID = [0.6, 0.8, 0.9, 1.0, 1.1, 1.2, 1.4]
+D3_GRID = [1.4, 1.6, 1.8, 2.0, 2.2, 2.5, 2.8, 3.0, 3.3]
 SEED = 3
 
 
