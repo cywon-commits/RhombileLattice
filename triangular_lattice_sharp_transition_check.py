@@ -44,16 +44,26 @@ N_SEEDED_PER_REF = 10
 N_SWEEPS_SEEDED = 4000
 
 
-def get_pure_coloring_state(lat, seed=1):
+def get_pure_coloring_state(lat, seed=1, n_random=15, n_sweeps=4000):
     """D3=0's own energy landscape is exactly flat (any valid coloring
-    costs nothing), so light SA trivially lands on a proper 3-coloring."""
+    costs nothing) but the underlying triangular-lattice 3-coloring
+    problem is T=0 CRITICAL (Nightingale-Schick/Baxter), so naive
+    single-spin annealing can still get stuck -- try several heavy
+    restarts rather than assuming one light pass suffices."""
     rng = np.random.default_rng(seed)
-    states, en = simulated_annealing(lat, (0.0, 0.0, 0.0), rng, n_sweeps=1500,
-                                      T_start=3.0, T_end=1e-6, record_energy=True)
-    assert en[-1] == 0.0, f"expected E=0 pure coloring, got {en[-1]}"
-    n3 = int((states == 2).sum())
+    best = None
+    for _ in range(n_random):
+        states, en = simulated_annealing(lat, (0.0, 0.0, 0.0), rng, n_sweeps=n_sweeps,
+                                          T_start=6.0, T_end=1e-6, record_energy=True)
+        if best is None or en[-1] < best[0]:
+            best = (en[-1], states)
+        if best[0] == 0.0:
+            break
+    print(f"Pure-coloring reference: E={best[0]:.1f} (expect 0.0) after search", flush=True)
+    assert best[0] == 0.0, f"expected E=0 pure coloring, got {best[0]}"
+    n3 = int((best[1] == 2).sum())
     assert n3 == lat.n_sites // 3, f"expected exactly N/3 state3 sites, got {n3}"
-    return states
+    return best[1]
 
 
 def get_wannier_state(lat, seed=2, n_random=15, n_sweeps=4000):
