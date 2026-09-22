@@ -23,6 +23,18 @@ Tested on two cases:
   2. Case 2's bent 5-segment detour (known from case2_sa_check.py to have
      a real background antiphase-swap in its own D3=1 ground state) --
      the interesting test of whether background-swap freedom breaks it.
+
+CONFIRMED RESULT:
+  1. simple string: greedy conversion E=21 == SA-found true D3=inf E=21.
+     MATCH (no background-swap freedom, state3 sites well-separated).
+  2. Case 2: greedy conversion E=9, but the true D3=inf ground state
+     (found independently via SA) is E=7 -- LOWER. MISMATCH. The D3=1
+     ground state's own background (which uses Case 0's antiphase swap
+     to stay cheap while state3 is available) is not the same background
+     the true D3=inf optimum needs; greedy conversion, touching only the
+     3 state3 sites, gets stuck 2 units above the real optimum. Confirms
+     failure mode (2) from the theoretical discussion: background-swap
+     freedom can make the naive greedy rule provably suboptimal.
 """
 import numpy as np
 
