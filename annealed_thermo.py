@@ -87,6 +87,8 @@ def build_arrays(L):
             prev_t, cur_t = cur_t, (tb if ta == cur_t else ta)
         assert cur_t == tri_of[bs[0]][0]
         hexb[s] = order
+    _, sub_of = lat.site_positions()
+    sub = np.array([{"r1": 0, "r2": 1, "r3": 2}[x] for x in sub_of], np.int64)
     mate = np.full(nt, -1, np.int64)
     for k in range(nb):
         if dimer[k]:
@@ -94,7 +96,7 @@ def build_arrays(L):
             mate[btb[k]] = k
     return dict(bi=np.array(bi), bj=np.array(bj), bta=bta_a, btb=btb_a,
                 dimer=np.array(dimer), mate=mate, tri_b=tri_b, site_b=site_b,
-                hexb=hexb, ns=ns, nt=nt, nb=nb)
+                hexb=hexb, sub=sub, ns=ns, nt=nt, nb=nb)
 
 
 @njit(cache=True)
@@ -234,10 +236,32 @@ def observe(s, mate, dimer, site_b):
 
 
 @njit(cache=True)
-def run_T(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D2, D3, mu, E, n_eq, n_meas):
+def z3_order(dimer, site_b, sub):
+    """|psi|^2 of the Z3 order parameter psi = sum_k m_k w^k, m_k = hub-type
+    fraction on triangular sublattice k (which sublattice hosts the hubs of
+    the rhombile crystal). 1 in a perfect rhombile tiling, ~0 when random."""
+    m = np.zeros(3)
+    cnt = np.zeros(3)
+    for i in range(sub.shape[0]):
+        cnt[sub[i]] += 1
+        full = True
+        for q in range(6):
+            if dimer[site_b[i, q]]:
+                full = False
+        if full:
+            m[sub[i]] += 1
+    for k in range(3):
+        m[k] /= cnt[k]
+    re = m[0] - 0.5 * (m[1] + m[2])
+    im = 0.8660254037844386 * (m[1] - m[2])
+    return re * re + im * im
+
+
+@njit(cache=True)
+def run_T(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D2, D3, mu, E, n_eq, n_meas, sub):
     for _ in range(n_eq):
         E = sweep(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D2, D3, mu, E)
-    acc = np.zeros(8)
+    acc = np.zeros(10)
     for _ in range(n_meas):
         E = sweep(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D2, D3, mu, E)
         nm, n3, n2, hub = observe(s, mate, dimer, site_b)
@@ -249,6 +273,9 @@ def run_T(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D2, D3, mu, E, n
         acc[5] += E * nm
         acc[6] += n2
         acc[7] += hub
+        p2 = z3_order(dimer, site_b, sub)
+        acc[8] += p2
+        acc[9] += p2 * p2
     return E, acc / n_meas
 
 
@@ -290,10 +317,10 @@ def scan(L, D3, mu, n_eq, n_meas, seed, tmin=0.25, tmax=6.0, nT=48, D2=0.0):
     betas = np.linspace(1.0 / tmax, 1.0 / tmin, nT)
     print(f"# annealed L={L} N_site={A['ns']} N_tri={A['nt']} N_bond={A['nb']} D2={D2} D3={D3} mu={mu} "
           f"n_eq={n_eq} n_meas={n_meas} seed={seed}")
-    print("# T  beta  E/Ntri  C/Ntri  n_mon(frac)  chi_mon  n3/Nsite  cov(E,nmon)/Ntri  n2/Nsite  hub_frac")
+    print("# T  beta  E/Ntri  C/Ntri  n_mon(frac)  chi_mon  n3/Nsite  cov(E,nmon)/Ntri  n2/Nsite  hub_frac  <|psi|^2>  U4=1-<|psi|^4>/(2<|psi|^2>^2)")
     for beta in betas:
         E, a = run_T(s, dimer, mate, A["bi"], A["bj"], A["bta"], A["btb"], A["site_b"], A["hexb"],
-                     beta, D2, D3, mu, E, n_eq, n_meas)
+                     beta, D2, D3, mu, E, n_eq, n_meas, A["sub"])
         e_chk = total_energy(s, dimer, A["bi"], A["bj"], D2, D3, mu, mate)
         assert abs(e_chk - E) < 1e-6, (e_chk, E)
         nt = A["nt"]
@@ -301,7 +328,8 @@ def scan(L, D3, mu, n_eq, n_meas, seed, tmin=0.25, tmax=6.0, nT=48, D2=0.0):
         chi = (a[3] - a[2] ** 2) / nt
         cov = (a[5] - a[0] * a[2]) / nt
         print(f"{1 / beta:.4f} {beta:.4f} {a[0] / nt:.6f} {C:.5f} {a[2] / nt:.6f} {chi:.5f} "
-              f"{a[4] / A['ns']:.6f} {cov:.5f} {a[6] / A['ns']:.6f} {a[7] / A['ns']:.6f}", flush=True)
+              f"{a[4] / A['ns']:.6f} {cov:.5f} {a[6] / A['ns']:.6f} {a[7] / A['ns']:.6f} "
+              f"{a[8]:.6f} {1 - a[9] / (2 * a[8] ** 2):.5f}", flush=True)
 
 
 def matchings(L, n_sweeps, seed):
