@@ -7,7 +7,12 @@ lattice is active iff it is not a dimer. Unmatched triangles are monomers
 chemical potential mu costs mu per monomer (default 0: the only cost of a
 monomer is what its strings do to the spins).
 
-  H = sum_{active b} delta(s_i, s_j) + D3 * n_3 + mu * n_mon
+  H = sum_{active b} delta(s_i, s_j) + D2 * n_2 + D3 * n_3 + mu * n_mon
+
+D2>0 (with D1=0) breaks the state1/state2 symmetry: at T=0 the minority
+sublattice (state2) must be as small as possible, which forces every
+state2 site to have all 6 bonds active -> the unique rhombile tiling
+(3 hub-sublattice choices), S(0)=0, for 0<D2<6.
 
 T=0: every perfect matching (lozenge tiling) in a flux sector compatible
 with a 2-colouring has E=0 at any D3>0, so the ground state is the whole
@@ -29,7 +34,7 @@ Entropy by thermodynamic integration in beta from beta=0:
 fugacity z, spins absent; run 'matchings').
 
 Usage:
-  python3 annealed_thermo.py scan <L> <D3> <mu> <n_eq> <n_meas> <seed> [Tmin Tmax nT]
+  python3 annealed_thermo.py scan <L> <D3> <mu> <n_eq> <n_meas> <seed> [Tmin Tmax nT [D2]]
   python3 annealed_thermo.py matchings <L> <n_sweeps> <seed>
 """
 import sys
@@ -98,7 +103,7 @@ def _seed(s):
 
 
 @njit(cache=True)
-def total_energy(s, dimer, bi, bj, D3, mu, mate):
+def total_energy(s, dimer, bi, bj, D2, D3, mu, mate):
     e = 0.0
     for k in range(bi.shape[0]):
         if not dimer[k] and s[bi[k]] == s[bj[k]]:
@@ -106,6 +111,8 @@ def total_energy(s, dimer, bi, bj, D3, mu, mate):
     for i in range(s.shape[0]):
         if s[i] == 2:
             e += D3
+        elif s[i] == 1:
+            e += D2
     for t in range(mate.shape[0]):
         if mate[t] < 0:
             e += mu
@@ -113,7 +120,7 @@ def total_energy(s, dimer, bi, bj, D3, mu, mate):
 
 
 @njit(cache=True)
-def sweep(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D3, mu, E):
+def sweep(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D2, D3, mu, E):
     ns, nb = s.shape[0], bi.shape[0]
     # spins
     for _ in range(ns):
@@ -127,7 +134,7 @@ def sweep(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D3, mu, E):
                 continue
             j = bj[k] if bi[k] == v else bi[k]
             dE += int(s[j] == new) - int(s[j] == old)
-        dE += D3 * (int(new == 2) - int(old == 2))
+        dE += D3 * (int(new == 2) - int(old == 2)) + D2 * (int(new == 1) - int(old == 1))
         if dE <= 0 or np.random.random() < np.exp(-beta * dE):
             s[v] = new
             E += dE
@@ -183,7 +190,7 @@ def sweep(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D3, mu, E):
             continue
         old = s[v]
         new = old if np.random.random() < 0.5 else np.random.randint(3)
-        dE = D3 * (int(new == 2) - int(old == 2))
+        dE = D3 * (int(new == 2) - int(old == 2)) + D2 * (int(new == 1) - int(old == 1))
         for q in range(6):
             k = hexb[v, q]
             j = bj[k] if bi[k] == v else bi[k]
@@ -203,7 +210,7 @@ def sweep(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D3, mu, E):
 
 
 @njit(cache=True)
-def observe(s, mate):
+def observe(s, mate, dimer, site_b):
     nm = 0
     for t in range(mate.shape[0]):
         if mate[t] < 0:
@@ -212,23 +219,36 @@ def observe(s, mate):
     for i in range(s.shape[0]):
         if s[i] == 2:
             n3 += 1
-    return nm, n3
+    n2 = 0
+    hub = 0
+    for i in range(s.shape[0]):
+        if s[i] == 1:
+            n2 += 1
+        full = True
+        for q in range(6):
+            if dimer[site_b[i, q]]:
+                full = False
+        if full:
+            hub += 1
+    return nm, n3, n2, hub
 
 
 @njit(cache=True)
-def run_T(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D3, mu, E, n_eq, n_meas):
+def run_T(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D2, D3, mu, E, n_eq, n_meas):
     for _ in range(n_eq):
-        E = sweep(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D3, mu, E)
-    acc = np.zeros(6)
+        E = sweep(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D2, D3, mu, E)
+    acc = np.zeros(8)
     for _ in range(n_meas):
-        E = sweep(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D3, mu, E)
-        nm, n3 = observe(s, mate)
+        E = sweep(s, dimer, mate, bi, bj, bta, btb, site_b, hexb, beta, D2, D3, mu, E)
+        nm, n3, n2, hub = observe(s, mate, dimer, site_b)
         acc[0] += E
         acc[1] += E * E
         acc[2] += nm
         acc[3] += nm * nm
         acc[4] += n3
         acc[5] += E * nm
+        acc[6] += n2
+        acc[7] += hub
     return E, acc / n_meas
 
 
@@ -259,29 +279,29 @@ def matching_sweeps(dimer, mate, bta, btb, z, n_eq, n_meas):
     return tot / n_meas
 
 
-def scan(L, D3, mu, n_eq, n_meas, seed, tmin=0.25, tmax=6.0, nT=48):
+def scan(L, D3, mu, n_eq, n_meas, seed, tmin=0.25, tmax=6.0, nT=48, D2=0.0):
     A = build_arrays(L)
     _seed(seed)
     rng = np.random.default_rng(seed)
     s = rng.integers(3, size=A["ns"]).astype(np.int64)
     dimer, mate = A["dimer"].copy(), A["mate"].copy()
-    E = total_energy(s, dimer, A["bi"], A["bj"], D3, mu, mate)
+    E = total_energy(s, dimer, A["bi"], A["bj"], D2, D3, mu, mate)
     # grid uniform in beta, plus beta=0 point handled analytically
     betas = np.linspace(1.0 / tmax, 1.0 / tmin, nT)
-    print(f"# annealed L={L} N_site={A['ns']} N_tri={A['nt']} N_bond={A['nb']} D3={D3} mu={mu} "
+    print(f"# annealed L={L} N_site={A['ns']} N_tri={A['nt']} N_bond={A['nb']} D2={D2} D3={D3} mu={mu} "
           f"n_eq={n_eq} n_meas={n_meas} seed={seed}")
-    print("# T  beta  E/Ntri  C/Ntri  n_mon(frac)  chi_mon  n3/Nsite  cov(E,nmon)/Ntri")
+    print("# T  beta  E/Ntri  C/Ntri  n_mon(frac)  chi_mon  n3/Nsite  cov(E,nmon)/Ntri  n2/Nsite  hub_frac")
     for beta in betas:
         E, a = run_T(s, dimer, mate, A["bi"], A["bj"], A["bta"], A["btb"], A["site_b"], A["hexb"],
-                     beta, D3, mu, E, n_eq, n_meas)
-        e_chk = total_energy(s, dimer, A["bi"], A["bj"], D3, mu, mate)
+                     beta, D2, D3, mu, E, n_eq, n_meas)
+        e_chk = total_energy(s, dimer, A["bi"], A["bj"], D2, D3, mu, mate)
         assert abs(e_chk - E) < 1e-6, (e_chk, E)
         nt = A["nt"]
         C = beta ** 2 * (a[1] - a[0] ** 2) / nt
         chi = (a[3] - a[2] ** 2) / nt
         cov = (a[5] - a[0] * a[2]) / nt
         print(f"{1 / beta:.4f} {beta:.4f} {a[0] / nt:.6f} {C:.5f} {a[2] / nt:.6f} {chi:.5f} "
-              f"{a[4] / A['ns']:.6f} {cov:.5f}", flush=True)
+              f"{a[4] / A['ns']:.6f} {cov:.5f} {a[6] / A['ns']:.6f} {a[7] / A['ns']:.6f}", flush=True)
 
 
 def matchings(L, n_sweeps, seed):
@@ -307,6 +327,7 @@ if __name__ == "__main__":
         L, D3, mu = int(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4])
         n_eq, n_meas, seed = int(sys.argv[5]), int(sys.argv[6]), int(sys.argv[7])
         extra = [float(x) for x in sys.argv[8:10]] + ([int(sys.argv[10])] if len(sys.argv) > 10 else [])
-        scan(L, D3, mu, n_eq, n_meas, seed, *extra)
+        D2 = float(sys.argv[11]) if len(sys.argv) > 11 else 0.0
+        scan(L, D3, mu, n_eq, n_meas, seed, *extra, D2=D2)
     else:
         matchings(int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]))
