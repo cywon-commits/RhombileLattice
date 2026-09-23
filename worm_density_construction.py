@@ -32,8 +32,41 @@ def relax(st, rng, n_sweeps=N_SWEEPS, t_start=T_START):
             c -= 1
         return c
 
+    n_anneal = int(0.7 * n_sweeps)
+
+    def reseed_stuck_pairs():
+        """Edge-adjacent monomer pairs trapped in a local minimum: re-pair
+        them into a rhombus and split a fresh, conflict-free one elsewhere
+        -- keeps the monomer count fixed while escaping the trap."""
+        mons = st.monomers
+        stuck = {(min(t, u), max(t, u)) for t in mons for u, _ in st.nbrs[t] if u in mons}
+        for t, u in stuck:
+            if t not in st.monomers or u not in st.monomers:
+                continue
+            st.bond_between(t, u)["J"] = 0.0
+            st.partner[t], st.partner[u] = u, t
+            st.monomers.discard(t)
+            st.monomers.discard(u)
+            last_pivot.pop(t, None)
+            last_pivot.pop(u, None)
+            for _ in range(200):
+                x = int(rng.integers(st.n))
+                y = st.partner[x]
+                if y is None:
+                    continue
+                if (site_nb[x] | site_nb[y]) & st.monomers:
+                    continue
+                a, b = st.split(x)
+                last_pivot[a] = last_pivot[b] = None
+                break
+            else:
+                st.split(t)  # no clean spot found: put the pair back
+                last_pivot[t] = last_pivot[u] = None
+
     for sweep in range(n_sweeps):
-        T = t_start * (1 - sweep / max(1, n_sweeps - 1))
+        T = t_start * max(0.0, 1 - sweep / max(1, n_anneal))
+        if T == 0 and sweep % 20 == 0 and sweep < n_sweeps - 60:
+            reseed_stuck_pairs()
         order = list(st.monomers)
         rng.shuffle(order)
         for t in order:
