@@ -1,2 +1,35 @@
 /root/.local/lib/python3.11/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
   warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+# potts NX=40 NY=12 Lmax=30 steps=1500000 seed=2 bias=0.6
+# L  count  F=-ln(count)+bias*L
+0 6161 -8.7260
+1 6301 -8.1485
+2 8457 -7.8427
+3 6070 -6.9111
+4 7658 -6.5435
+5 6553 -5.7877
+6 8699 -5.4710
+7 7628 -4.7396
+8 8830 -4.2859
+9 8949 -3.6993
+10 10560 -3.2648
+11 11639 -2.7621
+12 13369 -2.3007
+13 15353 -1.8391
+14 18230 -1.4108
+15 20559 -0.9311
+16 24447 -0.5043
+17 28265 -0.0494
+18 31994 0.4267
+19 35776 0.9150
+20 41612 1.3639
+21 46304 1.8570
+22 55125 2.2826
+23 62394 2.7588
+24 74042 3.1876
+25 84308 3.6578
+26 100266 4.0844
+27 116433 4.5349
+28 139810 4.9520
+29 157547 5.4325
+30 186661 5.8630
