@@ -7,7 +7,7 @@ progresses:
 https://claude.ai/artifact/9jxHSSeFMssZzDUT7Ph4eS
 
 As of this commit it is titled **"Confinement, Matching & Symmetry
-Breaking on a Tunable Potts–Ising Lattice"** (v7.1; artifact version 21) and is
+Breaking on a Tunable Potts–Ising Lattice"** (v7.2; artifact version 22) and is
 organized thematically rather than chronologically:
 
 1. Why this is worth doing (novelty/significance framing)
@@ -112,13 +112,16 @@ organized thematically rather than chronologically:
     thermally created frustration; S(T→0)→0.15 (lozenge-tiling value
     0.1615). 0=D1<D2: unique rhombile crystal at T=0 (S(0)=0, E=D2/6
     exact), extra 0.16/triangle of entropy released; at D2=1 the peak
-    grows with L (0.79→0.82→0.92), at D2=0.5 it does not. Z3
-    order-parameter/Binder runs in progress.
+    seemed to grow with L, but the decisive test is the Z3 order parameter
+    (which sublattice hosts the hubs): <|psi|^2>N collapses above and
+    scales with N below T_c, Binder 0 -> 1/2 — a genuine crystallisation
+    transition at T_c≈0.56 (D2=1) and ≈0.45-0.5 (D2=0.5), with only a
+    weak, non-growing C peak (0.90-0.95, L=8-24) at T_c.
 12. Experimental and real-material connections (artificial spin ice
     dislocations, NiO domain-wall pinning, delafossite/kagome endpoint
     realizations — with an explicit caveat on what's analogy vs. what's
     the same physics)
-13. What's next (item 12: finish the annealed D2>0 transition question)
+13. What's next (item 12: universality class of the Z3 transition; mu>0)
 14. References
 
 Shared with the whole organization (set via the artifact's own Share
