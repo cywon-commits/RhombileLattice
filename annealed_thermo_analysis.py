@@ -3,7 +3,7 @@
 Entropy per triangle by thermodynamic integration from beta=0:
   s(beta) = lnZ(0)/N_tri - int_0^beta e dbeta' + beta e(beta)
   lnZ(0)/N_tri = (N_site/N_tri) ln 3 + lnM/N_tri = 0.5 ln 3 + lnM/N_tri
-with e(beta=0) exact: (1.5 - d_inf)/3 + D3/6 + mu (1 - 2 d_inf), d_inf =
+with e(beta=0) exact: (1.5 - d_inf)/3 + (D2+D3)/6 + mu (1 - 2 d_inf), d_inf =
 <n_dimer>/N_tri of uniform matchings (matchings log). The beta grid is the
 high-T supplement (L=12, size effects negligible there) followed by each
 L's own scan. Consistency check: s(T->0) should approach the honeycomb
@@ -34,8 +34,8 @@ def matchings_info(path="results/thermo/matchings_L16.log"):
     return lnM, d[-1, 1], d[-1, 2]            # lnM, dimers/tri and monomer frac at z=1
 
 
-def entropy(D3, mu, main, high, lnM, d_inf):
-    e0 = (1.5 - d_inf) / 3 + D3 / 6 + mu * (1 - 2 * d_inf)
+def entropy(D3, mu, main, high, lnM, d_inf, D2=0.0):
+    e0 = (1.5 - d_inf) / 3 + (D2 + D3) / 6 + mu * (1 - 2 * d_inf)
     hb = high[:, 1][high[:, 1] < main[0, 1] - 1e-9]
     he = high[:, 2][high[:, 1] < main[0, 1] - 1e-9]
     beta = np.concatenate([[0.0], hb, main[:, 1]])
