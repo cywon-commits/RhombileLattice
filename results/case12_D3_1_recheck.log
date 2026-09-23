@@ -1,2 +1,4 @@
 /root/.local/lib/python3.11/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
   warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+Case 1: D3=1 SA best 3.0  (all: [3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 4.0, 7.0, 37.0, 38.0, 39.0])  exact E_inf 6
+Case 2: D3=1 SA best 3.0  (all: [3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 18.0, 38.0])  exact E_inf 7

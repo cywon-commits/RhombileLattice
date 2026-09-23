@@ -13,7 +13,7 @@ in a sector.
 
 Usage:
   python3 b_path_independence.py pair <hops> <n_loops> <seed>
-  python3 b_path_independence.py many <p> <n_loops> <seed>
+  python3 b_path_independence.py many <p> <n_loops> <seed> [knn]
 """
 import sys
 
@@ -84,20 +84,21 @@ def run_pair(hops, n_loops, seed):
     assert len(frustrated_triangles(st.lat)) == 2
 
 
-def run_many(p, n_loops, seed):
+def run_many(p, n_loops, seed, knn=None):
     from worm_density_construction import build
     rng = np.random.default_rng(seed)
     st, _ = build(p, rng, n_sweeps=600)
     frozen = set(st.monomers)
     m = len(frozen)
     print(f"# many: p={m / st.n:.4f}  monomers={m}")
-    print("# loop  lower(no homology)  E_inf(exact, MILP)  sector")
+    note = "exact, MILP" if knn is None else f"MILP over {knn} nearest partners: certified upper bound"
+    print(f"# loop  lower(no homology)  E_inf({note})  sector")
     rng2 = np.random.default_rng(seed + 100)
     for k in range(n_loops + 1):
         if k:
             loop_update(st, rng2, frozen=frozen)
         lo, _, _ = exact_two_state_energy(st.lat, max_fixups=0)
-        e, _ = exact_two_state_energy_milp(st.lat)
+        e, _ = exact_two_state_energy_milp(st.lat, knn=knn)
         print(f"{k} {lo} {e} {sector_signature(st)}", flush=True)
     assert st.monomers == frozen
 
@@ -107,4 +108,5 @@ if __name__ == "__main__":
     if mode == "pair":
         run_pair(int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]))
     else:
-        run_many(float(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]))
+        run_many(float(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]),
+                 int(sys.argv[5]) if len(sys.argv) > 5 else None)

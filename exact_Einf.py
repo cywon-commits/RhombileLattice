@@ -175,7 +175,7 @@ def exact_two_state_energy(lat, max_fixups=400):
     return lower, None, False
 
 
-def exact_two_state_energy_milp(lat, time_limit=600):
+def exact_two_state_energy_milp(lat, time_limit=600, knn=None, targets=None, bounds=False):
     """Exact E_inf for many defects: min-weight T-join with the global
     homology constraint, as a MILP (scipy/HiGHS). Variables x[pair, class]
     (each defect covered once); the XOR of the chosen classes must equal a
@@ -183,7 +183,13 @@ def exact_two_state_energy_milp(lat, time_limit=600):
     cycles, and a cycle can be absorbed into one pair's walk class, so the
     MILP optimum for the certifying target is exact. All four targets are
     solved; exactly one of them certifies. Returns (E, per_target) where
-    per_target maps class -> (milp optimum, realized |V|, certified)."""
+    per_target maps class -> (milp optimum, realized |V|, certified).
+
+    For many defects: knn=k keeps only pairs among each defect's k cheapest
+    partners (the result is then a certified UPPER bound), targets restricts
+    the classes solved, and bounds=True makes per_target entries
+    (value, |V|, certified, dual_bound) with HiGHS's rigorous dual bound
+    (a LOWER bound even when the time limit stops the search)."""
     from scipy.optimize import milp, LinearConstraint, Bounds
     from scipy.sparse import lil_matrix
     G = _Graph(lat)
@@ -192,8 +198,17 @@ def exact_two_state_energy_milp(lat, time_limit=600):
         return 0, {}
     idx = {s: i for i, s in enumerate(T)}
     info = {s: G.paths_from(s) for s in T}
+    keep = None
+    if knn is not None:
+        keep = set()
+        for s in T:
+            d = info[s][0]
+            near = sorted((int(d[t].min()), t) for t in T if t != s)[:knn]
+            keep.update(frozenset((s, t)) for _, t in near)
     var = []
     for s, t in itertools.combinations(T, 2):
+        if keep is not None and frozenset((s, t)) not in keep:
+            continue
         dist = info[s][0]
         for c in CLASSES:
             var.append((s, t, c, int(dist[t, c[0], c[1]])))
@@ -210,17 +225,18 @@ def exact_two_state_energy_milp(lat, time_limit=600):
     A = A.tocsr()
     ub = np.concatenate([np.ones(nv), [len(T), len(T)]])
     out = {}
-    for tgt in CLASSES:
+    for tgt in (targets or CLASSES):
         lo = np.concatenate([np.ones(len(T)), tgt])
         res = milp(cost, constraints=LinearConstraint(A, lo, lo),
                    integrality=np.ones(nv + 2), bounds=Bounds(0, ub),
                    options={"time_limit": time_limit})
+        dual = getattr(res, "mip_dual_bound", None)
         if res.x is None:
-            out[tgt] = (None, None, False)
+            out[tgt] = (None, None, False) + ((dual,) if bounds else ())
             continue
         chosen = [var[j] for j in range(nv) if res.x[j] > 0.5]
         v = _xor(G.path_bonds(info[s][1], (t, c[0], c[1])) for s, t, c, _ in chosen)
-        out[tgt] = (int(round(res.fun)), len(v), _certify(lat, set(v)))
+        out[tgt] = (int(round(res.fun)), len(v), _certify(lat, set(v))) + ((dual,) if bounds else ())
     good = [r for r in out.values() if r[2]]
     return (min(r[0] for r in good) if good else None), out
 
