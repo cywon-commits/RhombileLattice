@@ -7,7 +7,7 @@ progresses:
 https://claude.ai/artifact/9jxHSSeFMssZzDUT7Ph4eS
 
 As of this commit it is titled **"Confinement, Matching & Symmetry
-Breaking on a Tunable Potts–Ising Lattice"** (v6 restructure) and is
+Breaking on a Tunable Potts–Ising Lattice"** (v7; artifact version 20) and is
 organized thematically rather than chronologically:
 
 1. Why this is worth doing (novelty/significance framing)
@@ -89,12 +89,28 @@ organized thematically rather than chronologically:
    language literal (the winding loop is a genuine screw dislocation,
    B_x=+3 on every row; an open string's two endpoints are a genuine
    dislocation dipole, +3/-3).
-10. Experimental and real-material connections (artificial spin ice
+10. Part VIII — dimers, density, and path (in)dependence (new in v7):
+    frustrated triangles = monomers of a dimer covering of the honeycomb
+    triangle graph; constructions at chosen density (string router stalls
+    at 4-5%, max-flow isolated monomers feasible to ~8%, greedy jamming at
+    12.0±0.6%, worm moves 4-12%; all lower bounds on reachable p); D_c≈2
+    for isolated defects at every reachable density, 3 only at junctions
+    or saturation (rule: D_c = conflicts absorbed per state-3 site: 1, 2,
+    3, 2L/(L+1)); (a) two-ensemble comparison: dimer ensemble gives
+    0.46-0.47·ln r (critical, prediction 1/2), fixed bonds + D3=0 Potts
+    give a linear entropic tension 0.45-0.46/hop (KSS-ordered, smooth);
+    (b) exact D3=∞ solver (T-join + Z2xZ2 homology + certificate, MILP for
+    many defects): energy fixed by defect positions to leading order, but
+    the covering adds O(1) per pair (pairs 4/7 constant, 11↔12 at d=21;
+    many-defect spread ≤3%). CORRECTIONS applied to Parts IV/V: Case 1 is
+    6 at D3=∞ (not 10) and 3 at D3=1 (not 4) — detour is not cheaper;
+    L=40 string saturates at 38 (not 40).
+11. Experimental and real-material connections (artificial spin ice
     dislocations, NiO domain-wall pinning, delafossite/kagome endpoint
     realizations — with an explicit caveat on what's analogy vs. what's
     the same physics)
-11. What's next
-12. References
+12. What's next (new item: annealed-bond thermodynamics, in progress)
+13. References
 
 Shared with the whole organization (set via the artifact's own Share
 menu, not something this repo controls).
