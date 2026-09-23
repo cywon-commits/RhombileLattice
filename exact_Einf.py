@@ -175,6 +175,56 @@ def exact_two_state_energy(lat, max_fixups=400):
     return lower, None, False
 
 
+def exact_two_state_energy_milp(lat, time_limit=600):
+    """Exact E_inf for many defects: min-weight T-join with the global
+    homology constraint, as a MILP (scipy/HiGHS). Variables x[pair, class]
+    (each defect covered once); the XOR of the chosen classes must equal a
+    target class. Any T-join in a class decomposes into paths pairing T plus
+    cycles, and a cycle can be absorbed into one pair's walk class, so the
+    MILP optimum for the certifying target is exact. All four targets are
+    solved; exactly one of them certifies. Returns (E, per_target) where
+    per_target maps class -> (milp optimum, realized |V|, certified)."""
+    from scipy.optimize import milp, LinearConstraint, Bounds
+    from scipy.sparse import lil_matrix
+    G = _Graph(lat)
+    T = G.T
+    if not T:
+        return 0, {}
+    idx = {s: i for i, s in enumerate(T)}
+    info = {s: G.paths_from(s) for s in T}
+    var = []
+    for s, t in itertools.combinations(T, 2):
+        dist = info[s][0]
+        for c in CLASSES:
+            var.append((s, t, c, int(dist[t, c[0], c[1]])))
+    nv = len(var)
+    cost = np.array([v[3] for v in var] + [0, 0], dtype=float)  # + kx, ky
+    A = lil_matrix((len(T) + 2, nv + 2))
+    for j, (s, t, c, _) in enumerate(var):
+        A[idx[s], j] = 1
+        A[idx[t], j] = 1
+        A[len(T), j] = c[0]
+        A[len(T) + 1, j] = c[1]
+    A[len(T), nv] = -2
+    A[len(T) + 1, nv + 1] = -2
+    A = A.tocsr()
+    ub = np.concatenate([np.ones(nv), [len(T), len(T)]])
+    out = {}
+    for tgt in CLASSES:
+        lo = np.concatenate([np.ones(len(T)), tgt])
+        res = milp(cost, constraints=LinearConstraint(A, lo, lo),
+                   integrality=np.ones(nv + 2), bounds=Bounds(0, ub),
+                   options={"time_limit": time_limit})
+        if res.x is None:
+            out[tgt] = (None, None, False)
+            continue
+        chosen = [var[j] for j in range(nv) if res.x[j] > 0.5]
+        v = _xor(G.path_bonds(info[s][1], (t, c[0], c[1])) for s, t, c, _ in chosen)
+        out[tgt] = (int(round(res.fun)), len(v), _certify(lat, set(v)))
+    good = [r for r in out.values() if r[2]]
+    return (min(r[0] for r in good) if good else None), out
+
+
 def _validate():
     from rhombile_lattice import (RhombileLattice, route_string_between_points,
                                   apply_dual_string_defect, apply_string_defect)

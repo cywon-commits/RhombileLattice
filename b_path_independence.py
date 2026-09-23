@@ -20,7 +20,7 @@ import sys
 import numpy as np
 
 from rhombile_lattice import frustrated_triangles
-from exact_Einf import exact_two_state_energy
+from exact_Einf import exact_two_state_energy, exact_two_state_energy_milp
 from ensemble_comparison_A import PottsTrack, all_pairs_hop
 
 NX = NY = 16
@@ -91,13 +91,14 @@ def run_many(p, n_loops, seed):
     frozen = set(st.monomers)
     m = len(frozen)
     print(f"# many: p={m / st.n:.4f}  monomers={m}")
-    print("# loop  lower  E_inf  certified  sector")
+    print("# loop  lower(no homology)  E_inf(exact, MILP)  sector")
     rng2 = np.random.default_rng(seed + 100)
     for k in range(n_loops + 1):
         if k:
             loop_update(st, rng2, frozen=frozen)
-        lo, e, ok = exact_two_state_energy(st.lat)
-        print(f"{k} {lo} {e} {ok} {sector_signature(st)}", flush=True)
+        lo, _, _ = exact_two_state_energy(st.lat, max_fixups=0)
+        e, _ = exact_two_state_energy_milp(st.lat)
+        print(f"{k} {lo} {e} {sector_signature(st)}", flush=True)
     assert st.monomers == frozen
 
 
