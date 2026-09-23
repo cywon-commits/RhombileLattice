@@ -7,7 +7,7 @@ progresses:
 https://claude.ai/artifact/9jxHSSeFMssZzDUT7Ph4eS
 
 As of this commit it is titled **"Confinement, Matching & Symmetry
-Breaking on a Tunable Potts–Ising Lattice"** (v7; artifact version 20) and is
+Breaking on a Tunable Potts–Ising Lattice"** (v7.1; artifact version 21) and is
 organized thematically rather than chronologically:
 
 1. Why this is worth doing (novelty/significance framing)
@@ -105,12 +105,21 @@ organized thematically rather than chronologically:
     many-defect spread ≤3%). CORRECTIONS applied to Parts IV/V: Case 1 is
     6 at D3=∞ (not 10) and 3 at D3=1 (not 4) — detour is not cheaper;
     L=40 string saturates at 38 (not 40).
-11. Experimental and real-material connections (artificial spin ice
+11. Part IX — thermodynamics with annealed bonds (new in v7.1): bonds and
+    spins both fluctuate, no monomer chemical potential, D3=10. D1=D2: the
+    C(T) peak (T≈0.55, C/N_tri≈0.62-0.67) does not grow for L=8-24 — a
+    crossover; the fixed lattice's Ising transition is washed out by
+    thermally created frustration; S(T→0)→0.15 (lozenge-tiling value
+    0.1615). 0=D1<D2: unique rhombile crystal at T=0 (S(0)=0, E=D2/6
+    exact), extra 0.16/triangle of entropy released; at D2=1 the peak
+    grows with L (0.79→0.82→0.92), at D2=0.5 it does not. Z3
+    order-parameter/Binder runs in progress.
+12. Experimental and real-material connections (artificial spin ice
     dislocations, NiO domain-wall pinning, delafossite/kagome endpoint
     realizations — with an explicit caveat on what's analogy vs. what's
     the same physics)
-12. What's next (new item: annealed-bond thermodynamics, in progress)
-13. References
+13. What's next (item 12: finish the annealed D2>0 transition question)
+14. References
 
 Shared with the whole organization (set via the artifact's own Share
 menu, not something this repo controls).
