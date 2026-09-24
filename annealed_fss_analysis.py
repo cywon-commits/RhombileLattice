@@ -34,7 +34,8 @@ def load_L(D2, L):
     runs = []
     for f in files:
         d = np.load(f)
-        runs.append(dict(betas=d["betas"], E=d["E"].astype(float), re=d["re"].astype(float),
+        seed = int(f.rsplit("_s", 1)[1].split(".")[0])
+        runs.append(dict(group=seed % 10, betas=d["betas"], E=d["E"].astype(float), re=d["re"].astype(float),
                          im=d["im"].astype(float), N=int(d["N_site"]), Nt=int(d["N_tri"])))
     return runs
 
@@ -104,9 +105,9 @@ def observables(D2, Ls, bgrid, drop=None):
     for L in Ls:
         runs = load_L(D2, L)
         if drop is not None:
-            runs = [r for i, r in enumerate(runs) if i != drop]
-        bmin = max(r["betas"].min() for r in runs)
-        bmax = min(r["betas"].max() for r in runs)
+            runs = [r for r in runs if r["group"] != drop]
+        bmin = min(r["betas"].min() for r in runs)
+        bmax = max(r["betas"].max() for r in runs)
         g = bgrid[(bgrid >= bmin) & (bgrid <= bmax)]
         res[L] = (g, curves(runs, g))
     return res
@@ -147,7 +148,8 @@ def fit_exponents(res, Ls, Tc):
 def main():
     D2 = float(sys.argv[1])
     Ls = [int(x) for x in sys.argv[2:]]
-    nseed = min(len(load_L(D2, L)) for L in Ls)
+    groups = sorted(set.intersection(*[{r["group"] for r in load_L(D2, L)} for L in Ls]))
+    nseed = len(groups)
     allb = np.concatenate([r["betas"] for L in Ls for r in load_L(D2, L)])
     bgrid = np.linspace(allb.min(), allb.max(), 400)
 
@@ -159,7 +161,7 @@ def main():
         return res, tcs, Tc, fit_exponents(res, Ls, Tc)
 
     res, tcs, Tc, ex = estimate()
-    jk = [estimate(i) for i in range(nseed)] if nseed > 1 else []
+    jk = [estimate(g) for g in groups] if nseed > 1 else []
 
     def err(get):
         if not jk:
@@ -183,8 +185,27 @@ def main():
         print(f"    L={L:3d}  {ex['dUmax'][i]:8.3f}  {ex['dUTc'][i]:8.3f}  {ex['chimax'][i]:9.3f}  {ex['chiTc'][i]:9.2f}"
               f"  {ex['m2c'][i]:.5f}  {ex['Cmax'][i]:.4f}  {ex['Umin'][i]:+.3f}")
 
-    cols = ["#c5791f", "#3d7a4f", "#3b4ba8", "#a83b3b", "#6b4ba8"]
-    fig, ax = plt.subplots(2, 3, figsize=(14, 8))
+    # first-order test: reweighted energy distribution at each L's C-peak temperature
+    print("  energy distribution at the C peak: T_peak, #maxima, barrier ln(Pmax/Pmin_between)")
+    pe = {}
+    for L in Ls:
+        runs = load_L(D2, L)
+        rw = Reweighter(runs)
+        g, cv = res[L]
+        bpk = g[np.argmax(cv["C"])]
+        lp = rw.logg - bpk * rw.e
+        P = np.exp(lp - lp.max())
+        width = max(1.0, 0.02 * np.sqrt(rw.Nt))
+        grid = np.arange(rw.lev.min(), rw.lev.max() + 1)
+        dens = np.interp(grid, rw.lev, P)
+        ker = np.exp(-0.5 * (np.arange(-4 * width, 4 * width + 1) / width) ** 2)
+        sm = np.convolve(dens, ker / ker.sum(), mode="same")
+        mx = [i for i in range(1, len(sm) - 1) if sm[i] > sm[i - 1] and sm[i] >= sm[i + 1] and sm[i] > 0.05 * sm.max()]
+        bar = np.log(max(sm[mx[0]], sm[mx[-1]]) / sm[mx[0]:mx[-1] + 1].min()) if len(mx) > 1 else 0.0
+        print(f"    L={L:3d}  T={1 / bpk:.4f}  maxima={len(mx)}  barrier={bar:.3f}")
+        pe[L] = (grid / rw.Nt, sm / sm.max(), 1 / bpk)
+    cols = ["#c5791f", "#3d7a4f", "#3b4ba8", "#a83b3b", "#6b4ba8", "#201d18"]
+    fig, ax = plt.subplots(2, 4, figsize=(18, 8))
     for L, c in zip(Ls, cols):
         g, cv = res[L]
         T = 1 / g
@@ -212,6 +233,17 @@ def main():
         a.set_xlabel("L")
         a.set_ylabel(lab)
         a.legend(fontsize=7)
+    for L, c in zip(Ls, cols):
+        x, y, tp = pe[L]
+        ax[0, 3].plot(x, y, color=c, label=f"L={L}, T={tp:.4f}")
+    ax[0, 3].set_xlabel("E / N_tri")
+    ax[0, 3].set_ylabel("P(E) at the C peak (smoothed, max=1)")
+    ax[0, 3].legend(fontsize=7)
+    a = ax[1, 3]
+    a.loglog(Larr, ex["Cmax"], "o", color="k", label=f"C_max: slope {ex['alpha_nu']:.3f}")
+    a.set_xlabel("L")
+    a.set_ylabel("C_max / N_tri")
+    a.legend(fontsize=7)
     fig.suptitle(f"Z3 crystallisation of the annealed model, 0=D1<D2={D2:g}: multi-histogram FSS (T_c = {Tc:.4f})")
     fig.tight_layout()
     out = f"annealed_fss_d2{D2:g}_figure.png"
@@ -221,3 +253,39 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def pseudo_critical(D2, Ls, U_level=0.25):
+    """Pseudo-critical temperatures per L (C max, chi' max, dU/dbeta max,
+    U4 = U_level on the ordered-side rise) and a joint extrapolation
+    T_L = T_c + a_q L^(-1/nu) with common T_c and 1/nu."""
+    from scipy.optimize import least_squares
+    allb = np.concatenate([r["betas"] for L in Ls for r in load_L(D2, L)])
+    bgrid = np.linspace(allb.min(), allb.max(), 800)
+    res = observables(D2, Ls, bgrid)
+    T = {}
+    for L in Ls:
+        g, cv = res[L]
+        Tg = 1 / g
+        up = np.where(cv["U"] >= U_level)[0]
+        tU = np.nan
+        if len(up) and up.min() > 0:
+            i = up.min()                      # first beta (from the high-T side) with U above the level
+            tU = 1 / np.interp(U_level, [cv["U"][i - 1], cv["U"][i]], [g[i - 1], g[i]])
+        edge = lambda k: np.nan if k in (0, len(g) - 1) else Tg[k]
+        T[L] = dict(C=edge(np.argmax(cv["C"])), chi=edge(np.argmax(cv["chi"])),
+                    dU=edge(np.argmax(cv["dU"])), U=tU)
+    keys = ["C", "chi", "dU", "U"]
+    rows = [(L, q, T[L][q]) for L in Ls for q in keys if np.isfinite(T[L][q])]
+
+    def resid(p):
+        tc, x = p[0], p[1]
+        a = dict(zip(keys, p[2:]))
+        return [t - (tc + a[q] * L ** (-x)) for L, q, t in rows]
+
+    fit = least_squares(resid, x0=[0.52, 1.0, 0.3, 0.3, 0.3, 0.3])
+    return T, fit.x[0], fit.x[1], rows
+
+
+if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "pc":
+    pass
