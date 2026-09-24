@@ -11,7 +11,8 @@ Fits (log-log in L): max dU/dbeta ~ L^(1/nu), max chi' ~ L^(gamma/nu),
 <|psi|^2>(T_c) ~ L^(-2 beta/nu), C_max ~ L^(alpha/nu); T_c from Binder
 crossings of successive sizes. Errors: leave-one-seed-out jackknife.
 
-Usage: python3 annealed_fss_analysis.py <D2> L1 L2 ...
+Usage: [TC=<T_c>] python3 annealed_fss_analysis.py <D2> L1 L2 ...
+(TC fixes T_c, e.g. from pseudo_critical(); default: largest-pair Binder crossing)
 """
 import glob
 import sys
@@ -145,7 +146,13 @@ def fit_exponents(res, Ls, Tc):
                 Cmax=Cmax, dUmax=dUmax, chimax=chimax, m2c=m2c)
 
 
+TC_FIXED = None
+
+
 def main():
+    global TC_FIXED
+    import os
+    TC_FIXED = float(os.environ["TC"]) if os.environ.get("TC") else None
     D2 = float(sys.argv[1])
     Ls = [int(x) for x in sys.argv[2:]]
     groups = sorted(set.intersection(*[{r["group"] for r in load_L(D2, L)} for L in Ls]))
@@ -157,7 +164,7 @@ def main():
         res = observables(D2, Ls, bgrid, drop)
         tcs = [crossing(res[a][0], res[a][1]["U"], res[b][0], res[b][1]["U"])
                for a, b in zip(Ls[:-1], Ls[1:])]
-        Tc = tcs[-1] if np.isfinite(tcs[-1]) else np.nanmean(tcs)
+        Tc = TC_FIXED if TC_FIXED else (tcs[-1] if np.isfinite(tcs[-1]) else np.nanmean(tcs))
         return res, tcs, Tc, fit_exponents(res, Ls, Tc)
 
     res, tcs, Tc, ex = estimate()

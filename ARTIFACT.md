@@ -7,7 +7,7 @@ progresses:
 https://claude.ai/artifact/9jxHSSeFMssZzDUT7Ph4eS
 
 As of this commit it is titled **"Confinement, Matching & Symmetry
-Breaking on a Tunable Potts–Ising Lattice"** (v7.2; artifact version 22) and is
+Breaking on a Tunable Potts–Ising Lattice"** (v7.3; artifact version 23) and is
 organized thematically rather than chronologically:
 
 1. Why this is worth doing (novelty/significance framing)
@@ -116,7 +116,12 @@ organized thematically rather than chronologically:
     (which sublattice hosts the hubs): <|psi|^2>N collapses above and
     scales with N below T_c, Binder 0 -> 1/2 — a genuine crystallisation
     transition at T_c≈0.56 (D2=1) and ≈0.45-0.5 (D2=0.5), with only a
-    weak, non-growing C peak (0.90-0.95, L=8-24) at T_c.
+    weak, non-growing C peak (0.90-0.95, L=8-24) at T_c. FSS at D2=1 (parallel tempering,
+    multi-histogram, L=8-48, 4 seeds): T_c=0.518±0.005; not first order
+    (unimodal P(E), vanishing Binder dip); at T_c gamma/nu=1.72,
+    2beta/nu=0.28 match 3-state Potts, but C_max nearly saturates
+    (alpha/nu≈0.08 vs 0.4) and max chi' grows faster than L^1.733 —
+    not settled; Fisher-renormalised Potts is one hypothesis fitting all.
 12. Experimental and real-material connections (artificial spin ice
     dislocations, NiO domain-wall pinning, delafossite/kagome endpoint
     realizations — with an explicit caveat on what's analogy vs. what's
