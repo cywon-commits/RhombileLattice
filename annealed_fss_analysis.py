@@ -11,7 +11,7 @@ Fits (log-log in L): max dU/dbeta ~ L^(1/nu), max chi' ~ L^(gamma/nu),
 <|psi|^2>(T_c) ~ L^(-2 beta/nu), C_max ~ L^(alpha/nu); T_c from Binder
 crossings of successive sizes. Errors: leave-one-seed-out jackknife.
 
-Usage: [TC=<T_c>] python3 annealed_fss_analysis.py <D2> L1 L2 ...
+Usage: [TC=<T_c>] [MU=<mu>] python3 annealed_fss_analysis.py <D2> L1 L2 ...
 (TC fixes T_c, e.g. from pseudo_critical(); default: largest-pair Binder crossing)
 """
 import glob
@@ -30,14 +30,18 @@ CANDIDATES = {  # 1/nu, gamma/nu, 2beta/nu, alpha/nu
 }
 
 
+MU_TAG = ""
+
+
 def load_L(D2, L):
-    files = sorted(glob.glob(f"results/fss/fss_L{L}_d2{D2:g}_s*.npz"))
+    files = sorted(glob.glob(f"results/fss/fss_L{L}_d2{D2:g}{MU_TAG}_s*.npz"))
     runs = []
     for f in files:
         d = np.load(f)
         seed = int(f.rsplit("_s", 1)[1].split(".")[0])
         runs.append(dict(group=seed % 10, betas=d["betas"], E=d["E"].astype(float), re=d["re"].astype(float),
-                         im=d["im"].astype(float), N=int(d["N_site"]), Nt=int(d["N_tri"])))
+                         im=d["im"].astype(float), nm=d["nm"].astype(float),
+                         N=int(d["N_site"]), Nt=int(d["N_tri"])))
     return runs
 
 
@@ -49,20 +53,23 @@ class Reweighter:
 
     def __init__(self, runs):
         self.N, self.Nt = runs[0]["N"], runs[0]["Nt"]
-        E_all, P2_all, beta_of, n = [], [], [], []
+        E_all, P2_all, NM_all, beta_of, n = [], [], [], [], []
         for r in runs:
             for k, b in enumerate(r["betas"]):
                 E_all.append(np.round(r["E"][:, k], 6))
                 P2_all.append(r["re"][:, k] ** 2 + r["im"][:, k] ** 2)
+                NM_all.append(r["nm"][:, k])
                 beta_of.append(b)
                 n.append(r["E"].shape[0])
-        E_all, P2_all = np.concatenate(E_all), np.concatenate(P2_all)
+        E_all, P2_all, NM_all = np.concatenate(E_all), np.concatenate(P2_all), np.concatenate(NM_all)
         self.lev, inv = np.unique(E_all, return_inverse=True)
         nl = len(self.lev)
         self.H = np.bincount(inv, minlength=nl).astype(float)
         self.S1 = np.bincount(inv, weights=np.sqrt(P2_all), minlength=nl)
         self.S2 = np.bincount(inv, weights=P2_all, minlength=nl)
         self.S4 = np.bincount(inv, weights=P2_all ** 2, minlength=nl)
+        self.Sn = np.bincount(inv, weights=NM_all, minlength=nl)
+        self.Snn = np.bincount(inv, weights=NM_all ** 2, minlength=nl)
         self.b = np.array(beta_of)
         self.n = np.array(n, float)
         e = self.lev - self.lev.mean()
@@ -88,13 +95,21 @@ class Reweighter:
         m4 = (w * self.S4 / self.H).sum() / Z
         e1 = (w * self.lev).sum() / Z
         e2 = (w * self.lev ** 2).sum() / Z
+        n1 = (w * self.Sn / self.H).sum() / Z
+        n2 = (w * self.Snn / self.H).sum() / Z
+        en = (w * self.lev * self.Sn / self.H).sum() / Z
+        varE, varn, cov = e2 - e1 ** 2, n2 - n1 ** 2, en - e1 * n1
         return dict(U=1 - m4 / (2 * m2 ** 2), chi=beta * self.N * (m2 - m1 ** 2), m2=m2,
-                    C=beta ** 2 * (e2 - e1 ** 2) / self.Nt)
+                    C=beta ** 2 * varE / self.Nt,
+                    # canonical (fixed monomer number) heat capacity, Fisher's constrained ensemble:
+                    # C_n = C_mu - beta^2 cov(E,n)^2 / var(n)
+                    Cn=beta ** 2 * (varE - cov ** 2 / varn) / self.Nt,
+                    rho=cov / np.sqrt(varE * varn), nmon=n1 / self.Nt)
 
 
 def curves(runs, bgrid):
     rw = Reweighter(runs)
-    out = {k: np.array([rw.moments(b)[k] for b in bgrid]) for k in ("U", "chi", "m2", "C")}
+    out = {k: np.array([rw.moments(b)[k] for b in bgrid]) for k in ("U", "chi", "m2", "C", "Cn", "rho", "nmon")}
     out["dU"] = np.gradient(out["U"], bgrid)
     out["N"] = rw.N
     return out
@@ -153,6 +168,8 @@ def main():
     global TC_FIXED
     import os
     TC_FIXED = float(os.environ["TC"]) if os.environ.get("TC") else None
+    global MU_TAG
+    MU_TAG = f"_mu{float(os.environ['MU']):g}" if os.environ.get("MU") else ""
     D2 = float(sys.argv[1])
     Ls = [int(x) for x in sys.argv[2:]]
     groups = sorted(set.intersection(*[{r["group"] for r in load_L(D2, L)} for L in Ls]))

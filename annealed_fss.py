@@ -9,8 +9,8 @@ the hubs). One process = one (L, seed); replicas at K temperatures, one
 sweep each per step, then adjacent swap attempts (even/odd alternating).
 
 Usage:
-  python3 annealed_fss.py <L> <D2> <Tmin> <Tmax> <K> <n_eq> <n_meas> <thin> <seed>
-Writes results/fss/fss_L<L>_d2<D2>_s<seed>.npz
+  python3 annealed_fss.py <L> <D2> <Tmin> <Tmax> <K> <n_eq> <n_meas> <thin> <seed> [mu]
+Writes results/fss/fss_L<L>_d2<D2>[_mu<mu>]_s<seed>.npz (mu = cost per frustrated triangle)
 """
 import os
 import sys
@@ -21,7 +21,7 @@ from numba import njit
 
 from annealed_thermo import build_arrays, sweep, total_energy, _seed
 
-D3, MU = 10.0, 0.0
+D3 = 10.0
 
 
 @njit(cache=True)
@@ -51,7 +51,7 @@ def count_monomers(mate):
 
 
 @njit(cache=True)
-def run_pt(S, DIM, MATE, E, betas, bi, bj, bta, btb, site_b, hexb, sub, D2,
+def run_pt(S, DIM, MATE, E, betas, bi, bj, bta, btb, site_b, hexb, sub, D2, MU,
            n_eq, n_meas, thin, out_E, out_re, out_im, out_nm, acc_swap, rep_at):
     K = betas.shape[0]
     rec = 0
@@ -82,6 +82,7 @@ def run_pt(S, DIM, MATE, E, betas, bi, bj, bta, btb, site_b, hexb, sub, D2,
 def main():
     L, D2, tmin, tmax, K = int(sys.argv[1]), float(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4]), int(sys.argv[5])
     n_eq, n_meas, thin, seed = int(sys.argv[6]), int(sys.argv[7]), int(sys.argv[8]), int(sys.argv[9])
+    MU = float(sys.argv[10]) if len(sys.argv) > 10 else 0.0
     A = build_arrays(L)
     _seed(seed)
     rng = np.random.default_rng(seed)
@@ -102,13 +103,14 @@ def main():
                 E[r] = sweep(S[r], DIM[r], MATE[r], A["bi"], A["bj"], A["bta"], A["btb"],
                              A["site_b"], A["hexb"], b, D2, D3, MU, E[r])
     run_pt(S, DIM, MATE, E, betas, A["bi"], A["bj"], A["bta"], A["btb"], A["site_b"], A["hexb"],
-           A["sub"], D2, n_eq, n_meas, thin, out["E"], out["re"], out["im"], out["nm"], acc, rep_at)
+           A["sub"], D2, MU, n_eq, n_meas, thin, out["E"], out["re"], out["im"], out["nm"], acc, rep_at)
     for r in range(K):
         e = total_energy(S[r], DIM[r], A["bi"], A["bj"], D2, D3, MU, MATE[r])
         assert abs(e - E[r]) < 1e-6
     os.makedirs("results/fss", exist_ok=True)
-    fn = f"results/fss/fss_L{L}_d2{D2:g}_s{seed}.npz"
-    np.savez_compressed(fn, betas=betas, L=L, N_site=A["ns"], N_tri=A["nt"], D2=D2,
+    tag = f"_mu{MU:g}" if MU else ""
+    fn = f"results/fss/fss_L{L}_d2{D2:g}{tag}_s{seed}.npz"
+    np.savez_compressed(fn, betas=betas, L=L, N_site=A["ns"], N_tri=A["nt"], D2=D2, mu=MU,
                         swap_acc=acc / (n_meas / 2), **out)
     print(f"L={L} D2={D2} seed={seed} K={K} T=[{tmin},{tmax}] n_meas={n_meas} "
           f"swap acc min/mean={acc.min() / (n_meas / 2):.2f}/{acc.mean() / (n_meas / 2):.2f} "
