@@ -40,44 +40,52 @@ def load_L(D2, L):
 
 
 class Reweighter:
-    """WHAM over samples: sample i from ensemble k (beta_k); all ensembles of
-    all runs enter with their own sample counts."""
+    """Multi-histogram (WHAM) over all ensembles of all runs. Energies are
+    binned exactly on their unique values (integers here, since D2, D3 and
+    the bond costs are integers), and per-bin sums of the psi moments are
+    pooled over all ensembles, so reweighting costs O(#energy levels)."""
 
     def __init__(self, runs):
-        E, P2, beta_of, n = [], [], [], []
         self.N, self.Nt = runs[0]["N"], runs[0]["Nt"]
+        E_all, P2_all, beta_of, n = [], [], [], []
         for r in runs:
             for k, b in enumerate(r["betas"]):
-                E.append(r["E"][:, k])
-                P2.append(r["re"][:, k] ** 2 + r["im"][:, k] ** 2)
+                E_all.append(np.round(r["E"][:, k], 6))
+                P2_all.append(r["re"][:, k] ** 2 + r["im"][:, k] ** 2)
                 beta_of.append(b)
                 n.append(r["E"].shape[0])
-        self.E = np.concatenate(E)
-        self.p2 = np.concatenate(P2)
+        E_all, P2_all = np.concatenate(E_all), np.concatenate(P2_all)
+        self.lev, inv = np.unique(E_all, return_inverse=True)
+        nl = len(self.lev)
+        self.H = np.bincount(inv, minlength=nl).astype(float)
+        self.S1 = np.bincount(inv, weights=np.sqrt(P2_all), minlength=nl)
+        self.S2 = np.bincount(inv, weights=P2_all, minlength=nl)
+        self.S4 = np.bincount(inv, weights=P2_all ** 2, minlength=nl)
         self.b = np.array(beta_of)
         self.n = np.array(n, float)
-        self.E0 = self.E.mean()
-        e = self.E - self.E0
+        e = self.lev - self.lev.mean()
+        self.e = e
         f = np.zeros(len(self.b))
-        # log denominator for each sample: log sum_k n_k exp(f_k - b_k e_i)
-        for _ in range(2000):
+        logH = np.log(self.H)
+        for _ in range(20000):
             logden = logsumexp(np.log(self.n)[:, None] + f[:, None] - np.outer(self.b, e), axis=0)
-            fn = -logsumexp(-np.outer(self.b, e) - logden[None, :], axis=1)
+            fn = -logsumexp(logH[None, :] - np.outer(self.b, e) - logden[None, :], axis=1)
             fn -= fn[0]
-            if np.max(np.abs(fn - f)) < 1e-9:
+            if np.max(np.abs(fn - f)) < 1e-10:
                 f = fn
                 break
             f = fn
-        self.logden = logsumexp(np.log(self.n)[:, None] + f[:, None] - np.outer(self.b, e), axis=0)
-        self.e = e
+        self.logg = logH - logsumexp(np.log(self.n)[:, None] + f[:, None] - np.outer(self.b, e), axis=0)
 
     def moments(self, beta):
-        lw = -beta * self.e - self.logden
+        lw = self.logg - beta * self.e
         w = np.exp(lw - lw.max())
-        w /= w.sum()
-        p2, E = self.p2, self.E
-        m2, m4, m1 = w @ p2, w @ p2 ** 2, w @ np.sqrt(p2)
-        e1, e2 = w @ E, w @ E ** 2
+        Z = w.sum()
+        m1 = (w * self.S1 / self.H).sum() / Z
+        m2 = (w * self.S2 / self.H).sum() / Z
+        m4 = (w * self.S4 / self.H).sum() / Z
+        e1 = (w * self.lev).sum() / Z
+        e2 = (w * self.lev ** 2).sum() / Z
         return dict(U=1 - m4 / (2 * m2 ** 2), chi=beta * self.N * (m2 - m1 ** 2), m2=m2,
                     C=beta ** 2 * (e2 - e1 ** 2) / self.Nt)
 
