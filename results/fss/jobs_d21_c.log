@@ -1,0 +1,6 @@
+L=64 D2=1.0 seed=22 K=20 T=[0.512,0.536] n_meas=60000 swap acc min/mean=0.78/0.79 time=5923s -> results/fss/fss_L64_d21_s22.npz
+L=64 D2=1.0 seed=21 K=20 T=[0.512,0.536] n_meas=60000 swap acc min/mean=0.78/0.79 time=5957s -> results/fss/fss_L64_d21_s21.npz
+L=64 D2=1.0 seed=24 K=20 T=[0.512,0.536] n_meas=60000 swap acc min/mean=0.78/0.79 time=5818s -> results/fss/fss_L64_d21_s24.npz
+L=64 D2=1.0 seed=23 K=20 T=[0.512,0.536] n_meas=60000 swap acc min/mean=0.79/0.79 time=5876s -> results/fss/fss_L64_d21_s23.npz
+L=96 D2=1.0 seed=21 K=24 T=[0.513,0.531] n_meas=60000 swap acc min/mean=0.80/0.81 time=20375s -> results/fss/fss_L96_d21_s21.npz
+L=96 D2=1.0 seed=22 K=24 T=[0.513,0.531] n_meas=60000 swap acc min/mean=0.80/0.81 time=20519s -> results/fss/fss_L96_d21_s22.npz
