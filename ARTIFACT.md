@@ -7,7 +7,7 @@ progresses:
 https://claude.ai/artifact/9jxHSSeFMssZzDUT7Ph4eS
 
 As of this commit it is titled **"Confinement, Matching & Symmetry
-Breaking on a Tunable Potts–Ising Lattice"** (v7.3; artifact version 23) and is
+Breaking on a Tunable Potts–Ising Lattice"** (v7.4; artifact version 24) and is
 organized thematically rather than chronologically:
 
 1. Why this is worth doing (novelty/significance framing)
@@ -121,7 +121,13 @@ organized thematically rather than chronologically:
     (unimodal P(E), vanishing Binder dip); at T_c gamma/nu=1.72,
     2beta/nu=0.28 match 3-state Potts, but C_max nearly saturates
     (alpha/nu≈0.08 vs 0.4) and max chi' grows faster than L^1.733 —
-    not settled; Fisher-renormalised Potts is one hypothesis fitting all.
+    not settled. Fisher-renormalisation test: the fixed-n (canonical)
+    heat capacity C_n keeps growing (Potts- or log-compatible) while the
+    grand-canonical C_mu saturates — the opposite of Fisher; half of C_mu
+    is a smooth frustrated-triangle background (corr(E,n)=0.71) sitting
+    on T_c. mu>0 moves the ordering up (≈0.625 at mu=0.5, ≈0.77 at
+    mu=1) and the background bump above it. Data consistent with plain
+    3-state Potts; L=64/96 at mu=0 running.
 12. Experimental and real-material connections (artificial spin ice
     dislocations, NiO domain-wall pinning, delafossite/kagome endpoint
     realizations — with an explicit caveat on what's analogy vs. what's
