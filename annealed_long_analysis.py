@@ -8,7 +8,7 @@ multi-histogram reweighting of annealed_fss_analysis.py; errors come from a
 jackknife over NB time blocks (block b of every run is dropped together),
 which replaces the seed-group jackknife of the PT analysis.
 
-Usage: [MU=<mu>] [TC=<T_c>] [DISCARD=100000] [NB=8] [CKPT=1] \
+Usage: [DIR=results/tafm] [MU=<mu>] [TC=<T_c>] [DISCARD=100000] [NB=8] [CKPT=1] \
        python3 annealed_long_analysis.py <D2> L1 L2 ...
 CKPT=1 also reads unfinished checkpoints (monitoring only).
 """
@@ -24,6 +24,7 @@ DISCARD = int(os.environ.get("DISCARD", 100000))
 NB = int(os.environ.get("NB", 8))
 USE_CKPT = os.environ.get("CKPT") == "1"
 MU = float(os.environ["MU"]) if os.environ.get("MU") else 0.0
+DIR = os.environ.get("DIR", "results/long")   # results/tafm for the fixed-bond TAFM reference
 
 
 def tau_int(x):
@@ -42,10 +43,10 @@ def tau_int(x):
 
 def files(D2, L):
     tag = f"L{L}_d2{D2:g}" + (f"_mu{MU:g}" if MU else "") + "_T"
-    fs = sorted(glob.glob(f"results/long/long_{tag}*_s*.npz"))
+    fs = sorted(glob.glob(f"{DIR}/long_{tag}*_s*.npz"))
     if USE_CKPT:
         done = {f.replace("long_", "ckpt_") for f in fs}
-        fs += [f for f in sorted(glob.glob(f"results/long/ckpt_{tag}*_s*.npz")) if f not in done]
+        fs += [f for f in sorted(glob.glob(f"{DIR}/ckpt_{tag}*_s*.npz")) if f not in done]
     return [f for f in fs if "_random" not in f and not f.endswith(".tmp.npz")]
 
 
