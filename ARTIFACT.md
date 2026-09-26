@@ -7,7 +7,7 @@ progresses:
 https://claude.ai/artifact/9jxHSSeFMssZzDUT7Ph4eS
 
 As of this commit it is titled **"Confinement, Matching & Symmetry
-Breaking on a Tunable Potts–Ising Lattice"** (v7.4; artifact version 24) and is
+Breaking on a Tunable Potts–Ising Lattice"** (v7.5; artifact version 25) and is
 organized thematically rather than chronologically:
 
 1. Why this is worth doing (novelty/significance framing)
@@ -127,7 +127,14 @@ organized thematically rather than chronologically:
     is a smooth frustrated-triangle background (corr(E,n)=0.71) sitting
     on T_c. mu>0 moves the ordering up (≈0.625 at mu=0.5, ≈0.77 at
     mu=1) and the background bump above it. Data consistent with plain
-    3-state Potts; L=64/96 at mu=0 running.
+    3-state Potts. CORRECTION (v7.5): L=64/96 runs exposed that all
+    L>=48 parallel-tempering data were not equilibrated (psi2 drifts
+    between halves, tau ~ 2500-5000 sweeps); T_c=0.518, the at-T_c
+    exponents and the C "saturation" (absent for L<=32) are withdrawn.
+    Ordered- vs random-start runs converge (no persistent hysteresis):
+    slow dynamics, not metastability; ordered/disordered energy gap
+    shrinks 0.006 (L=48) -> 0.004 (L=64); T_c ≈ 0.52-0.53; universality
+    class open again.
 12. Experimental and real-material connections (artificial spin ice
     dislocations, NiO domain-wall pinning, delafossite/kagome endpoint
     realizations — with an explicit caveat on what's analogy vs. what's
