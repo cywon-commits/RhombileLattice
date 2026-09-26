@@ -140,3 +140,53 @@ Data are in `results/thermo/` (sequential scans, logs) and `results/fss/`
   ~4.5 ms at L=64, ~8.5 ms at L=96. The machine has 4 cores.
 - **Energies are integer-valued** when D2 and mu are integers (or multiples of
   0.5 for mu=0.5). The reweighter bins on exact levels for that reason.
+
+## Strict assessment and go/no-go plan (from the parent session)
+
+**Verdict:** worth continuing, but novelty is moderate and must be verified
+before investing more.
+
+- **Strengths:**
+  - exact T=0 and T=∞ anchors, closed by thermodynamic integration
+  - a well-posed open question (the nature of the Z3 crystallisation)
+  - links to active topics: interacting dimers, monomers destroying
+    criticality, height-model roughening, and entropy-driven order
+- **Weaknesses:**
+  - **Heavy related literature.** D2>0 favours the "flat", maximally
+    flippable tiling, as honeycomb interacting-dimer models do (e.g.
+    Schlittler et al., PRL 115, 217202 (2015), extended classical dimer
+    model). If the mu→∞ limit reduces to a known model, our contribution
+    shrinks to "adding monomers".
+  - **Thin core.** The firm results are exact limits plus a qualitative
+    crossover-vs-transition contrast. Without the universality class there
+    is no core result.
+  - **Hard equilibration at L≥48.** Fixing it may need an algorithm, not
+    just CPU.
+- **Hypothesis that would raise the value (untested):**
+  - Without frustrated triangles (mu→∞) the lozenge tiling is rough
+    (critical), and D2 locks it into a flat crystal. That suggests a
+    KT-type roughening transition: non-divergent C, small apparent 1/ν,
+    and very slow dynamics, which is what we see.
+  - Frustrated triangles are height dislocations (Burgers ±3). At finite
+    density they destroy the rough phase, so the transition from a
+    disordered phase into the Z3 crystal should then be 3-state-Potts-like
+    (q=3 has no intermediate phase).
+  - Then **mu is a knob between roughening (KT) and Potts**, possibly with
+    a multicritical point where the character of the transition changes.
+    The slow dynamics and ambiguous exponents may be crossover effects
+    between the two.
+- **Go/no-go steps:**
+  1. **Literature check (1–2 days).** Is the mu→∞ limit a known interacting
+     dimer / roughening model? Has the monomer-doped version been studied?
+     References: Alet et al. (interacting dimers), Papanikolaou–Luijten–
+     Fradkin 2007 (doped dimers), Schlittler et al. 2015, Nienhuis
+     (dilute/tricritical Potts), roughening/BCSOS.
+  2. **Cheap numerical test at large mu** (few frustrated triangles), or
+     with monomer moves disabled (tiling fixed-sector dynamics via hexagon
+     flips only). Does the transition look KT-like: C non-divergent with
+     its peak above T_c, height-roughness/stiffness jump, very slow Binder
+     crossings?
+  3. **Decide:**
+     - If mu→∞ is known, make the mu-crossover the paper's core.
+     - If it is new and clean, it is the core.
+     - If both are murky, shrink the paper or pivot.
