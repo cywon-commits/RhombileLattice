@@ -2,3 +2,7 @@ L=32 seed=1 K=44 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.25/0.33 time=484
 L=32 seed=2 K=44 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.25/0.33 time=4818s -> results/d1d2/pt_L32_s2.npz
 L=32 seed=3 K=44 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.25/0.33 time=4817s -> results/d1d2/pt_L32_s3.npz
 L=32 seed=4 K=44 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.25/0.33 time=4861s -> results/d1d2/pt_L32_s4.npz
+L=24 seed=1 K=34 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.26/0.34 time=1883s -> results/d1d2/pt_L24_s1.npz
+L=24 seed=2 K=34 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.26/0.34 time=1891s -> results/d1d2/pt_L24_s2.npz
+L=24 seed=4 K=34 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.26/0.34 time=1883s -> results/d1d2/pt_L24_s4.npz
+L=24 seed=3 K=34 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.26/0.34 time=1903s -> results/d1d2/pt_L24_s3.npz
