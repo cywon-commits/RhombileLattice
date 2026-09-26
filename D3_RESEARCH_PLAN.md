@@ -6,6 +6,8 @@
 cost_D3(s) = #{ij ∈ E : s_i = s_j} + D3 · #{v : s_v = 3},   s : V → {1,2,3},  G 평면, 최대 차수 Δ
 ```
 
+> **2026-09-26 갱신.** 정리 B1(`d3_complexity/theorem_delta3.md`)로 **Δ=3이 완전히 풀렸다**: D3 = 0이면 P, D3 ∈ (0,1)이면 NP-완전, D3 ≥ 1이면 P. 또 모든 Δ ≥ 3에서 D3 ∈ (0,1)은 NP-완전이다. 남은 열린 구간은 **Δ ≥ 4, D3 ∈ [1, ⌊Δ/2⌋)** 이다. 아래 단계 3은 완료됐고(재검토 대기), 단계 4의 목표는 Δ=4, D3 ∈ [1,2)로 좁혀졌다. 추측은 "0 < D3 < ⌊Δ/2⌋"로 수정한다.
+
 ---
 
 ## 1. 문헌 조사 결과
@@ -33,6 +35,7 @@ cost_D3(s) = #{ij ∈ E : s_i = s_j} + D3 · #{v : s_v = 3},   s : V → {1,2,3}
 | Thapper–Živný; Kolmogorov–Krokhin–Rolínek | 일반 그래프 VCSP 이분법 | 평면성 제약은 이 틀 밖 |
 | Kubicka, Jansen 등: Optimum Cost Chromatic Partition (OCCP) | 색마다 비용이 있는 **진짜(proper)** 색칠 최소화. 평면에서 강 NP-hard(sum coloring) | 이 문제는 단색 간선을 허용하는 "soft" 판이고 색이 3개로 고정되어 있음. D3 → 0 극한과만 닿음 |
 | Independent OCT / near-bipartite 문헌 (Bonamy–Dabrowski–Feghali–Johnson–Paulusma 등; P₅-free 다항 결과) | 독립 OCT가 **존재**하는지는 3색칠 가능성과 동치. 평면 OCT(비독립)는 vertex cover 환원으로 NP-hard | **최소** 독립 OCT의 평면·저차수 복잡도는 검색에서 확인되지 않음 [원문 확인 필요] |
+| **Johnson–Martin–Oostveen–Pandey–Paulusma–Smith–van Leeuwen**, *Complexity Framework for Forbidden Subgraphs I*, arXiv:2211.12887v5 (**원문 확인 완료**) | 정리 11: (최소) Independent OCT는 **평면 최대 차수 3 그래프에서 NP-완전**. 각 리터럴이 두 번 이하 나오는 Planar 3-SAT에서 환원하며, 정점이 겹치지 않는 삼각형 2m개를 가진 그래프를 만든다 | **Δ=3, D3 ∈ (0,1)을 해결.** 삼각형마다 비용 ≥ min(1,D3)이라는 계산만으로 "OPT ≤ 2m·D3 ⇔ 충족 가능"이 나온다 → `d3_complexity/theorem_delta3.md` (정리 B1). "최소 IOCT가 이미 알려져 있는가"라는 질문에도 답이 된다: **D3 → 0 극한은 알려져 있었고, 고정 D3 ∈ (0,1)은 그로부터 곧바로 따라 나온다** |
 | Baker 1994 및 후속(Max 2-CSP는 평면에서 PTAS) | 평면 max-k-cut PTAS | 계산 가능성 쪽의 상한 참고 (§1.3) |
 | Zhang, arXiv:1911.04122 | 스핀 모델 복잡도 분류 개관(Ising 중심) | Potts + 이방성 항은 다루지 않음 |
 | Emmerich, arXiv:2608.23506 (2026-08) | Barahona의 평면 3-정규 Ising+장 환원을 기하 문제로 옮김 | Barahona 환원을 현대적으로 재서술한 참고 자료 |
@@ -83,7 +86,7 @@ cost_D3(s) = #{ij ∈ E : s_i = s_j} + D3 · #{v : s_v = 3},   s : V → {1,2,3}
 - 원문으로 확인할 항목:
   - ~~Barahona 1982의 평면 환원~~ → 완료 (사용자 제공 원문, 위 표 참고)
   - ~~Fulla–Živný의 conservative 평면 VCSP 정리 문구~~ → 완료 (사용자 제공 원문, 위 표 참고)
-  - **최소** independent OCT의 평면·저차수 복잡도
+  - ~~**최소** independent OCT의 평면·저차수 복잡도~~ → 완료: JMOPSvL 정리 11 (평면 최대 차수 3에서 NP-완전)
   - Kubicka/Jansen OCCP의 평면 결과
 - 사용자에게 요청: 원문 접근이 막혀 있으므로, 남은 PDF를 저장소에 넣어 주거나 요지를 알려 주면 반영하겠다.
 - **판정 지점:** 이 문제가 이미 알려져 있다면 계획을 "알려진 결과의 물리 해석 + 빡빡함" 쪽으로 축소한다.
