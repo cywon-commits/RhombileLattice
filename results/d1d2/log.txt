@@ -6,3 +6,15 @@ L=24 seed=1 K=34 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.26/0.34 time=188
 L=24 seed=2 K=34 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.26/0.34 time=1891s -> results/d1d2/pt_L24_s2.npz
 L=24 seed=4 K=34 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.26/0.34 time=1883s -> results/d1d2/pt_L24_s4.npz
 L=24 seed=3 K=34 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.26/0.34 time=1903s -> results/d1d2/pt_L24_s3.npz
+L=16 seed=1 K=24 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.28/0.36 time=631s -> results/d1d2/pt_L16_s1.npz
+L=16 seed=2 K=24 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.28/0.36 time=629s -> results/d1d2/pt_L16_s2.npz
+L=16 seed=3 K=24 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.28/0.36 time=628s -> results/d1d2/pt_L16_s3.npz
+L=16 seed=4 K=24 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.29/0.36 time=640s -> results/d1d2/pt_L16_s4.npz
+L=12 seed=1 K=18 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.28/0.36 time=241s -> results/d1d2/pt_L12_s1.npz
+L=12 seed=2 K=18 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.28/0.36 time=238s -> results/d1d2/pt_L12_s2.npz
+L=12 seed=3 K=18 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.28/0.36 time=243s -> results/d1d2/pt_L12_s3.npz
+L=12 seed=4 K=18 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.28/0.36 time=249s -> results/d1d2/pt_L12_s4.npz
+L=8 seed=1 K=12 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.26/0.34 time=74s -> results/d1d2/pt_L8_s1.npz
+L=8 seed=2 K=12 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.26/0.34 time=75s -> results/d1d2/pt_L8_s2.npz
+L=8 seed=3 K=12 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.26/0.34 time=75s -> results/d1d2/pt_L8_s3.npz
+L=8 seed=4 K=12 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.26/0.34 time=78s -> results/d1d2/pt_L8_s4.npz
