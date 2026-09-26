@@ -1,0 +1,11 @@
+/root/.local/lib/python3.11/site-packages/networkx/algorithms/graph_hashing.py:211: UserWarning: The hashes produced for graphs without node or edge attributes changed in v3.5 due to a bugfix (see documentation).
+  node_labels = _init_node_labels(G, edge_attr, node_attr)
+n=3: connected subcubic graphs 2, non-healable (excluding K4): 0
+n=4: connected subcubic graphs 6, non-healable (excluding K4): 0
+n=5: connected subcubic graphs 10, non-healable (excluding K4): 0
+n=6: connected subcubic graphs 29, non-healable (excluding K4): 0
+n=7: connected subcubic graphs 64, non-healable (excluding K4): 0
+n=8: connected subcubic graphs 194, non-healable (excluding K4): 0
+n=9: connected subcubic graphs 531, non-healable (excluding K4): 0
+n=10: connected subcubic graphs 1733, non-healable (excluding K4): 0
+n=11: connected subcubic graphs 5524, non-healable (excluding K4): 0
