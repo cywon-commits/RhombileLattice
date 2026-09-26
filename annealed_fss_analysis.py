@@ -270,7 +270,7 @@ def main():
     a.legend(fontsize=7)
     fig.suptitle(f"Z3 crystallisation of the annealed model, 0=D1<D2={D2:g}: multi-histogram FSS (T_c = {Tc:.4f})")
     fig.tight_layout()
-    out = f"annealed_fss_d2{D2:g}_figure.png"
+    out = os.environ.get("FIG", f"annealed_fss_d2{D2:g}_figure.png")
     fig.savefig(out, dpi=150)
     print("saved", out)
 
