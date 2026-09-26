@@ -1,0 +1,97 @@
+D2=1.0  sizes [32, 48, 64]  seeds per size 8
+  Binder crossing L=32/48: T = 0.4715 +- 0.0006
+  Binder crossing L=48/64: T = 0.4718 +- 0.0011
+  T_c (largest pair) = 0.4718 +- 0.0011
+  1/nu (max dU)          = 1.273 +- 0.124
+  1/nu (dU at T_c)       = 1.188 +- 0.143
+  gamma/nu (max chi')    = 1.854 +- 0.063
+  gamma/nu (chi at T_c)  = 1.778 +- 0.048
+  2beta/nu               = 0.222 +- 0.048
+  alpha/nu               = 0.307 +- 0.024
+  candidates (1/nu, gamma/nu, 2beta/nu, alpha/nu):
+    2D 3-state Potts   1.200 1.733 0.267 0.400
+    2D Ising           1.000 1.750 0.250 0.000
+    first order        2.000 2.000 0.000 2.000
+  per L: max dU/dbeta, dU/dbeta(T_c), max chi', chi(T_c), <|psi|^2>(T_c), C_max, min U4
+    L= 32     3.815     1.459    203.624    2913.30  0.44742  0.5278  +0.270
+    L= 48     6.495     2.408    438.472    5989.93  0.40886  0.6083  +0.124
+    L= 64     9.200     3.315    734.645    9995.00  0.38376  0.6517  +0.016
+  energy distribution at the C peak: T_peak, #maxima, barrier ln(Pmax/Pmin_between)
+    L= 32  T=0.4798  maxima=2  barrier=0.022
+    L= 48  T=0.4769  maxima=2  barrier=0.007
+    L= 64  T=0.4752  maxima=2  barrier=0.015
+saved annealed_tafm_fss_d21_figure.png
+  L=128 T=0.4620 kept=  900000 tau_psi=   1204 tau_E=   194 n_tau= 747.6 <psi2>=0.5406 drift= -0.6 E=0.70833
+  L=128 T=0.4640 kept=  900000 tau_psi=   1868 tau_E=   358 n_tau= 481.9 <psi2>=0.5131 drift= -1.0 E=0.70915
+  L=128 T=0.4660 kept=  900000 tau_psi=   2758 tau_E=   366 n_tau= 326.3 <psi2>=0.4916 drift= +0.7 E=0.70991
+  L=128 T=0.4680 kept=  900000 tau_psi=  10563 tau_E=  1893 n_tau=  85.2 <psi2>=0.4540 drift= +0.8 E=0.71083
+  L=128 T=0.4720 kept=  900000 tau_psi=   6414 tau_E=  1880 n_tau= 140.3 <psi2>=0.3778 drift= -0.4 E=0.71282
+  L=128 T=0.4740 kept=  900000 tau_psi=  22420 tau_E= 11447 n_tau=  40.1 <psi2>=0.2674 drift= -0.3 E=0.71437
+  L=128 T=0.4760 kept=  900000 tau_psi=  14512 tau_E=  8386 n_tau=  62.0 <psi2>=0.1231 drift= +1.0 E=0.71632
+  L=128 T=0.4780 kept=  900000 tau_psi=   9875 tau_E=  4807 n_tau=  91.1 <psi2>=0.0677 drift= +0.2 E=0.71757
+  L=128 T=0.4700 kept=  900000 tau_psi=  14054 tau_E=  2541 n_tau=  64.0 <psi2>=0.4155 drift= -0.7 E=0.71182
+  L=128 T=0.4820 kept=  900000 tau_psi=   3113 tau_E=   417 n_tau= 289.1 <psi2>=0.0257 drift= +1.5 E=0.71946
+  L=128 T=0.4840 kept=  900000 tau_psi=   3791 tau_E=   368 n_tau= 237.4 <psi2>=0.0228 drift= +0.9 E=0.72022
+  L=128 T=0.4860 kept=  900000 tau_psi=   4702 tau_E=   290 n_tau= 191.4 <psi2>=0.0186 drift= -0.5 E=0.72098
+  L=128 T=0.4800 kept=  900000 tau_psi=   7516 tau_E=   927 n_tau= 119.7 <psi2>=0.0409 drift= -1.0 E=0.71853
+D2=1.0  sizes [24, 32, 48, 64, 96, 128]  seeds per size 8
+  Binder crossing L=24/32: T = 0.4732 +- 0.0011
+  Binder crossing L=32/48: T = 0.4715 +- 0.0006
+  Binder crossing L=48/64: T = 0.4718 +- 0.0011
+  Binder crossing L=64/96: T = 0.4713 +- 0.0010
+  Binder crossing L=96/128: T = 0.4748 +- 0.0007
+  T_c (largest pair) = 0.4748 +- 0.0007
+  1/nu (max dU)          = 1.372 +- 0.062
+  1/nu (dU at T_c)       = 1.696 +- 0.089
+  gamma/nu (max chi')    = 1.867 +- 0.021
+  gamma/nu (chi at T_c)  = 1.509 +- 0.100
+  2beta/nu               = 0.491 +- 0.100
+  alpha/nu               = 0.369 +- 0.019
+  candidates (1/nu, gamma/nu, 2beta/nu, alpha/nu):
+    2D 3-state Potts   1.200 1.733 0.267 0.400
+    2D Ising           1.000 1.750 0.250 0.000
+    first order        2.000 2.000 0.000 2.000
+  per L: max dU/dbeta, dU/dbeta(T_c), max chi', chi(T_c), <|psi|^2>(T_c), C_max, min U4
+    L= 24     2.441     1.366    118.897    1592.96  0.43772  0.4755  +0.330
+    L= 32     3.815     2.025    203.624    2611.84  0.40371  0.5278  +0.270
+    L= 48     6.495     4.021    438.472    4986.84  0.34258  0.6083  +0.124
+    L= 64     9.200     6.251    734.645    7666.16  0.29624  0.6517  +0.016
+    L= 96    13.888    12.833   1550.424   12502.93  0.21473  0.7611  -0.011
+    L=128    28.192    23.832   2755.152   21188.22  0.20469  0.9111  -0.071
+  energy distribution at the C peak: T_peak, #maxima, barrier ln(Pmax/Pmin_between)
+    L= 24  T=0.4820  maxima=1  barrier=0.000
+    L= 32  T=0.4798  maxima=2  barrier=0.022
+    L= 48  T=0.4769  maxima=2  barrier=0.007
+    L= 64  T=0.4752  maxima=2  barrier=0.015
+    L= 96  T=0.4734  maxima=2  barrier=0.003
+    L=128  T=0.4746  maxima=6  barrier=0.033
+saved annealed_tafm_fss_d21_figure.png
+D2=1.0  sizes [24, 32, 48, 64, 96]  seeds per size 8
+  Binder crossing L=24/32: T = 0.4732 +- 0.0011
+  Binder crossing L=32/48: T = 0.4715 +- 0.0006
+  Binder crossing L=48/64: T = 0.4718 +- 0.0011
+  Binder crossing L=64/96: T = 0.4713 +- 0.0010
+  T_c (largest pair) = 0.4713 +- 0.0010
+  1/nu (max dU)          = 1.254 +- 0.089
+  1/nu (dU at T_c)       = 1.115 +- 0.145
+  gamma/nu (max chi')    = 1.852 +- 0.036
+  gamma/nu (chi at T_c)  = 1.813 +- 0.044
+  2beta/nu               = 0.187 +- 0.044
+  alpha/nu               = 0.333 +- 0.016
+  candidates (1/nu, gamma/nu, 2beta/nu, alpha/nu):
+    2D 3-state Potts   1.200 1.733 0.267 0.400
+    2D Ising           1.000 1.750 0.250 0.000
+    first order        2.000 2.000 0.000 2.000
+  per L: max dU/dbeta, dU/dbeta(T_c), max chi', chi(T_c), <|psi|^2>(T_c), C_max, min U4
+    L= 24     2.441     1.044    118.897    1745.95  0.47621  0.4755  +0.330
+    L= 32     3.815     1.380    203.624    2958.40  0.45389  0.5278  +0.270
+    L= 48     6.495     2.199    438.472    6134.31  0.41829  0.6083  +0.124
+    L= 64     9.200     2.936    734.645   10325.05  0.39603  0.6517  +0.016
+    L= 96    13.888     4.916   1550.424   21623.92  0.36862  0.7611  -0.011
+  energy distribution at the C peak: T_peak, #maxima, barrier ln(Pmax/Pmin_between)
+    L= 24  T=0.4820  maxima=1  barrier=0.000
+    L= 32  T=0.4798  maxima=2  barrier=0.022
+    L= 48  T=0.4769  maxima=2  barrier=0.007
+    L= 64  T=0.4752  maxima=2  barrier=0.015
+    L= 96  T=0.4734  maxima=2  barrier=0.003
+saved annealed_tafm_fss_d21_figure.png
