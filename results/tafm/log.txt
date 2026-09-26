@@ -1,0 +1,11 @@
+L128_d21_T0.462_s1: 2638s <psi2>=0.5406 E/Ntri=0.70833 -> results/tafm/long_L128_d21_T0.462_s1.npz
+L128_d21_T0.464_s1: 2636s <psi2>=0.5131 E/Ntri=0.70915 -> results/tafm/long_L128_d21_T0.464_s1.npz
+L128_d21_T0.466_s1: 2671s <psi2>=0.4916 E/Ntri=0.70991 -> results/tafm/long_L128_d21_T0.466_s1.npz
+L128_d21_T0.468_s1: 2635s <psi2>=0.4540 E/Ntri=0.71083 -> results/tafm/long_L128_d21_T0.468_s1.npz
+L128_d21_T0.472_s1: 2658s <psi2>=0.3778 E/Ntri=0.71282 -> results/tafm/long_L128_d21_T0.472_s1.npz
+L128_d21_T0.47_s1: 2694s <psi2>=0.4155 E/Ntri=0.71182 -> results/tafm/long_L128_d21_T0.47_s1.npz
+L128_d21_T0.474_s1: 2694s <psi2>=0.2674 E/Ntri=0.71437 -> results/tafm/long_L128_d21_T0.474_s1.npz
+L128_d21_T0.476_s1: 2670s <psi2>=0.1231 E/Ntri=0.71632 -> results/tafm/long_L128_d21_T0.476_s1.npz
+L128_d21_T0.48_s1: 2685s <psi2>=0.0409 E/Ntri=0.71853 -> results/tafm/long_L128_d21_T0.48_s1.npz
+L128_d21_T0.478_s1: 2695s <psi2>=0.0677 E/Ntri=0.71757 -> results/tafm/long_L128_d21_T0.478_s1.npz
+L128_d21_T0.482_s1: 2711s <psi2>=0.0257 E/Ntri=0.71946 -> results/tafm/long_L128_d21_T0.482_s1.npz
