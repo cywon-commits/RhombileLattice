@@ -9,3 +9,6 @@ L128_d21_T0.476_s1: 2670s <psi2>=0.1231 E/Ntri=0.71632 -> results/tafm/long_L128
 L128_d21_T0.48_s1: 2685s <psi2>=0.0409 E/Ntri=0.71853 -> results/tafm/long_L128_d21_T0.48_s1.npz
 L128_d21_T0.478_s1: 2695s <psi2>=0.0677 E/Ntri=0.71757 -> results/tafm/long_L128_d21_T0.478_s1.npz
 L128_d21_T0.482_s1: 2711s <psi2>=0.0257 E/Ntri=0.71946 -> results/tafm/long_L128_d21_T0.482_s1.npz
+L128_d21_T0.484_s1: 2707s <psi2>=0.0228 E/Ntri=0.72022 -> results/tafm/long_L128_d21_T0.484_s1.npz
+L96_d21_T0.462_s1: 1140s <psi2>=0.5409 E/Ntri=0.70834 -> results/tafm/long_L96_d21_T0.462_s1.npz
+L96_d21_T0.464_s1: 1121s <psi2>=0.5186 E/Ntri=0.70910 -> results/tafm/long_L96_d21_T0.464_s1.npz
