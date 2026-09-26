@@ -34,3 +34,20 @@ L32_d21_T0.52_s1: 1000000/1000000 sweeps, 843s, last-chunk <psi2>=0.1111 E/Ntri=
 wrote results/long/long_L32_d21_T0.52_s1.npz
 L32_d21_T0.525_s1: 1000000/1000000 sweeps, 839s, last-chunk <psi2>=0.0688 E/Ntri=0.33936
 wrote results/long/long_L32_d21_T0.525_s1.npz
+L48_d21_T0.539_s1: 1000000/1000000 sweeps, 1981s, last-chunk <psi2>=0.0297 E/Ntri=0.33746
+wrote results/long/long_L48_d21_T0.539_s1.npz
+L48_d21_T0.543_s1: 1000000/1000000 sweeps, 1970s, last-chunk <psi2>=0.0164 E/Ntri=0.34975
+wrote results/long/long_L48_d21_T0.543_s1.npz
+L32_d21_T0.53_s1: 1000000/1000000 sweeps, 858s, last-chunk <psi2>=0.0613 E/Ntri=0.34115
+wrote results/long/long_L32_d21_T0.53_s1.npz
+L32_d21_T0.535_s1: 1000000/1000000 sweeps, 854s, last-chunk <psi2>=0.0719 E/Ntri=0.32568
+wrote results/long/long_L32_d21_T0.535_s1.npz
+L32_d21_T0.54_s1: 1000000/1000000 sweeps, 847s, last-chunk <psi2>=0.0336 E/Ntri=0.34408
+wrote results/long/long_L32_d21_T0.54_s1.npz
+L32_d21_T0.545_s1: 1000000/1000000 sweeps, 853s, last-chunk <psi2>=0.0143 E/Ntri=0.34229
+wrote results/long/long_L32_d21_T0.545_s1.npz
+L32_d21_T0.55_s1: 1000000/1000000 sweeps, 856s, last-chunk <psi2>=0.0290 E/Ntri=0.33659
+wrote results/long/long_L32_d21_T0.55_s1.npz
+L32_d21_T0.555_s1: 1000000/1000000 sweeps, 843s, last-chunk <psi2>=0.0238 E/Ntri=0.35807
+wrote results/long/long_L32_d21_T0.555_s1.npz
+queue results/long/jobs_step1.txt finished
