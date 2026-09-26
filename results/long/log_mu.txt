@@ -1,0 +1,12 @@
+wrote results/long/long_L48_d21_mu0.5_T0.618_s1.npz
+wrote results/long/long_L48_d21_mu0.5_T0.606_s1.npz
+wrote results/long/long_L48_d21_mu0.5_T0.6_s1.npz
+wrote results/long/long_L48_d21_mu0.5_T0.612_s1.npz
+wrote results/long/long_L48_d21_mu0.5_T0.624_s1.npz
+wrote results/long/long_L48_d21_mu0.5_T0.642_s1.npz
+wrote results/long/long_L48_d21_mu0.5_T0.636_s1.npz
+wrote results/long/long_L48_d21_mu0.5_T0.63_s1.npz
+wrote results/long/long_L48_d21_mu1_T0.69_s1.npz
+wrote results/long/long_L48_d21_mu0.5_T0.648_s1.npz
+wrote results/long/long_L48_d21_mu1_T0.696_s1.npz
+wrote results/long/long_L48_d21_mu1_T0.702_s1.npz
