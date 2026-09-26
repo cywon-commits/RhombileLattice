@@ -18,6 +18,14 @@
 [ -f results/d1d2/pt_L8_s2.npz ] || python3 annealed_d1d2.py 8 0.33 1.0 12 20000 100000 10 2 >> results/d1d2/log.txt
 [ -f results/d1d2/pt_L8_s3.npz ] || python3 annealed_d1d2.py 8 0.33 1.0 12 20000 100000 10 3 >> results/d1d2/log.txt
 [ -f results/d1d2/pt_L8_s4.npz ] || python3 annealed_d1d2.py 8 0.33 1.0 12 20000 100000 10 4 >> results/d1d2/log.txt
+python3 annealed_long.py 96 0.522 1200000 10 10000 1 | tail -n 1 >> results/long/log_L96.txt
+python3 annealed_long.py 96 0.524 1200000 10 10000 1 | tail -n 1 >> results/long/log_L96.txt
+python3 annealed_long.py 96 0.526 1200000 10 10000 1 | tail -n 1 >> results/long/log_L96.txt
+python3 annealed_long.py 96 0.528 1200000 10 10000 1 | tail -n 1 >> results/long/log_L96.txt
+python3 annealed_long.py 96 0.53 1200000 10 10000 1 | tail -n 1 >> results/long/log_L96.txt
+python3 annealed_long.py 96 0.532 1200000 10 10000 1 | tail -n 1 >> results/long/log_L96.txt
+python3 annealed_long.py 96 0.534 1200000 10 10000 1 | tail -n 1 >> results/long/log_L96.txt
+python3 annealed_long.py 96 0.536 1200000 10 10000 1 | tail -n 1 >> results/long/log_L96.txt
 python3 annealed_long.py 48 0.6 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
 python3 annealed_long.py 48 0.606 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
 python3 annealed_long.py 48 0.612 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
