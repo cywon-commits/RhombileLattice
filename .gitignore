@@ -1,3 +1,7 @@
 __pycache__/
 *.pyc
 .claude/
+results/long/ckpt_*.npz
+results/long/ckpt_*.tmp.npz
+results/*/*_s99*.npz
+results/tafm/ckpt_*.npz

@@ -1,0 +1,4 @@
+L=32 seed=1 K=44 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.25/0.33 time=4847s -> results/d1d2/pt_L32_s1.npz
+L=32 seed=2 K=44 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.25/0.33 time=4818s -> results/d1d2/pt_L32_s2.npz
+L=32 seed=3 K=44 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.25/0.33 time=4817s -> results/d1d2/pt_L32_s3.npz
+L=32 seed=4 K=44 T=[0.33,1.0] n_meas=100000 swap acc min/mean=0.25/0.33 time=4861s -> results/d1d2/pt_L32_s4.npz

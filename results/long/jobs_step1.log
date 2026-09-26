@@ -1,0 +1,53 @@
+L64_d21_T0.525_s1: 1000000/1000000 sweeps, 2721s, last-chunk <psi2>=0.0963 E/Ntri=0.32548
+wrote results/long/long_L64_d21_T0.525_s1.npz
+L64_d21_T0.519_s1: 1000000/1000000 sweeps, 2750s, last-chunk <psi2>=0.0952 E/Ntri=0.32402
+wrote results/long/long_L64_d21_T0.519_s1.npz
+L64_d21_T0.522_s1: 1000000/1000000 sweeps, 2765s, last-chunk <psi2>=0.0763 E/Ntri=0.32609
+wrote results/long/long_L64_d21_T0.522_s1.npz
+L64_d21_T0.516_s1: 1000000/1000000 sweeps, 2843s, last-chunk <psi2>=0.1078 E/Ntri=0.31616
+wrote results/long/long_L64_d21_T0.516_s1.npz
+L64_d21_T0.528_s1: 1000000/1000000 sweeps, 4015s, last-chunk <psi2>=0.0300 E/Ntri=0.33223
+wrote results/long/long_L64_d21_T0.528_s1.npz
+L64_d21_T0.531_s1: 1000000/1000000 sweeps, 4008s, last-chunk <psi2>=0.0391 E/Ntri=0.32918
+wrote results/long/long_L64_d21_T0.531_s1.npz
+L64_d21_T0.534_s1: 1000000/1000000 sweeps, 4026s, last-chunk <psi2>=0.0633 E/Ntri=0.33289
+wrote results/long/long_L64_d21_T0.534_s1.npz
+L64_d21_T0.537_s1: 1000000/1000000 sweeps, 4004s, last-chunk <psi2>=0.0182 E/Ntri=0.34106
+wrote results/long/long_L64_d21_T0.537_s1.npz
+L48_d21_T0.515_s1: 1000000/1000000 sweeps, 1882s, last-chunk <psi2>=0.1019 E/Ntri=0.31264
+wrote results/long/long_L48_d21_T0.515_s1.npz
+L48_d21_T0.519_s1: 1000000/1000000 sweeps, 1905s, last-chunk <psi2>=0.1107 E/Ntri=0.31778
+wrote results/long/long_L48_d21_T0.519_s1.npz
+L48_d21_T0.523_s1: 1000000/1000000 sweeps, 1869s, last-chunk <psi2>=0.1006 E/Ntri=0.32219
+wrote results/long/long_L48_d21_T0.523_s1.npz
+L48_d21_T0.527_s1: 1000000/1000000 sweeps, 1954s, last-chunk <psi2>=0.0655 E/Ntri=0.32154
+wrote results/long/long_L48_d21_T0.527_s1.npz
+L48_d21_T0.535_s1: 1000000/1000000 sweeps, 1951s, last-chunk <psi2>=0.0454 E/Ntri=0.33746
+wrote results/long/long_L48_d21_T0.535_s1.npz
+L48_d21_T0.531_s1: 1000000/1000000 sweeps, 1977s, last-chunk <psi2>=0.0827 E/Ntri=0.33022
+wrote results/long/long_L48_d21_T0.531_s1.npz
+L64_d21_T0.54_s1: 1000000/1000000 sweeps, 4221s, last-chunk <psi2>=0.0041 E/Ntri=0.33936
+wrote results/long/long_L64_d21_T0.54_s1.npz
+L32_d21_T0.515_s1: 1000000/1000000 sweeps, 844s, last-chunk <psi2>=0.1192 E/Ntri=0.31738
+wrote results/long/long_L32_d21_T0.515_s1.npz
+L32_d21_T0.52_s1: 1000000/1000000 sweeps, 843s, last-chunk <psi2>=0.1111 E/Ntri=0.32340
+wrote results/long/long_L32_d21_T0.52_s1.npz
+L32_d21_T0.525_s1: 1000000/1000000 sweeps, 839s, last-chunk <psi2>=0.0688 E/Ntri=0.33936
+wrote results/long/long_L32_d21_T0.525_s1.npz
+L48_d21_T0.539_s1: 1000000/1000000 sweeps, 1981s, last-chunk <psi2>=0.0297 E/Ntri=0.33746
+wrote results/long/long_L48_d21_T0.539_s1.npz
+L48_d21_T0.543_s1: 1000000/1000000 sweeps, 1970s, last-chunk <psi2>=0.0164 E/Ntri=0.34975
+wrote results/long/long_L48_d21_T0.543_s1.npz
+L32_d21_T0.53_s1: 1000000/1000000 sweeps, 858s, last-chunk <psi2>=0.0613 E/Ntri=0.34115
+wrote results/long/long_L32_d21_T0.53_s1.npz
+L32_d21_T0.535_s1: 1000000/1000000 sweeps, 854s, last-chunk <psi2>=0.0719 E/Ntri=0.32568
+wrote results/long/long_L32_d21_T0.535_s1.npz
+L32_d21_T0.54_s1: 1000000/1000000 sweeps, 847s, last-chunk <psi2>=0.0336 E/Ntri=0.34408
+wrote results/long/long_L32_d21_T0.54_s1.npz
+L32_d21_T0.545_s1: 1000000/1000000 sweeps, 853s, last-chunk <psi2>=0.0143 E/Ntri=0.34229
+wrote results/long/long_L32_d21_T0.545_s1.npz
+L32_d21_T0.55_s1: 1000000/1000000 sweeps, 856s, last-chunk <psi2>=0.0290 E/Ntri=0.33659
+wrote results/long/long_L32_d21_T0.55_s1.npz
+L32_d21_T0.555_s1: 1000000/1000000 sweeps, 843s, last-chunk <psi2>=0.0238 E/Ntri=0.35807
+wrote results/long/long_L32_d21_T0.555_s1.npz
+queue results/long/jobs_step1.txt finished
