@@ -1,0 +1,10 @@
+L=48 T=0.525 ordered: <psi2> quarters 0.0847 0.0463 0.0323 0.0861  E/Ntri last half 0.32548  -> results/fss/hyst_L48_T0.525_ordered_s1.npz
+L=48 T=0.515 ordered: <psi2> quarters 0.1135 0.1127 0.1114 0.1132  E/Ntri last half 0.31500  -> results/fss/hyst_L48_T0.515_ordered_s1.npz
+L=48 T=0.525 random: <psi2> quarters 0.0157 0.0551 0.0708 0.0128  E/Ntri last half 0.32687  -> results/fss/hyst_L48_T0.525_random_s1.npz
+L=48 T=0.515 random: <psi2> quarters 0.0968 0.1197 0.1063 0.0272  E/Ntri last half 0.31755  -> results/fss/hyst_L48_T0.515_random_s1.npz
+L=48 T=0.535 ordered: <psi2> quarters 0.0200 0.0470 0.0292 0.0238  E/Ntri last half 0.33556  -> results/fss/hyst_L48_T0.535_ordered_s1.npz
+L=48 T=0.535 random: <psi2> quarters 0.0250 0.0218 0.0356 0.0685  E/Ntri last half 0.33343  -> results/fss/hyst_L48_T0.535_random_s1.npz
+L=64 T=0.515 ordered: <psi2> quarters 0.1159 0.1138 0.1155 0.1084  E/Ntri last half 0.31500  -> results/fss/hyst_L64_T0.515_ordered_s1.npz
+L=64 T=0.515 random: <psi2> quarters 0.1108 0.1145 0.1160 0.1120  E/Ntri last half 0.31486  -> results/fss/hyst_L64_T0.515_random_s1.npz
+L=64 T=0.525 ordered: <psi2> quarters 0.0920 0.0933 0.0738 0.0743  E/Ntri last half 0.32432  -> results/fss/hyst_L64_T0.525_ordered_s1.npz
+L=64 T=0.525 random: <psi2> quarters 0.0209 0.0725 0.0888 0.0788  E/Ntri last half 0.32359  -> results/fss/hyst_L64_T0.525_random_s1.npz
