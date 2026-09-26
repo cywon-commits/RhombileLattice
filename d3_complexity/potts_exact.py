@@ -6,23 +6,25 @@ from scipy.optimize import milp, LinearConstraint, Bounds
 from scipy.sparse import lil_matrix
 
 
-def solve(n, edges, D3, fix=None, time_limit=None):
+def solve(n, edges, D3, fix=None, time_limit=None, count33=True):
     """Return (mono, n3, colours) of an optimal colouring. colours[v] in {1,2,3}.
-    `fix` maps vertex -> set of forbidden colours (optional)."""
+    `fix` maps vertex -> set of forbidden colours (optional).
+    count33=False drops the cost of colour-3/colour-3 edges (the "hub" relaxation)."""
     ne = len(edges)
     N = 3 * n + ne
     c = np.zeros(N)
     c[[3 * v + 2 for v in range(n)]] = D3
     c[3 * n:] = 1.0
-    A = lil_matrix((n + 3 * ne, N))
-    lo = np.empty(n + 3 * ne)
-    hi = np.empty(n + 3 * ne)
+    ncol = 3 if count33 else 2
+    A = lil_matrix((n + ncol * ne, N))
+    lo = np.empty(n + ncol * ne)
+    hi = np.empty(n + ncol * ne)
     for v in range(n):
         A[v, 3 * v:3 * v + 3] = 1
         lo[v] = hi[v] = 1
     r = n
     for k, (u, w) in enumerate(edges):
-        for col in range(3):
+        for col in range(3 if count33 else 2):
             A[r, 3 * u + col] = 1
             A[r, 3 * w + col] = 1
             A[r, 3 * n + k] = -1
@@ -40,7 +42,7 @@ def solve(n, edges, D3, fix=None, time_limit=None):
         raise RuntimeError(res.message)
     x = np.round(res.x).astype(int)
     col = np.array([1 + int(np.argmax(x[3 * v:3 * v + 3])) for v in range(n)])
-    mono = sum(col[u] == col[w] for u, w in edges)
+    mono = sum(col[u] == col[w] and (count33 or col[u] != 3) for u, w in edges)
     n3 = int((col == 3).sum())
     return int(mono), n3, col
 
