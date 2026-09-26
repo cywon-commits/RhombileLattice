@@ -1,0 +1,74 @@
+[ -f results/d1d2/pt_L32_s1.npz ] || python3 annealed_d1d2.py 32 0.33 1.0 44 20000 100000 10 1 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L32_s2.npz ] || python3 annealed_d1d2.py 32 0.33 1.0 44 20000 100000 10 2 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L32_s3.npz ] || python3 annealed_d1d2.py 32 0.33 1.0 44 20000 100000 10 3 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L32_s4.npz ] || python3 annealed_d1d2.py 32 0.33 1.0 44 20000 100000 10 4 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L24_s1.npz ] || python3 annealed_d1d2.py 24 0.33 1.0 34 20000 100000 10 1 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L24_s2.npz ] || python3 annealed_d1d2.py 24 0.33 1.0 34 20000 100000 10 2 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L24_s3.npz ] || python3 annealed_d1d2.py 24 0.33 1.0 34 20000 100000 10 3 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L24_s4.npz ] || python3 annealed_d1d2.py 24 0.33 1.0 34 20000 100000 10 4 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L16_s1.npz ] || python3 annealed_d1d2.py 16 0.33 1.0 24 20000 100000 10 1 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L16_s2.npz ] || python3 annealed_d1d2.py 16 0.33 1.0 24 20000 100000 10 2 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L16_s3.npz ] || python3 annealed_d1d2.py 16 0.33 1.0 24 20000 100000 10 3 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L16_s4.npz ] || python3 annealed_d1d2.py 16 0.33 1.0 24 20000 100000 10 4 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L12_s1.npz ] || python3 annealed_d1d2.py 12 0.33 1.0 18 20000 100000 10 1 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L12_s2.npz ] || python3 annealed_d1d2.py 12 0.33 1.0 18 20000 100000 10 2 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L12_s3.npz ] || python3 annealed_d1d2.py 12 0.33 1.0 18 20000 100000 10 3 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L12_s4.npz ] || python3 annealed_d1d2.py 12 0.33 1.0 18 20000 100000 10 4 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L8_s1.npz ] || python3 annealed_d1d2.py 8 0.33 1.0 12 20000 100000 10 1 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L8_s2.npz ] || python3 annealed_d1d2.py 8 0.33 1.0 12 20000 100000 10 2 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L8_s3.npz ] || python3 annealed_d1d2.py 8 0.33 1.0 12 20000 100000 10 3 >> results/d1d2/log.txt
+[ -f results/d1d2/pt_L8_s4.npz ] || python3 annealed_d1d2.py 8 0.33 1.0 12 20000 100000 10 4 >> results/d1d2/log.txt
+python3 annealed_long.py 48 0.6 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.606 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.612 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.618 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.624 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.63 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.636 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.642 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.648 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.69 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.696 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.702 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.708 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.714 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.72 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.726 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.732 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 48 0.738 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.6 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.606 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.612 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.618 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.624 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.63 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.636 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.642 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.648 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.69 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.696 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.702 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.708 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.714 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.72 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.726 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.732 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 32 0.738 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.6 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.606 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.612 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.618 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.624 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.63 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.636 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.642 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.648 500000 10 20000 1 1 0.5 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.69 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.696 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.702 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.708 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.714 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.72 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.726 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.732 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
+python3 annealed_long.py 24 0.738 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu.txt
