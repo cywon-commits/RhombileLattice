@@ -1,0 +1,8 @@
+L64_d21_T0.525_s1: 1000000/1000000 sweeps, 2721s, last-chunk <psi2>=0.0963 E/Ntri=0.32548
+wrote results/long/long_L64_d21_T0.525_s1.npz
+L64_d21_T0.519_s1: 1000000/1000000 sweeps, 2750s, last-chunk <psi2>=0.0952 E/Ntri=0.32402
+wrote results/long/long_L64_d21_T0.519_s1.npz
+L64_d21_T0.522_s1: 1000000/1000000 sweeps, 2765s, last-chunk <psi2>=0.0763 E/Ntri=0.32609
+wrote results/long/long_L64_d21_T0.522_s1.npz
+L64_d21_T0.516_s1: 1000000/1000000 sweeps, 2843s, last-chunk <psi2>=0.1078 E/Ntri=0.31616
+wrote results/long/long_L64_d21_T0.516_s1.npz
