@@ -28,7 +28,7 @@ cost_D3(s) = #{ij ∈ E : s_i = s_j} + D3 · #{v : s_v = 3},   s : V → {1,2,3}
 | Garey–Johnson–Stockmeyer 1976; Dailey 1980 (4-정규 평면 3색칠 NP-완전) | 평면 3색칠은 Δ=4에서도 NP-완전 | D3·n < 1 극한만 다룸. **D3가 고정된 경우는 다루지 않음** |
 | Garey–Johnson (1977 근방) | 최대 차수 3 평면 그래프의 vertex cover / MIS는 NP-완전 | 경계 바로 아래 구간 환원의 가장 자연스러운 출발 문제 (§2.3) |
 | **Barahona 1982**, J. Phys. A 15, 3241 (**원문 확인 완료**, §4.3) | 문제 P5: 평면 그래프에서 H = Σ_{ij∈E} S_iS_j + Σ_i S_i 최소화 (J = −1 반강자성, 균일 장 F = 1, 즉 |h| = |J|). 출발 문제 P4는 평면 3-정규 그래프의 최대 안정집합(Maier–Storer 1977). **가젯이 없다.** 입력 그래프를 그대로 쓰고 X_i = (S_i+1)/2로 치환한 항등식 L = ΣX_i − Σ_{E}X_iX_j = −¼ΣS_i − ¼ΣS_iS_j + |V|/8 하나뿐이다. 결론: "크기 k 이상의 안정집합 존재 ⇔ min H ≤ |V|/2 − 4k" (상수를 직접 검산함; 3-정규성은 Σ_E(S_i+S_j) = 3ΣS_i에 쓰임). Ising 그래프의 최대 차수는 3이고, 비율 h/J = 1로 고정된 채 NP-hard | (i) 평면 3-정규 MIS가 표준 출발점임을 확인. (ii) 그의 증명은 QUBO 항등식이라 **우리 문제로 옮길 가젯 자체가 없다.** 색 3을 X_i = 1("선택")로, 3-3 간선 비용을 X_iX_j 벌점으로 대응시킬 수 있지만, 우리 문제에서는 G−S가 좌절돼 있을 때만 색 3이 이득이다(이분 그래프면 S = ∅이 최적). 따라서 "색 3 하나가 좌절 1단위를 해소하는" 자리를 가젯으로 만들어야 한다(§2 단계 3). (iii) ±장은 1↔2 대칭과 맞지 않는다 (§1.3-7) |
-| Fulla–Živný, *On planar valued CSPs*, JCSS 87 (2017) / MFCS 2016 | (i) 평면 Boolean VCSP 분류. (ii) **conservative**(모든 단항 비용 허용) 평면 VCSP는 임의의 유한 정의역에서 평면성이 새로운 다항 경우를 만들지 않는다 | 모든 단항을 허용하면 평면 반강자성 Potts는 일반 그래프와 같은 분류로 떨어진다(추정). 이 문제는 단항 (0,0,D3) **하나만** 있는 비-conservative 경우라서 **적용되지 않는다** [원문 확인 필요] |
+| Fulla–Živný, *On planar valued CSPs*, JCSS 87 (2017) / MFCS 2016, arXiv:1602.06323v3 (**원문 확인 완료**) | 평면 VCSP = 인스턴스의 **incidence graph**가 평면(제약 주위 간선 순서가 인자 순서를 따름). 이진 제약만 있으면 제약 그래프가 평면이라는 뜻이고, 단항 제약은 평면성에 영향을 주지 않는다. **Thm 16:** 다루기 어려운 Boolean 언어가 self-complementary가 아니면 평면에서도 어렵다. **Thm 24:** conservative(모든 {0,1}값 단항 포함) 언어가 어려우면 평면에서도 어렵다. §1.1: Γ_cut ∪ {γ₀}(한쪽에만 단항 비용이 붙은 가중 평면 Min-UnCut)도 평면에서 어렵다. §5 결론: "**non-conservative 더 큰 정의역**"은 열린 문제로 명시(4색 정리 때문에 어렵다고 언급) | (i) 우리 언어 {γ_=, [x=3]}(정의역 3)는 conservative가 **아니고** 1↔2 대칭이다. Thm 24는 **적용되지 않는다.** (ii) 더 근본적으로, VCSP는 제약마다 임의의 가중치 w ≥ 0을 허용한다. 그래서 VCSPₚ({γ_=, [x=3]})는 단항 가중치 0만으로 평면 3색칠을 포함해 **자명하게 어렵다.** 즉 VCSP 틀은 우리 질문(간선 가중치 1, **고정 비율** D3, 차수 제한)보다 **거칠다.** 이 질문은 기존 이분법 **아래**에 있다. (iii) 저자들이 열린 방향으로 꼽은 영역(non-conservative, |D| ≥ 3)에 해당하므로 새로움을 주장할 근거가 된다. (iv) Boolean 유사물(Ising + 한쪽 장)은 가중치를 허용하면 어렵고, 단위 가중치로도 Barahona가 이미 어렵다고 보였다 |
 | Dvořák–Kupec ICALP 2015; Kazda–Kolmogorov–Rolínek SODA 2017 / TALG 2018 | 평면 Boolean CSP 분류 완성(even Δ-matroid) | 정의역이 2여서 직접 적용되지 않음. "평면 VCSP" 분야의 현재 위치를 보여 줌 |
 | Thapper–Živný; Kolmogorov–Krokhin–Rolínek | 일반 그래프 VCSP 이분법 | 평면성 제약은 이 틀 밖 |
 | Kubicka, Jansen 등: Optimum Cost Chromatic Partition (OCCP) | 색마다 비용이 있는 **진짜(proper)** 색칠 최소화. 평면에서 강 NP-hard(sum coloring) | 이 문제는 단색 간선을 허용하는 "soft" 판이고 색이 3개로 고정되어 있음. D3 → 0 극한과만 닿음 |
@@ -82,7 +82,7 @@ cost_D3(s) = #{ij ∈ E : s_i = s_j} + D3 · #{v : s_v = 3},   s : V → {1,2,3}
 
 - 원문으로 확인할 항목:
   - ~~Barahona 1982의 평면 환원~~ → 완료 (사용자 제공 원문, 위 표 참고)
-  - Fulla–Živný의 conservative 평면 VCSP 정리 문구
+  - ~~Fulla–Živný의 conservative 평면 VCSP 정리 문구~~ → 완료 (사용자 제공 원문, 위 표 참고)
   - **최소** independent OCT의 평면·저차수 복잡도
   - Kubicka/Jansen OCCP의 평면 결과
 - 사용자에게 요청: 원문 접근이 막혀 있으므로, 남은 PDF를 저장소에 넣어 주거나 요지를 알려 주면 반영하겠다.
