@@ -12,3 +12,15 @@ L128_d21_T0.482_s1: 2711s <psi2>=0.0257 E/Ntri=0.71946 -> results/tafm/long_L128
 L128_d21_T0.484_s1: 2707s <psi2>=0.0228 E/Ntri=0.72022 -> results/tafm/long_L128_d21_T0.484_s1.npz
 L96_d21_T0.462_s1: 1140s <psi2>=0.5409 E/Ntri=0.70834 -> results/tafm/long_L96_d21_T0.462_s1.npz
 L96_d21_T0.464_s1: 1121s <psi2>=0.5186 E/Ntri=0.70910 -> results/tafm/long_L96_d21_T0.464_s1.npz
+L96_d21_T0.466_s1: 1102s <psi2>=0.4959 E/Ntri=0.70988 -> results/tafm/long_L96_d21_T0.466_s1.npz
+L96_d21_T0.468_s1: 1108s <psi2>=0.4641 E/Ntri=0.71079 -> results/tafm/long_L96_d21_T0.468_s1.npz
+L96_d21_T0.47_s1: 1126s <psi2>=0.4255 E/Ntri=0.71176 -> results/tafm/long_L96_d21_T0.47_s1.npz
+L128_d21_T0.486_s1: 2704s <psi2>=0.0186 E/Ntri=0.72098 -> results/tafm/long_L128_d21_T0.486_s1.npz
+L96_d21_T0.472_s1: 1084s <psi2>=0.2992 E/Ntri=0.71354 -> results/tafm/long_L96_d21_T0.472_s1.npz
+L96_d21_T0.474_s1: 1075s <psi2>=0.2319 E/Ntri=0.71488 -> results/tafm/long_L96_d21_T0.474_s1.npz
+L96_d21_T0.476_s1: 1088s <psi2>=0.2081 E/Ntri=0.71579 -> results/tafm/long_L96_d21_T0.476_s1.npz
+L96_d21_T0.478_s1: 1126s <psi2>=0.1115 E/Ntri=0.71743 -> results/tafm/long_L96_d21_T0.478_s1.npz
+L96_d21_T0.48_s1: 1108s <psi2>=0.0788 E/Ntri=0.71841 -> results/tafm/long_L96_d21_T0.48_s1.npz
+L64_d21_T0.462_s1: 475s <psi2>=0.5430 E/Ntri=0.70832 -> results/tafm/long_L64_d21_T0.462_s1.npz
+L96_d21_T0.482_s1: 1159s <psi2>=0.0609 E/Ntri=0.71931 -> results/tafm/long_L96_d21_T0.482_s1.npz
+L96_d21_T0.484_s1: 1171s <psi2>=0.0355 E/Ntri=0.72027 -> results/tafm/long_L96_d21_T0.484_s1.npz
