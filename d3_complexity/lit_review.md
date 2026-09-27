@@ -1,0 +1,64 @@
+# 논문화를 위한 선행 연구 점검 (1차, 2026-09-27)
+
+방법: 웹 검색만 했다. 원문 PDF 접근은 막혀 있다(arXiv, 출판사). "[원문 필요]" 표시가 붙은 항목은 사용자 도움이 필요하다.
+
+## 1. 가장 가까운 모형: Blume–Capel (spin-1) 반강자성체
+
+우리 모형(상태 1, 2, 3; 같은 상태 결합 1; 상태 3 비용 D3)은 **Blume–Capel(BC) 반강자성체**와 매우 가깝다. 대응은 상태 1, 2 ↔ s = ±1, 상태 3 ↔ s = 0이다.
+
+| 결합 | 우리 모형 | BC 반강자성 (J Σ s_i s_j) |
+|---|---|---|
+| ±와 ± (같음) | 1 | +J |
+| ±와 ∓ (다름) | 0 | −J |
+| ±와 0 | 0 | 0 |
+| **0과 0** | **1** | **0** |
+
+J = 1/2로 맞추면 BC 에너지 = (우리 에너지) − |E|/2 + Σ_{v: s=0} deg(v)/2 − (0–0 결합 수)·(3/2) + (단일 이온 항)이다.
+
+- **정규 격자(모든 사이트 이웃 z개)에서는** 차수 항이 상수 이동(D3 ↔ D_BC + z/4, 단위에 따라 다름)이 된다. 남는 차이는 **0–0 결합 에너지**뿐이다.
+- 우리 모형의 바닥상태에서 상태 3이 서로 이웃하지 않는 경우에는(Δ ≤ 4의 모든 D3 > 0, 정리 A.5), 두 모형의 바닥상태가 사실상 일치한다. 정확한 조건은 [원문 확인 후 정리 필요]이다.
+- **결론:** 논문은 BC 반강자성 문헌과의 관계를 명시적으로 다뤄야 한다. 기여는 "일반 평면 격자 전체에 대한 엄밀한 정리와 정확 알고리즘"으로 규정한다.
+
+### 핵심 선행 연구
+- **Žukovič & Bobák, "Phase transitions in a triangular Blume-Capel antiferromagnet", Phys. Rev. E 87, 032121 (2013), arXiv:1212.5447** [원문 필요]
+    - 삼각 격자 BC 반강자성체의 바닥상태를 다룬다. 축소 이방성 −1.5 < D/J < 0에서 두 부격자는 반강자성 정렬, 세 번째 부격자는 비자성(s = 0)이다.
+    - 경계 1.5는 우리 단위로 D3* = 3에 해당하는 것으로 보인다(결합 에너지 차 2J = 1 환산).
+    - **따라서 삼각 격자의 D3* = 3 자체는 (BC 형태로) 알려져 있다.** 우리 쪽 새로운 점은 모든 격자에서의 ⌊Δ/2⌋ 법칙, 빡빡함, 국소 구조다.
+- Žukovič, Borovský, Bobák, 선택적 희석 삼각·벌집 Ising 반강자성체, arXiv:1212.5437 (담금질 희석이라 우리와 다르다. 비교용)
+- Hartmann & Rieger, *Frustrated systems: ground state properties via combinatorial optimization* (Springer 강의록). 희석 반강자성체, 매칭·흐름 알고리즘을 다룬다 [원문 필요: 빈자리 있는 평면 Ising의 정확 알고리즘이 있는지]
+
+## 2. 그래프 이론 쪽
+
+- **Choi, Nakajima, Rim, "Graph bipartization and via minimization", SIAM J. Discrete Math. 2(1):38–47 (1989)** [원문 필요]
+    - 최대 차수 3에서 "정점 이분화 최소 = 간선 이분화 최소(fr)"를 보였다.
+    - 확인할 것: 그들의 구성이 이미 **독립** 정점 집합을 주는지. 그렇다면 추측 C.5의 상당 부분이 알려져 있다.
+- **Faria, Klein, Stehlík, "Odd cycle transversals and independent sets in fullerene graphs", SIAM J. Discrete Math. 26(3) (2012)** [원문 필요]. 풀러렌(평면 3-정규)에서 홀수 사이클 횡단과 독립집합의 관계를 다룬다.
+- **"Frustration indices of signed subcubic graphs", arXiv:2511.15226** [원문 필요]. 부호 이웃-3 그래프의 좌절 지수를 다루며, (K₄, 전부 음)을 예외로 둔다. 추측 C.5의 부호 그래프 판과 관련될 수 있다.
+- Brooks(1941), Lovász의 분할 정리 등 고전 결과(인용용)
+
+## 3. 복잡도 쪽 (이미 확인)
+- Johnson 외, *Complexity Framework for Forbidden Subgraphs I*
+    - arXiv:2211.12887v5는 확인했다(평면성 빈틈 발견).
+    - **저널판: Algorithmica 87(3):429–464 (2025)** [원문 필요]. 정리 11의 평면성 논증이 고쳐졌는지 확인해야 한다. 고쳐지지 않았으면 저자들에게 알린다.
+- Pilz 2019, Kazda–Kolmogorov–Rolínek, Fulla–Živný, Barahona 1982: 확인 완료
+
+## 4. 추가 검색 키워드 (사용자 검색용)
+
+- Blume-Capel antiferromagnet ground state kagome / honeycomb / diced / Shastry-Sutherland / arbitrary lattice
+- spin-1 Ising antiferromagnet crystal field frustration relief nonmagnetic sites "ground-state phase diagram"
+- annealed vacancies frustrated Ising exact ground state matching / "site-diluted" planar spin glass chemical potential
+- "independent odd cycle transversal" subcubic / "stable bipartization" maximum degree 3
+- "3-colouring" "colour class" minimum cubic graph / "bipartite subgraph" 3-colouring subcubic
+- Potts antiferromagnet crystal field / single-ion anisotropy ground state
+
+## 5. 지금까지의 판단
+
+| 결과 | 선행 연구 상태 |
+|---|---|
+| 삼각 격자 D3* = 3 | **BC 형태로 알려짐**(Žukovič–Bobák 2013). 인용하고 재유도로 제시한다 |
+| 일반 ⌊Δ/2⌋ 법칙 + 모든 Δ에서의 빡빡함 + 사이트별 형태 | 검색에서 발견 못함 (새로울 가능성 높음) |
+| 국소 구조 정리 (독립성, 2:2) | 발견 못함 |
+| 정리 C (이웃 3 치유, E = min(D3,1)·fr) | 발견 못함. Choi–Nakajima–Rim과의 관계 확인 필요 |
+| 매칭 + 2-SAT 인증 알고리즘 | 발견 못함 |
+| 추측 C.5 | 발견 못함. Choi–Nakajima–Rim, 부호 그래프 문헌 확인 필요 |
+| 펜로즈 쌍대·깎은 펜로즈 결과 | 발견 못함 |
