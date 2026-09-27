@@ -15,7 +15,7 @@
 | 3 문턱 | 보조정리(국소 재색칠), 정리(문턱), 명제(바퀴), 삼각 격자 | `theorem_A.md` §1–3, §5 |
 | 4 국소 구조 | 정리(독립성, 2:2, 구간 구조) | `theorem_A.md` §4 |
 | 5 정확 알고리즘 | 평면 max-cut / T-join | `theorem_A.md` §3 |
-| 6 이웃 3 치유 | 샌드위치, 치유 정리, 허브 완화, 인증 알고리즘, 추측 | `theorem_C.md` |
+| 6 이웃 3 치유 | 샌드위치, 치유 판정, 인증 알고리즘, 치유 정리와 증명(`healing_proof.tex`) | `theorem_C.md` |
 | 7 Δ = 4 어려움 | 정리 D (CNR 구성 + 삼각형 나눠 매기기) | `theorem_D.md`, `cnr_reduction.py` |
 | 8 격자 | 삼각, 펜로즈 쌍대, 깎기, 깎은 펜로즈·거품·결함 벌집 | `report/`, `penrose_scan.py`, `lattices3.py` |
 | 9 논의 | 복잡도 지형(짧게), 대칭 대 장, 열린 문제 | `perfect_colouring_obstruction.md`, `theorem_delta3.md` |
