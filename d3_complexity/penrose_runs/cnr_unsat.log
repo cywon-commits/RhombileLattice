@@ -1,0 +1,6 @@
+unsat: all 8 clauses on 3 vars n 224 D3 0.5 OPT 24.5 6mD3 24.0 OPT<=6mD3: False sat: False (11s)
+unsat: all 8 clauses on 3 vars n 224 D3 1.5 OPT 72.5 6mD3 72.0 OPT<=6mD3: False sat: False (1s)
+unsat: all 8 clauses on 3 vars n 224 D3 1.9 OPT 91.3 6mD3 91.2 OPT<=6mD3: False sat: False (1s)
+sat: 7 clauses n 196 D3 0.5 OPT 21.0 6mD3 21.0 OPT<=6mD3: True sat: True (6s)
+sat: 7 clauses n 196 D3 1.5 OPT 63.0 6mD3 63.0 OPT<=6mD3: True sat: True (2s)
+sat: 7 clauses n 196 D3 1.9 OPT 79.8 6mD3 79.8 OPT<=6mD3: True sat: True (1s)

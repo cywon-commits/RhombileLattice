@@ -1,5 +1,5 @@
 % Manuscript skeleton -- D3 project. Not yet compiled (no TeX in the build container).
-% TODO markers: [TODO-BC] Blume-Capel mapping (needs Zukovic-Bobak 2013), [TODO-LIT] literature,
+% TODO markers: [TODO-LIT] literature,
 % [TODO-FIG] figure to be produced, [TODO-NUM] numerics to rerun at larger size.
 \documentclass[aps,pre,twocolumn,superscriptaddress,showpacs]{revtex4-2}
 \usepackage{amsmath,amssymb,amsthm}
@@ -32,14 +32,12 @@ three-state Potts model with single-ion anisotropy on frustrated planar lattices
 \begin{abstract}
 We study the ground states of the antiferromagnetic three-state Potts model in which the third
 state carries a single-ion energy cost $D_3$, on arbitrary lattices.
-A single local recolouring argument shows that a site of coordination $d$ in the third state can
-relieve at most $\lfloor d/2\rfloor$ frustrated bonds.
-Consequently the third state disappears from every ground state once $D_3>\lfloor\Delta/2\rfloor$,
-where $\Delta$ is the maximum coordination, and for planar lattices the ground state is then
-computable exactly in polynomial time by matching.
-The threshold is attained for every $\Delta\ge 3$, and it explains the transition points
-observed on the triangular lattice ($D_3^*=3$), on the face-adjacency graph of Penrose tilings
-($D_3^*=2$) and around dilute frustrated defects ($D_c\simeq 2$).
+On lattices of constant coordination the model is equivalent to the spin-1 Blume--Capel
+antiferromagnet whenever third-state sites are isolated.
+As a preliminary we show that a site of coordination $d$ in the third state relieves at most
+$\lfloor d/2\rfloor$ frustrated bonds, so the third state disappears from every ground state once
+$D_3>\lfloor\Delta/2\rfloor$ on arbitrary, also irregular, lattices; the bound is sharp for every
+maximum coordination $\Delta\ge3$ and reproduces the known triangular-lattice point $D_3^*=3$.
 Below the threshold, ground states have a rigid local structure: third-state sites are isolated
 and, for coordination four and $1<D_3<2$, surrounded by exactly two neighbours of each other state.
 On lattices of coordination three the third state heals frustrated bonds one for one:
@@ -49,6 +47,9 @@ and certifies exact ground states of quasicrystalline, foam-like and defective l
 thousands of sites in seconds.
 We conjecture that every connected graph of maximum degree three other than $K_4$ is healable,
 and verify this exhaustively for all 27\,523 such graphs with at most 12 vertices.
+On planar lattices of coordination four, in contrast, deciding the ground-state energy is
+NP-complete for every fixed $0<D_3<2$, while it is polynomial for $D_3\ge2$: the threshold
+$\lfloor\Delta/2\rfloor$ is also the exact boundary of computational hardness.
 \end{abstract}
 
 \maketitle
@@ -77,17 +78,21 @@ is a property of the lattice.
 
 The model is closely related to the spin-1 Blume--Capel antiferromagnet, in which the
 non-magnetic state $s=0$ plays the role of the third state; on the triangular lattice the
-non-magnetic sublattice phase and its stability window are known~\cite{Zukovic2013}. [TODO-BC:
-precise mapping.] Most studies of such models fix a lattice and map the phase diagram
+non-magnetic sublattice phase and its stability window are known~\cite{Zukovic2013}. The
+two models differ only in the energy of a bond between two third-state sites
+(Sec.~\ref{sec:model}); on lattices of constant coordination they coincide whenever third-state
+sites are isolated, which is the case below threshold for coordination up to four. Most studies of such models fix a lattice and map the phase diagram
 numerically. Here we instead prove statements that hold on \emph{every} lattice, controlled only
 by the local coordination.
 
 Our results are as follows.
-(i) A single local recolouring argument shows that a site of coordination $d$ in the third state
+(i) As a preliminary, a single local recolouring argument shows that a site of coordination $d$ in the third state
 relieves at most $\lfloor d/2\rfloor$ frustrated bonds. Hence the third state disappears from all
 ground states once $D_3>\lfloor\Delta/2\rfloor$, with $\Delta$ the maximum coordination
 (Theorem~\ref{thm:threshold}). On planar lattices the ground state is then computable exactly
-by matching for all such $D_3$.
+by matching for all such $D_3$. For regular lattices this is the Potts-normalised form of an
+elementary Blume--Capel fact; its content lies in the site-resolved form, which applies to
+irregular and quasiperiodic lattices, and in its sharpness.
 (ii) The threshold cannot be improved for any $\Delta\ge3$ (Proposition~\ref{prop:wheel}). It
 accounts for the transition points found on the triangular lattice ($D_3^*=3$), on the
 face-adjacency graph of Penrose tilings ($D_3^*=2$), and around dilute frustrated defects on the
@@ -103,12 +108,16 @@ yields an algorithm that constructs \emph{and certifies} exact ground states by 
 (v) We conjecture that every connected graph of maximum degree three other than $K_4$ is
 healable (Conjecture~\ref{conj:healing}), which would make the coordination-three problem
 polynomial for all $D_3$. We verify the conjecture exhaustively up to 12 vertices.
+(vi) At coordination four the picture is the opposite: on planar lattices with $\Delta=4$ the
+ground-state problem is NP-complete for every fixed $0<D_3<2$ (Theorem~\ref{thm:hard4}). Together
+with (i), the threshold $D_3=\lfloor\Delta/2\rfloor=2$ is exactly where the problem becomes
+tractable.
 
 The paper is organised as follows. Section~\ref{sec:model} defines the model and its relation to
 the Blume--Capel antiferromagnet. Sections~\ref{sec:threshold}--\ref{sec:exact} prove the
 threshold law, the local structure and the exact algorithm above threshold.
-Section~\ref{sec:healing} treats coordination three, and Section~\ref{sec:lattices} applies the
-results to specific lattices. Section~\ref{sec:discussion} discusses the computational-complexity
+Section~\ref{sec:healing} treats coordination three and Section~\ref{sec:hard4} proves hardness
+at coordination four. Section~\ref{sec:lattices} applies the results to specific lattices. Section~\ref{sec:discussion} discusses the computational-complexity
 landscape and open problems.
 
 %=====================================================================
@@ -125,13 +134,23 @@ State 3 is a genuine state, not a vacancy: two adjacent sites in state 3 cost on
 Write $\OPT(D_3)=\min_s E(s)$ and $\fr(G)=\min_{t:V\to\{1,2\}}\#\{uv:\ t_u=t_v\}$, the number of
 frustrated bonds of the Ising (two-state) ground state; $\fr(G)=|E|-\mathrm{maxcut}(G)$.
 
-\paragraph*{Relation to the Blume--Capel antiferromagnet.} [TODO-BC]
-With $s=\pm1$ for states 1,2 and $s=0$ for state 3 and $J=1/2$,
-$E_{\rm BC}=E-\tfrac{|E|}{2}+\tfrac12\sum_{v:s_v=0}d(v)-\tfrac32\,e_{00}+(\text{single-ion term})$,
-where $e_{00}$ counts bonds between two $s=0$ sites. On lattices of constant coordination the
-degree term is a shift of $D_3$; the only genuine difference is the $0$--$0$ bond energy,
-which is irrelevant whenever third-state sites are independent in the ground state
-(Theorem~\ref{thm:local}). State precisely and check against Ref.~\cite{Zukovic2013}.
+\paragraph*{Relation to the Blume--Capel antiferromagnet.}
+The spin-1 Blume--Capel antiferromagnet has $H_{\rm BC}=\sum_{uv\in E}\sigma_u\sigma_v-D\sum_v\sigma_v^2$
+with $\sigma_v\in\{-1,0,1\}$ (exchange $|J|=1$, anisotropy $D$ in units of $|J|$).
+Identify states 1, 2 with $\sigma=\pm1$ and state 3 with $\sigma=0$, and let $S=s^{-1}(3)$ and
+$e(S)$ be the number of bonds inside $S$. Checking the four bond types and the two site types gives
+\begin{equation}
+H_{\rm BC}=2E(s)-3\,e(S)+\sum_{v\in S}\bigl(d(v)+D-2D_3\bigr)-|E|-D|V| .
+\label{eq:BC}
+\end{equation}
+On a lattice of constant coordination $z$ and on configurations with $e(S)=0$ the two energies are
+therefore affinely related when $D_3=(z+D)/2$. The genuine differences are the energy of a
+$0$--$0$ bond, which is $0$ in the Blume--Capel model and $1$ here, and, on irregular lattices, the
+site-dependent shift $d(v)$. On the triangular lattice ($z=6$) the Blume--Capel boundary $D=0$
+between the Wannier-type and the $(1,-1,0)$ sublattice ground states~\cite{Zukovic2013}
+corresponds to $D_3=3$, the threshold of Theorem~\ref{thm:threshold}. The Blume--Capel phase in
+which all sites have $\sigma=0$ ($D<-3/2$) has no counterpart here because $0$--$0$ bonds are
+frustrated.
 
 \paragraph*{Reformulation.} With $S=s^{-1}(3)$ and $e(S)$ the number of bonds inside $S$,
 \begin{equation}
@@ -183,7 +202,7 @@ rim). Putting the hub in state 3 costs $D_3+\fr(C_\Delta)=D_3+(\lceil\Delta/2\rc
 
 \begin{remark}
 The same triangle counting gives $D_3^*=3$ on the triangular lattice ($\fr=N$ versus
-$N D_3/3$), in agreement with Ref.~\cite{Zukovic2013} [TODO-BC] and with our annealing data, and the
+$N D_3/3$), in agreement with Ref.~\cite{Zukovic2013} via Eq.~\eqref{eq:BC} and with our annealing data, and the
 octahedron gives a second $\Delta=4$ example.
 \end{remark}
 
@@ -248,9 +267,54 @@ $\ioct(G)=\fr(G)$.
 Evidence: exhaustive for all 27\,523 connected graphs with $\Delta\le3$ on $\le12$ vertices; no
 exception among $\approx3\,700$ lattice and random instances. The stronger statement ``every
 maximum cut is healable'' is false (18-vertex example, App.~\ref{app:numerics}).
-Relation to Brooks' theorem and to Choi--Nakajima--Rim \cite{Choi1989} [TODO-LIT].
+For $\Delta\le3$, Choi, Nakajima and Rim showed that the minimum number of vertices whose removal
+leaves a bipartite graph equals $\fr(G)$~\cite{Choi1989}; their construction does not control
+adjacency among the removed vertices, which is the content of the conjecture. $K_4$ is also the
+exception in Brooks' theorem~\cite{Brooks1941}.
 If true, $\OPT(D_3)=\min(D_3,1)\fr(G)$ for every planar $\Delta\le3$ lattice, computable in
 polynomial time for all $D_3$.
+
+%=====================================================================
+\section{Coordination four: hardness below the threshold}
+\label{sec:hard4}
+\begin{theorem}[hardness at $\Delta=4$]\label{thm:hard4}
+For every fixed rational $0<D_3<2$ it is NP-complete to decide, given a planar graph $G$ of
+maximum degree four and a number $K$, whether $\OPT(D_3)\le K$.
+\end{theorem}
+Together with Theorem~\ref{thm:threshold} and planar 3-colourability at $D_3=0$
+\cite{GareyJohnsonStockmeyer1976}, the planar $\Delta=4$ problem is NP-complete for $0\le D_3<2$
+and polynomial for $D_3\ge2$.
+
+\begin{proof}
+We use the graph $G_\varphi$ constructed by Choi, Nakajima and Rim to show that vertex
+bipartization is NP-complete on planar graphs of maximum degree four~\cite{Choi1989}, starting from
+planar 3-SAT with exactly three literals per clause~\cite{Lichtenstein1982}. For a variable with
+$n_i$ occurrences, $G_\varphi$ contains a cycle $b_1b_2\cdots b_{4n_i}$ with a triangle erected on
+each cycle bond; the $b$'s alternately represent $x_i$ and $\bar x_i$. Each clause is a path
+of four new sites which, through the tips of two adjacent triangles of each of its three
+literals, closes an odd cycle of length 13 passing through one $b$ of the literal's type.
+$G_\varphi$ is planar, has maximum degree four, $28m$ sites for $m$ clauses, and $12m$ variable
+triangles. Choi \emph{et al.} show that $\varphi$ is satisfiable iff removing the $6m$ $b$'s of the
+true literal types leaves a bipartite graph; these $b$'s are pairwise non-adjacent.
+
+Set $K=6mD_3$. If $\varphi$ is satisfiable, put these $6m$ sites in state 3 and two-colour the rest;
+the energy is $6mD_3$. Conversely, distribute the energy of any configuration over the variable
+triangles: each triangle receives its own frustrated bonds, the full $D_3$ of a state-3 tip and
+$D_3/2$ of each state-3 base site (a base site lies in two triangles). The triangles are
+bond-disjoint, so the charges sum to at most $E(s)$. A triangle without state 3 has a frustrated
+bond, charge $\ge1$; one with a state-3 tip has charge $\ge D_3$; otherwise charge $\ge D_3/2$.
+Since $D_3<2$ every charge is $\ge D_3/2$, so $E(s)\ge6mD_3$, with equality only if every triangle
+contains exactly one state-3 site, a base site, and nothing else costs energy. Then the state-3
+sites alternate along each variable cycle, fixing a truth assignment, the configuration is a
+proper colouring, and every odd clause cycle contains a state-3 site, i.e.\ a true literal.
+\end{proof}
+
+Exact solutions of the reduction confirm the gap: for the unsatisfiable formula consisting of all
+eight clauses on three variables ($224$ sites) we find $\OPT-6mD_3=\min(D_3,2-D_3)$ at
+$D_3=0.5,1.5,1.9$, while satisfiable formulas give equality (App.~\ref{app:numerics}). The gap
+closes as $D_3\to2$, consistent with the threshold. The construction extends to every
+$\Delta\ge4$ by the same instances, so for $\Delta\ge6$ only the window
+$2\le D_3<\lfloor\Delta/2\rfloor$ remains open.
 
 %=====================================================================
 \section{Lattices}
@@ -260,7 +324,7 @@ frustrated bond per triangle. Each bond lies in two triangles, so $\fr\ge N$ for
 $2N$ triangles), and the Wannier states attain $N$~\cite{Wannier1950}. The three-sublattice
 configuration has energy $ND_3/3$. The ground state therefore changes at $D_3^*=3=\lfloor6/2\rfloor$
 by a level crossing, in agreement with simulated annealing and with the Blume--Capel
-result~\cite{Zukovic2013} [TODO-BC]. The triangular lattice is thus an extremal lattice for
+result~\cite{Zukovic2013} ($D=0$ in Eq.~\eqref{eq:BC}). The triangular lattice is thus an extremal lattice for
 Theorem~\ref{thm:threshold}.
 
 \paragraph*{Penrose face-adjacency graph ($\Delta=4$).} Taking the rhombi of a Penrose P3 tiling
@@ -271,7 +335,16 @@ the exact lower envelope over $D_3$ (App.~\ref{app:numerics}). All state-3 rhomb
 together at $D_3^*=2$. For a 140-rhombus patch the energies obey $66=10+2\times28$: each of the 28
 state-3 rhombi relieves exactly $\lfloor4/2\rfloor=2$ frustrated bonds. At $D_3=1.5$ all 28 have
 two neighbours in each of the other states, as required by Theorem~\ref{thm:local}(iii).
-[TODO-NUM: kinks at $D_3=1$ and $1.25$ -- boundary or bulk; see size scaling.]
+The two principal kinks are those allowed by Theorem~\ref{thm:local}: below $D_3=1$ state-3
+rhombi may have a $1{:}3$ neighbourhood, above it only $2{:}2$, and at $D_3=2$ all state-3 rhombi
+disappear. Between them the exact curves of nine patches (97--198 rhombi, three radii, three phason
+offsets) show one to three further kinks at patch-dependent positions ($4/3$, $5/4$, $7/5$,
+$3/2$, $5/3$). These are collective rearrangements of the state-3 pattern, not boundary artefacts:
+most of the rhombi that change lie two or more steps from the patch edge, reaching the patch
+centre, and the energy they gain relative to the two-line envelope stays at
+$\approx0.013$--$0.024$ per rhombus as the patch grows while the edge fraction falls from $0.3$ to
+$0.2$. Whether they persist as distinct transitions in the thermodynamic limit, or merge into a
+sequence of small steps, requires periodic approximants.
 
 \paragraph*{Truncated lattices ($\Delta=3$).} Replacing every vertex of degree $d$ of a planar
 tiling by a $d$-gon (truncation) produces a three-coordinated lattice. Faces of the parent tiling
@@ -298,23 +371,29 @@ polynomial on planar lattices for $D_3\ge\lfloor\Delta/2\rfloor$. At $D_3=0$ it 
 for $\Delta\le3$ (Brooks' theorem~\cite{Brooks1941}) and NP-complete for $\Delta\ge4$ (planar
 3-colourability~\cite{GareyJohnsonStockmeyer1976}). For $\Delta\le3$, Theorem~\ref{thm:healing}
 settles every healable lattice, and Conjecture~\ref{conj:healing} would settle all of them.
-The window $0<D_3<\lfloor\Delta/2\rfloor$ for $\Delta\ge4$ remains open.
+For $\Delta=4$ Theorem~\ref{thm:hard4} closes the window: NP-complete for $0<D_3<2$, polynomial
+from $D_3=2$ on. Coordination three and four thus sit on opposite sides, and the threshold of the
+preliminary Theorem~\ref{thm:threshold} is the exact complexity boundary at $\Delta=4$. For
+$\Delta\ge6$ the window $2\le D_3<\lfloor\Delta/2\rfloor$ remains open.
 
 \paragraph*{A cost is not a field.} Barahona showed that a magnetic field turns the planar Ising
 ground-state problem from polynomial into NP-hard~\cite{Barahona1982}. The third-state cost looks
 like a field on one state, but unlike a field it preserves the symmetry between states 1 and 2.
-Standard hardness constructions need a global reference for ``true'' and ``false'', which a
-symmetric cost does not provide. We found that a published planar reduction for the related
+Standard hardness constructions use a global reference for ``true'' and ``false'', which a
+symmetric cost does not provide. The reduction of Theorem~\ref{thm:hard4} avoids this: truth is
+the choice of one of the two alternating state-3 patterns on each variable cycle, a local
+symmetry-breaking that the cost itself enforces. We found that a published planar reduction for the related
 independent-odd-cycle-transversal problem~\cite{Johnson2025} cannot be planar on hard instances
 [TODO-LIT: check the journal version]. Formulated as a planar Boolean constraint problem, the
 symmetric structure falls close to the tractable side of the planar CSP
-classification~\cite{KazdaKolmogorovRolinek2018,FullaZivny2017}. Coordination three is exactly
-where healing makes the problem easy.
+classification~\cite{KazdaKolmogorovRolinek2018,FullaZivny2017}. At coordination three healing makes the problem easy;
+at coordination four it does not, because a state-3 site can relieve two bonds and the choice of
+which sites to use carries information.
 
 \paragraph*{Open problems.} (1) Prove Conjecture~\ref{conj:healing}, at least for planar graphs,
 which suffices for the complexity statement. (2) Decide the complexity of the window
-$0<D_3<\lfloor\Delta/2\rfloor$ for $\Delta\ge4$; the Penrose face-adjacency graph and kagome-type
-lattices are natural test cases. (3) Finite temperature: the rigid local structure of
+$2\le D_3<\lfloor\Delta/2\rfloor$ for $\Delta\ge6$, e.g.\ on subgraphs of the triangular lattice.
+(3) The intermediate kinks of the Penrose face-adjacency graph in the thermodynamic limit. (4) Finite temperature: the rigid local structure of
 Theorem~\ref{thm:local} suggests constrained low-energy excitations below the threshold.
 
 \appendix

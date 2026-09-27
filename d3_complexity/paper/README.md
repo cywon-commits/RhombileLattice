@@ -9,13 +9,14 @@
 | 절 | 내용 | 근거 (`d3_complexity/`) |
 |---|---|---|
 | 1 서론 | 좌절, 세 번째 상태, Barahona, Blume–Capel, 결과 요약 | `D3_RESEARCH_PLAN.md`, `lit_review.md` |
-| 2 모형 | 해밀토니안, BC 대응 [TODO-BC], 재정식화 | `theorem_A.md` §4 |
+| 2 모형 | 해밀토니안, 정확한 BC 대응, 재정식화 | `theorem_A.md` §4 |
 | 3 문턱 | 보조정리(국소 재색칠), 정리(문턱), 명제(바퀴), 삼각 격자 | `theorem_A.md` §1–3, §5 |
 | 4 국소 구조 | 정리(독립성, 2:2, 구간 구조) | `theorem_A.md` §4 |
 | 5 정확 알고리즘 | 평면 max-cut / T-join | `theorem_A.md` §3 |
 | 6 이웃 3 치유 | 샌드위치, 치유 정리, 허브 완화, 인증 알고리즘, 추측 | `theorem_C.md` |
-| 7 격자 | 삼각, 펜로즈 쌍대, 깎기, 깎은 펜로즈·거품·결함 벌집 | `report/`, `penrose_scan.py`, `lattices3.py` |
-| 8 논의 | 복잡도 지형(짧게), 대칭 대 장, 열린 문제 | `perfect_colouring_obstruction.md`, `theorem_delta3.md` |
+| 7 Δ = 4 어려움 | 정리 D (CNR 구성 + 삼각형 나눠 매기기) | `theorem_D.md`, `cnr_reduction.py` |
+| 8 격자 | 삼각, 펜로즈 쌍대, 깎기, 깎은 펜로즈·거품·결함 벌집 | `report/`, `penrose_scan.py`, `lattices3.py` |
+| 9 논의 | 복잡도 지형(짧게), 대칭 대 장, 열린 문제 | `perfect_colouring_obstruction.md`, `theorem_delta3.md` |
 | 부록 A | 수치 방법, 전수 생성, 강한 판 반례 | `potts_exact.py`, `exhaustive_heal.py`, `hub_runs/` |
 
 ## 그림 목록 (계획)
@@ -35,8 +36,8 @@
 그림은 현재 SVG다. 원고용으로는 벡터 PDF로 변환하거나 matplotlib으로 다시 그린다.
 
 ## 남은 일
-1. [TODO-BC] Žukovič–Bobák 2013 원문으로 BC 대응과 삼각 격자 결과를 확인한다.
-2. [TODO-LIT] Choi–Nakajima–Rim 1989 원문으로 추측 C.5와의 관계를 확인한다. 부호 그래프 문헌도 확인한다.
-3. [TODO-NUM] 펜로즈 쌍대의 가장자리 효과를 확인한다(더 큰 조각, 주기 근사).
+1. ~~[TODO-BC]~~ 완료: 정확한 BC 대응(식 BC)과 Žukovič–Bobák 확인을 반영했다.
+2. ~~Choi–Nakajima–Rim 확인~~ 완료: 추측 C.5는 없고, 정리 2로 정리 D(새 절)를 얻었다. 부호 그래프 문헌과 Johnson 외 저널판은 남았다.
+3. ~~[TODO-NUM] 펜로즈 가장자리 효과~~ 완료: 중간 꺾임은 벌크 재배열이다(`penrose_runs/SUMMARY.md`). 주기 근사체는 남았다.
 4. 서론·격자·논의 절 본문과 부록을 쓴다.
 5. (병행) 추측 C.5의 평면판 증명을 시도한다.
