@@ -8,3 +8,8 @@
 {"fam": "voronoi_foam", "arg": 500, "n": 980, "fr": 124, "healed": true, "t_match": 0.55, "t_2sat": 0.002}
 {"fam": "voronoi_foam", "arg": 1000, "n": 1982, "fr": 269, "healed": true, "t_match": 4.62, "t_2sat": 0.004}
 {"fam": "voronoi_foam", "arg": 2000, "n": 3982, "fr": 518, "healed": true, "t_match": 34.52, "t_2sat": 0.008}
+{"fam": "voronoi_foam", "arg": 4000, "n": 7974, "fr": 1059, "healed": true, "t_match": 340.28, "t_2sat": 0.016}
+{"fam": "defect_honeycomb", "arg": 10, "n": 173, "fr": 15, "healed": true, "t_match": 0.01, "t_2sat": 0.0}
+{"fam": "defect_honeycomb", "arg": 20, "n": 749, "fr": 50, "healed": true, "t_match": 0.07, "t_2sat": 0.001}
+{"fam": "defect_honeycomb", "arg": 30, "n": 1713, "fr": 95, "healed": true, "t_match": 0.46, "t_2sat": 0.005}
+{"fam": "defect_honeycomb", "arg": 45, "n": 3847, "fr": 208, "healed": true, "t_match": 3.35, "t_2sat": 0.004}
