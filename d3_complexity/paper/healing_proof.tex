@@ -1,0 +1,148 @@
+% Formal proof of the healing theorem (Conjecture C.5 -> Theorem).  Draft 2026-09-27.
+% To be \input into main.tex (Sec. healing / appendix) after independent review.
+% Notation: all graphs simple, maximum degree <= 3.  fr(H) = min number of monochromatic
+% edges of a 2-colouring of H.  For X subset V: phi(X) = |X| + fr(G - X).
+
+\begin{theorem}[healing]\label{thm:healing-full}
+Let $G$ be a graph of maximum degree at most three with no connected component isomorphic to
+$K_4$. Then $\ioct(G)=\fr(G)$. Consequently $\OPT(D_3)=\min(D_3,1)\,\fr(G)$ for every $D_3\ge0$.
+\end{theorem}
+
+\paragraph*{Preliminaries.}
+(F1) For every $X\subseteq V$, $\varphi(X):=|X|+\fr(G-X)\ge\fr(G)$: re-insert the vertices of $X$
+one at a time, each on the side opposite to the majority of its already present neighbours;
+since degrees are at most three, each insertion creates at most one monochromatic edge.
+In particular every odd cycle transversal has at least $\fr(G)$ vertices, so it suffices to
+find an independent $S$ with $\varphi(S)=\fr(G)$ and $\fr(G-S)=0$.
+An independent set $S$ is \emph{tight} if $\varphi(S)=\fr(G)$; the empty set is tight.
+We may assume $G$ connected. Fix a tight set $S$ of maximum size and suppose, for a
+contradiction, that $k:=\fr(G-S)\ge1$.
+
+\begin{lemma}[augmentation]\label{lem:aug}
+Let $S$ be tight and let $v$ be an endpoint of a monochromatic edge in some optimal
+2-colouring of $G-S$. If $v$ has no neighbour in $S$, then $S\cup\{v\}$ is tight.
+\end{lemma}
+\begin{proof}
+Deleting $v$ from that colouring removes at least one monochromatic edge, so
+$\fr(G-S-v)\le k-1$ and $\varphi(S\cup\{v\})\le\varphi(S)$; equality holds by (F1), and
+$S\cup\{v\}$ is independent.
+\end{proof}
+
+\begin{lemma}[stuck structure]\label{lem:stuck}
+Let $T$ be a tight set of maximum size. Every component $K$ of $G-T$ with $\fr(K)\ge1$ is an odd
+cycle, and each vertex of $K$ has degree three in $G$ and exactly one neighbour in $T$.
+\end{lemma}
+\begin{proof}
+Take an optimal colouring of $G-T$ and a monochromatic edge $uv$ in $K$. By
+Lemma~\ref{lem:aug} and maximality $v$ has a neighbour in $T$, so $\deg_K v\le2$. If
+$\deg_K v=1$, recolouring $v$ improves the colouring. Hence $v$ has a second neighbour $v_1$
+in $K$, of the other colour (otherwise recolouring $v$ gains two). Recolouring $v$ gives another
+optimal colouring in which $v v_1$ is the monochromatic edge, so $v_1$ has the same properties.
+Iterating, every vertex met has degree exactly two in $K$; since $K$ is finite and connected, $K$
+is a cycle, odd because $\fr(K)\ge1$. Each vertex of $K$ has a neighbour in $T$ and degree at most
+three, hence exactly one such neighbour and degree three.
+\end{proof}
+
+\begin{lemma}[exchange]\label{lem:exchange}
+Let $T$ be a tight set of maximum size, $Y$ an odd-cycle component of $G-T$, $y\in Y$ and $t$ the
+neighbour of $y$ in $T$. Then
+(a) $\deg t=3$ and $y$ is the only neighbour of $t$ on $Y$;
+(b) the other two neighbours of $t$ are the endpoints of a component $Q$ of $G-T$ which is a path
+with an even number of vertices;
+(c) $T'=T-t+y$ is a tight set of maximum size and $Q+t$ is an odd-cycle component of $G-T'$.
+In particular distinct vertices of $Y$ have distinct neighbours in $T$.
+\end{lemma}
+\begin{proof}
+$T'$ is independent, since the neighbours of $y$ other than $t$ lie on $Y$. Removing $y$ turns $Y$
+into a path, so $\fr(G-T-y)=k-1$; adding back $t$, which has at most two neighbours in
+$G-T'$, creates at most one monochromatic edge. Thus $\fr(G-T')\le k$, and by (F1) $T'$ is tight;
+it has maximum size, so Lemma~\ref{lem:stuck} applies to $T'$.
+If $t$ had a neighbour on another odd-cycle component $Y_2$ of $G-T$, the component of $G-T'$
+containing $Y_2$ would be frustrated but contain a vertex of degree three, contradicting
+Lemma~\ref{lem:stuck}. Hence the component $D$ of $t$ in $G-T'$ satisfies
+$\fr(G-T')=(k-1)+\fr(D)$, so $\fr(D)=1$ and, by Lemma~\ref{lem:stuck}, $D$ is an odd cycle all of
+whose vertices have degree two in $G-T'$. Thus $t$ has exactly two neighbours $t_1,t_2$ in
+$G-T'$, $\deg t=3$, and $W=D-t$ is a component of $G-T-y$ which is a $t_1$--$t_2$ path with an
+even number of vertices.
+If $W=Y-y$, then $t$ is adjacent to both neighbours $y^\pm$ of $y$ on $Y$, and $t$ is the unique
+$T$-neighbour of $y^+$. Applying the same argument to $y^+$ shows that the two neighbours of $t$
+other than $y^+$ are the neighbours of $y^+$ on $Y$, i.e.\ $\{y,y^-\}=\{y,y^{++}\}$. Hence $|Y|=3$
+and $Y\cup\{t\}$ induces a $K_4$ whose vertices all have degree three, so $G=K_4$, excluded.
+Otherwise $W$ is a component of $G-T$ other than $Y$; it is not an odd cycle, so $W=Q$ is a
+path component as claimed, and (a)--(c) follow.
+\end{proof}
+
+\paragraph*{Chains.}
+Let $Z$ be an odd-cycle component of $G-S$. A \emph{chain} is a sequence defined by
+$T_0=S$, $R_0=Z$, and for $j\ge0$: choose $p_{j+1}\in R_j$ (so $p_{j+1}\ne w_j$), let $w_{j+1}$ be the
+$T_j$-neighbour of $p_{j+1}$, let $R_{j+1}$ be the path given by Lemma~\ref{lem:exchange} applied
+to $(T_j,\,Y_j,\,p_{j+1})$ with $Y_0=Z$ and $Y_j=R_j+w_j$, and set $T_{j+1}=T_j-w_{j+1}+p_{j+1}$.
+Write $W_j=\{w_1,\dots,w_j\}\subseteq S$ and $P_j=\{p_1,\dots,p_j\}$, so $T_j=(S\setminus W_j)\cup P_j$.
+
+\begin{lemma}[chain invariant]\label{lem:chain}
+For every chain and every $j\ge1$:
+(I1) $T_j$ is a tight set of maximum size and $Y_j=R_j+w_j$ is an odd-cycle component of $G-T_j$;
+(I2) $R_j$ is a component of $G-S$, distinct from $Z,R_1,\dots,R_{j-1}$;
+(I3) every vertex of a component of $G-S$ other than $Z,R_1,\dots,R_j$ has the same neighbours
+in $T_j$ as in $S$; in particular the $S$-neighbours of a vertex of $R_j$ are its unique
+$T_j$-neighbour together with $w_j$ if it is an endpoint of $R_j$.
+\end{lemma}
+\begin{proof}
+Induction on $j$; (I1) is Lemma~\ref{lem:exchange}(c). Assume the claims up to $j$. The components
+of $G-T_j$ are: (i) the components of $G-S$ other than $Z,R_1,\dots,R_j$; (ii) the path $Z-p_1$
+and the paths $\rho_i=Y_i-p_{i+1}$, $1\le i<j$; (iii) the odd cycle $Y_j$.
+Note $N(p_i)\subseteq R_{i-1}\cup\{w_{i-1},w_i\}$ and $N(w_i)=\{p_i\}\cup\{\text{endpoints of }R_i\}$.
+
+\emph{$w_{j+1}\in S\setminus W_j$.} Otherwise $w_{j+1}=p_i$ with $i\le j$ would be adjacent to
+$p_{j+1}\in R_j$; but $p_{j+1}\notin R_{i-1}$ by (I2) and $p_{j+1}\notin S$.
+
+\emph{$R_{j+1}$ is of type (i).} It is a path, so not $Y_j$. It is not $Z-p_1$: its closing vertex
+$w_{j+1}\in S$ would be adjacent to both neighbours $z^\pm$ of $p_1$ on $Z$, i.e.\ equal to both
+of their (distinct, Lemma~\ref{lem:exchange}) $S$-neighbours. It is not $\rho_i$: if both endpoints
+$y,y'$ of $\rho_i$ lie in $R_i$, then $w_{j+1}\in S\setminus W_j\subseteq T_i$ is the
+$T_i$-neighbour of $y\in Y_i$ and is adjacent to $y'\in Y_i$, contradicting
+Lemma~\ref{lem:exchange}(a) at stage $i$; otherwise one endpoint is $w_i\in S$, and $w_{j+1}\in S$
+cannot be adjacent to it because $S$ is independent.
+
+Hence $R_{j+1}$ is a component of $G-S$ distinct from $Z,R_1,\dots,R_j$, giving (I2). For (I3):
+a vertex of a type-(i) component is not adjacent to any $p_i$ or $w_i$ by the neighbourhood
+description above, so its $T_{j+1}$- and $S$-neighbourhoods coincide; the statement about $R_{j+1}$
+follows from (I1) for $T_{j+1}$ (each vertex of $Y_{j+1}$ has exactly one $T_{j+1}$-neighbour) and
+$T_{j+1}=T_j-w_{j+1}+p_{j+1}$.
+\end{proof}
+
+\paragraph*{Counting.}
+Call a component of $G-S$ a \emph{region path} if it equals $R_j$ for some chain and some
+$j\ge1$, and call the vertices of $Z$ and of all region paths \emph{region vertices}. Let
+$\Sigma$ be the set of $S$-neighbours of region vertices.
+\begin{enumerate}
+\item[(P)] Let $R=R_j$ be a region path with closing vertex $w=w_j$, $r\in R$, and $u\ne w$ an
+$S$-neighbour of $r$. Then $u$ is the $T_j$-neighbour of $r$, so by Lemma~\ref{lem:exchange} at
+$(T_j,Y_j,r)$ it has exactly one neighbour in $R$, and its other two neighbours are the endpoints
+of $R_{j+1}$ for the chain extended by $p_{j+1}=r$, a region path. The same holds for
+$r\in Z$ with $u$ its $S$-neighbour.
+\item[(U)] Each region path $R$ has exactly one $S$-vertex adjacent to both of its endpoints (its
+\emph{closer}): a second one would be an $S$-neighbour $\ne w$ of an endpoint with two
+neighbours in $R$, contradicting (P). ($R$ has at least two vertices since $R+w$ is an odd
+cycle.)
+\item[(B)] By Lemma~\ref{lem:stuck} and (I3), every region vertex $v$ has exactly one
+$S$-neighbour $\pi(v)$ that is not the closer of its own component.
+\end{enumerate}
+Let $x\in\Sigma$ be adjacent to a region vertex $v$. If $x=\pi(v)$, then by (P) the neighbours of
+$x$ are $v$ and the two endpoints of a region path $R_x$ that $x$ closes. If $x$ is the closer of
+$v$'s path $R_j$, then $x=w_j$ is the $T_{j-1}$-neighbour of $p_j$ and, being in
+$S\setminus W_{j-1}$, is not the closer of $p_j$'s component, so $x=\pi(p_j)$. Thus every
+$x\in\Sigma$ has degree three, equals $\pi(v)$ for exactly one region vertex $v$ (its third
+neighbour cannot be an endpoint $a$ of $R_x$ with $x=\pi(a)$, since $x$ closes $a$'s path), and
+closes exactly one region path. By (U) the map sending $x$ to the path it closes is a bijection
+between $\Sigma$ and the set $\mathcal R$ of region paths, and by (B) $\pi$ is a bijection between
+region vertices and $\Sigma$. Therefore
+\[
+|\mathcal R| \;=\; |\Sigma| \;=\; |Z|+\sum_{R\in\mathcal R}|R| \;\ge\; 3+2|\mathcal R| ,
+\]
+a contradiction. Hence $\fr(G-S)=0$ for a maximum tight set $S$, which is an independent odd
+cycle transversal of size $\fr(G)$. \hfill$\square$
+
+\paragraph*{Remarks.} Planarity is not used. The argument does not fix a maximum cut, consistent
+with the fact that not every maximum cut is healable (App.~\ref{app:numerics}). For planar $G$ the
+theorem makes $\OPT(D_3)$ computable in polynomial time for all $D_3$.
