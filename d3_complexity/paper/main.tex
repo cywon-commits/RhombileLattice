@@ -122,10 +122,10 @@ landscape and open problems.
 Let $G=(V,E)$ be a finite simple graph (the lattice), $d(v)$ the coordination of site $v$ and
 $\Delta=\max_v d(v)$. A configuration is $s:V\to\{1,2,3\}$ with energy
 \begin{equation}
-E(s)=\#\{uv\in E:\ s_u=s_v\}+D_3\,\#\{v:\ s_v=3\},\qquad D_3\ge 0,
+E(s)=\#\{uv\in E:\ s_u=s_v\}+D_3\,\#\{v:\ s_v=3\},
 \label{eq:H}
 \end{equation}
-i.e.\ the antiferromagnetic three-state Potts model with single-ion anisotropy $(0,0,D_3)$.
+with $D_3\ge 0$, i.e.\ the antiferromagnetic three-state Potts model with single-ion anisotropy $(0,0,D_3)$.
 State 3 is a genuine state, not a vacancy: two adjacent sites in state 3 cost one unit.
 Write $\OPT(D_3)=\min_s E(s)$ and $\fr(G)=\min_{t:V\to\{1,2\}}\#\{uv:\ t_u=t_v\}$, the number of
 frustrated bonds of the Ising (two-state) ground state; $\fr(G)=|E|-\mathrm{maxcut}(G)$.
@@ -519,7 +519,8 @@ ground state was healed, which certifies $E_0(D_3)=\min(D_3,1)\fr$. Python/Netwo
 \label{tab:timing}
 \begin{ruledtabular}
 \begin{tabular}{lrrrrc}
-lattice & $N$ & $\fr$ & matching (s) & 2-SAT (ms) & healed\\
+lattice & $N$ & $\fr$ & matching & 2-SAT & healed\\
+ & & & (s) & (ms) & \\
 \hline
 truncated Penrose & 270 & 54 & 0.03 & 2 & yes\\
 truncated Penrose & 624 & 122 & 0.14 & 2 & yes\\
