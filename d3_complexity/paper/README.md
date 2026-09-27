@@ -1,5 +1,7 @@
 # 원고 뼈대 (영문, revtex4-2 / Phys. Rev. E 형식)
 
+> 함께 보고 고치는 한국어 작업본은 Claude Docs 문서 "D3 논문 원고"에 있다: https://claude.ai/code/artifact/921480cd-99f1-4005-a8ba-63659fdec2a1 . 내용 수정은 그 문서에서 먼저 하고, 제출용 영문은 이 `main.tex`에 반영한다.
+
 - `main.tex`: 원고 본문. 정리 문장과 짧은 증명은 들어 있다. 서론·논의·격자 절 등은 `[TODO]`로 남겨 두었다.
 - `refs.bib`: 참고문헌. `note = {check}` 항목은 원문 대조가 필요하다.
 - 컴파일: 이 컨테이너에는 TeX이 없다. 로컬에서 `latexmk -pdf main.tex`로 컴파일한다.
