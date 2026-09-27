@@ -4,7 +4,7 @@
 
 - `main.tex`: 원고 본문. 정리 문장과 짧은 증명은 들어 있다. 서론·논의·격자 절 등은 `[TODO]`로 남겨 두었다.
 - `refs.bib`: 참고문헌. `note = {check}` 항목은 원문 대조가 필요하다.
-- 컴파일: 이 컨테이너에는 TeX이 없다. 로컬에서 `latexmk -pdf main.tex`로 컴파일한다.
+- 컴파일: `latexmk -pdf main.tex` (TeX Live + REVTeX, 예: `texlive-publishers`). 2026-09-27 컨테이너에서 경고 없이 컴파일됨.
 
 ## 절 구성과 근거 문서
 
