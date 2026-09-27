@@ -298,8 +298,12 @@ $n_i$ occurrences, $G_\varphi$ contains a cycle $b_1b_2\cdots b_{4n_i}$ with a t
 each cycle bond; the $b$'s alternately represent $x_i$ and $\bar x_i$. Each clause is a path
 of four new sites which, through the tips of two adjacent triangles of each of its three
 literals, closes an odd cycle of length 13 passing through one $b$ of the literal's type.
-$G_\varphi$ is planar, has maximum degree four, $28m$ sites for $m$ clauses, and $12m$ variable
-triangles. Choi \emph{et al.} show that $\varphi$ is satisfiable iff removing the $6m$ $b$'s of the
+$G_\varphi$ has maximum degree four, $28m$ sites for $m$ clauses, and $12m$ variable
+triangles. It is planar provided the occurrence blocks around each variable cycle follow the
+rotation of that variable in a planar embedding of the variable--clause incidence graph and the
+literals of each clause are ordered along $w_1\cdots w_4$ opposite to the rotation at the clause
+(we verified planarity for 307 planar formulas with this rule; with the same orientation at both
+ends only 67 were planar). Choi \emph{et al.} show that $\varphi$ is satisfiable iff removing the $6m$ $b$'s of the
 true literal types leaves a bipartite graph; these $b$'s are pairwise non-adjacent.
 
 Set $K=6mD_3$. If $\varphi$ is satisfiable, put these $6m$ sites in state 3 and two-colour the rest;
