@@ -1,0 +1,15 @@
+Part IX mechanism tests (a), (b) -- 2026-09-27
+(a) D2=0 correlation length at the sqrt3 wavevector, L=32:
+    T      1.00  0.63  0.54  0.46  0.40  0.34
+    TAFM   0.82  1.33  2.01  2.87  4.39  5.88   (fixed bonds, 1 seed)
+    annl.  0.89  2.08  3.46  6.60  11.8  15.6   (D1=D2 annealed, 4 seeds)
+    d ln xi / d(1/T): TAFM ~1.0-1.3, annealed ~2.0
+  Spin-defect triangles (all 3 spins equal), L=24 (results/tafm/defects_L24_s1.txt):
+    effective activation d ln n/d(1/T): annealed 3.0-3.8, TAFM 1.5-1.6 (ratio ~2); at T=0.33 annealed 22x fewer.
+    Frustrated triangles (monomers): activation 1.0, ~300x more numerous than defects at T=0.33, yet harmless (confined).
+  Mechanism: each triangle's dimer screens one equal-spin bond, so a TAFM defect triangle keeps >=2 unscreened
+  equal bonds -> defect cost doubles; frustrated triangles are cheap (cost 1+2mu) but string-confined.
+(b) T_c(mu) at D2=1 (h/J=1): fixed-bond TAFM 0.471(1)
+    mu=0 0.528(2) | 0.5 0.620(7) | 1 0.696(4) | 2 ~0.87 (L=16/24) | 5 ~1.1 (L=16; ordered and random starts agree)
+    -> frustrated triangles lower T_c; mu->inf (no thermal frustration) approaches the unfrustrated scale
+       (Ising on the pristine rhombile/dice lattice: T_c=1.2027) -- to be checked.
