@@ -79,6 +79,9 @@ figcaption{font-size:14px; color:var(--ink2); margin-top:8px; max-width:68ch}
 .tile.t1{fill:var(--c1); fill-opacity:.55} .tile.t2{fill:var(--c2); fill-opacity:.55} .tile.t3{fill:var(--c3); fill-opacity:1}
 .tile.edge{fill-opacity:.28}
 .frusedge{stroke:var(--ink); stroke-width:3; stroke-linecap:round}
+.godd{fill:var(--c2); fill-opacity:.16}
+.gbond{stroke:var(--ink2); stroke-width:1.1; opacity:.7}
+.gsite{stroke:var(--paper); stroke-width:.8}
 /* hand diagrams */
 .dline{stroke:var(--ink2); stroke-width:1.6; fill:none}
 .dfill{fill:var(--paper); stroke:var(--ink2); stroke-width:1.4}
@@ -89,6 +92,7 @@ figcaption{font-size:14px; color:var(--ink2); margin-top:8px; max-width:68ch}
 .band-open{fill:url(#hatch)}
 .hatchline{stroke:var(--open); stroke-width:1.4}
 .npc{fill:var(--c2)} .pdot{fill:var(--c3)}
+.band-conj{fill:var(--c3); fill-opacity:.12; stroke:var(--c3); stroke-width:1; stroke-dasharray:4 3}
 /* callouts */
 .new{background:var(--hl); border:1px solid var(--hl-rule); border-radius:10px; padding:14px 18px 6px; margin:18px 0 22px}
 .new .tag{display:inline-block; font:600 12px "IBM Plex Mono", monospace; letter-spacing:.06em; color:var(--acc); margin-bottom:4px}
@@ -138,6 +142,8 @@ code{font-family:"IBM Plex Mono", monospace; font-size:.9em}
   <li><a href="#lattices"><b>삼각 격자의 3, 펜로즈 쌍대의 2, 희석 결함의 2가 한 원리로 설명된다.</b><span>수치로만 보던 꺾임들이 모두 ⌊Δ/2⌋ 또는 사이트별 ⌊d/2⌋다.</span></a></li>
   <li><a href="#local"><b>바닥상태의 상태 3 사이트는 고립되어 있고, 이웃은 정확히 2:2다.</b><span>Δ = 4이고 1 &lt; D3 &lt; 2이면 예외가 없다. 펜로즈 조각에서 28개 중 28개가 그랬다.</span></a></li>
   <li><a href="#exact"><b>D3 ≥ ⌊Δ/2⌋이면 큰 계의 바닥상태를 정확하게 구할 수 있다.</b><span>평면 격자라면 매칭 알고리즘 한 번이면 된다. 어닐링 결과를 검증할 기준이 생긴다.</span></a></li>
+  <li><a href="#heal"><b>이웃 3 격자에서는 상태 3이 좌절 결합을 하나씩 치유한다.</b><span>에너지는 min(D3, 1) × (Ising 좌절 수)로, D3 = 1에서 단 한 번 꺾인다. 매칭과 2-SAT만으로 정확한 바닥상태를 구하고 인증한다. 사이트 수천 개도 몇 초면 된다.</span></a></li>
+  <li><a href="#heal-make"><b>아무 평면 격자나 "깎으면" 이웃 3 격자가 된다.</b><span>좌절은 원래 격자에서 이웃 수가 홀수인 꼭짓점 자리에 생긴다. 깎은 펜로즈 준결정은 펜로즈 쌍대와 좌절 위치가 같다.</span></a></li>
   <li><a href="#hard"><b>1↔2 대칭이 어려움을 막는다.</b><span>상태 3의 비용은 자기장과 달리 상태 1과 2를 구별하지 않는다. 그래서 Barahona식 NP-hard 증명이 그대로 통하지 않는다. 이 과정에서 인용하려던 문헌의 오류도 찾았다.</span></a></li>
 </ul>
 <nav class="toc" aria-label="목차">
@@ -149,6 +155,7 @@ code{font-family:"IBM Plex Mono", monospace; font-size:.9em}
     <li><a href="#lattices">격자별 전이점</a></li>
     <li><a href="#local">바닥상태의 국소 구조</a></li>
     <li><a href="#exact">정확히 풀리는 영역</a></li>
+    <li><a href="#heal">이웃 3 격자: 일대일 치유</a></li>
     <li><a href="#hard">어려운 쪽: 계산 복잡도</a></li>
     <li><a href="#open">남은 질문</a></li>
     <li><a href="#repro">결과의 상태와 재현</a></li>
@@ -220,7 +227,7 @@ code{font-family:"IBM Plex Mono", monospace; font-size:.9em}
   <text class="dtext c" x="60" y="34">3색칠 문제</text>
   <text class="dtext c" x="230" y="34">상태 3과 좌절의 경쟁</text>
   <text class="dtext c" x="535" y="34">상태 3이 사라짐</text>
-  <text class="dtext c m s" x="230" y="132">바닥상태 계산의 난이도: 대부분 미해결 (8장)</text>
+  <text class="dtext c m s" x="230" y="132">바닥상태 계산의 난이도: 이웃 3은 8장, 나머지는 9장</text>
   <text class="dtext c m s" x="535" y="132">평면 Ising: 정확히 풀림 (7장)</text>
 </svg>
 <figcaption>그림 3. D3 축은 세 부분으로 나뉜다. 경계 ⌊Δ/2⌋은 격자의 최대 이웃 수만으로 정해진다.</figcaption>
@@ -307,7 +314,55 @@ code{font-family:"IBM Plex Mono", monospace; font-size:.9em}
 <p>프로젝트의 <code>exact_Einf.py</code>는 D3 = ∞ 전용이었다. 정리 A는 그 결과가 <b>삼각 격자 부분 그래프에서 D3 ≥ 3, 이웃 4개 격자에서 D3 ≥ 2까지 그대로 정확한 바닥상태</b>임을 보장한다. 이 범위에서 시뮬레이티드 어닐링 결과를 정확해와 직접 비교할 수 있다.</p></div>
 
 <!-- ============================================================ 8 -->
-<h2 id="hard"><span class="num">8</span>어려운 쪽: 계산 복잡도</h2>
+<h2 id="heal"><span class="num">8</span>이웃 3 격자: 상태 3의 일대일 치유</h2>
+<p>모든 사이트의 이웃이 3개 이하인 격자에서는 이야기가 특히 깔끔해진다. 3장의 원리에 따르면 상태 3 하나가 풀 수 있는 좌절은 ⌊3/2⌋ = 1개다. 그래서 상태 3은 좌절 결합을 <b>하나씩</b> 치유하는 역할만 한다.</p>
+
+<h3>치유의 방법</h3>
+<p>먼저 상태 1, 2만 쓰는 Ising 바닥상태를 구한다. 이웃이 3개 이하이므로 좌절 결합들은 서로 끝점을 공유하지 않는다. 좌절 결합마다 끝점 하나를 골라 상태 3으로 바꾸면 그 결합이 사라진다. 고른 사이트끼리 이웃하지만 않으면 새 좌절도 생기지 않는다.</p>
+<div class="row two">
+  <div class="panel"><figure style="margin:0">{{heal_ising}}</figure><p class="pt">① Ising 바닥상태</p><p class="pd">삼각 기둥. 두 삼각형에 좌절 결합(점선)이 하나씩 있다.</p></div>
+  <div class="panel"><figure style="margin:0">{{heal_done}}</figure><p class="pt">② 치유한 배치</p><p class="pd">좌절 결합마다 한 끝을 상태 3으로 바꿨다. 두 상태 3은 서로 이웃하지 않는다. 좌절 결합은 0개다.</p></div>
+</div>
+
+<div class="new"><span class="tag">정리 C <span class="badge b-proof">증명</span></span>
+<p><b>이웃 3 이하 격자에서 0 ≤ D3 ≤ 1이면, 바닥상태 에너지는 D3 × fr 이상이다.</b> 여기서 fr은 Ising 바닥상태의 좌절 결합 수다. 증명은 짧다. 상태 3 사이트를 하나씩 상태 1이나 2로 되돌리면, 되돌릴 때마다 좌절 결합이 1개 이하로 생긴다.</p>
+<p><b>치유가 가능하면 바닥상태 에너지는 정확히 E(D3) = min(D3, 1) × fr이다.</b> 치유 가능이란, 어떤 Ising 바닥상태에서 좌절 결합의 끝점들을 서로 이웃하지 않게 고를 수 있다는 뜻이다. 이때 에너지 곡선은 D3 = 1에서 <b>단 한 번</b> 꺾이고, 상태 3 사이트 수는 정확히 fr이다.</p></div>
+<figure>
+{{chart_tpen}}
+<figcaption>그림 10. 깎은 펜로즈 조각(사이트 270개, 좌절 54)의 정확한 바닥상태 에너지(MILP로 계산). 정리 C의 예측 min(D3, 1) × 54와 정확히 일치한다. 이웃 4개인 펜로즈 쌍대(그림 5, 6)가 여러 번 꺾이는 것과 대조적이다.</figcaption>
+</figure>
+
+<h3>바닥상태를 구하고 인증하는 알고리즘</h3>
+<ol>
+  <li><b>Ising 바닥상태:</b> 홀수 면(좌절 전하)들을 쌍대 그래프의 최단 경로로 짝짓는다(최소 가중 완전 매칭). 짝을 잇는 경로가 가로지르는 결합이 좌절 결합이다.</li>
+  <li><b>치유할 사이트 고르기:</b> 좌절 결합마다 두 끝점 중 하나를 고르되, 고른 사이트끼리 이웃하지 않게 한다. 이것은 2-SAT 문제라서 선형 시간에 풀린다.</li>
+  <li><b>인증:</b> 결과 배치의 에너지는 D3 × fr로 하한과 같다. 따라서 더 찾아볼 필요 없이 바닥상태다. 같은 배치가 0 &lt; D3 &lt; 1 전 구간의 바닥상태이고, D3 ≥ 1이면 1단계의 Ising 바닥상태가 바닥상태다.</li>
+</ol>
+<p>시뮬레이티드 어닐링은 "지금까지 찾은 가장 낮은 값"만 준다. 이 방법은 <b>배치와 최적성 증명을 함께</b> 준다. 사이트 약 1,700~3,000개 격자(무작위 거품, 결함 있는 벌집, 깎은 펜로즈)를 각각 15초 안에 풀었다.</p>
+
+<h3 id="heal-make">복잡한 이웃 3 격자를 만드는 법: 깎기</h3>
+<p>평면 그래프는 모든 면이 짝수 고리일 때만 이분 그래프다. 그래서 이웃 3이면서 좌절이 있는 격자를 만들려면 홀수 면을 넣어야 한다. 가장 체계적인 방법은 <b>깎기</b>다. 아무 평면 격자에서 이웃이 d개인 꼭짓점을 작은 d각형으로 바꾸면, 모든 사이트의 이웃이 3개가 된다.</p>
+<div class="row two">
+  <div class="panel"><figure style="margin:0">{{trunc_before}}</figure><p class="pt">깎기 전: 이웃 5개인 꼭짓점</p></div>
+  <div class="panel"><figure style="margin:0">{{trunc_after}}</figure><p class="pt">깎은 뒤: 오각형 (홀수 면 = 좌절 전하)</p></div>
+</div>
+<p>원래 면은 길이가 두 배가 되어 항상 짝수다. 따라서 <b>좌절 전하는 원래 격자에서 이웃 수가 홀수인 꼭짓점 자리에 정확히 생긴다.</b> 깎은 벌집은 별 격자, 깎은 마름모 격자는 삼각형과 육각형, 깎은 펜로즈는 삼각형·오각형·칠각형이 준주기적으로 놓인 격자다. 깎은 펜로즈의 좌절 위치는 5장의 펜로즈 쌍대(이웃 4개)와 같다. 같은 좌절 배치를 이웃 3과 4에서 비교할 수 있다.</p>
+<div class="row three">
+  <div class="panel"><figure style="margin:0">{{gal_tpen}}</figure><p class="pt">깎은 펜로즈 준결정</p><p class="pd">사이트 334개, 좌절 70, 상태 3 70개</p></div>
+  <div class="panel"><figure style="margin:0">{{gal_foam}}</figure><p class="pt">2차원 거품 (무작위 Voronoi)</p><p class="pd">사이트 164개, 좌절 21, 상태 3 21개</p></div>
+  <div class="panel"><figure style="margin:0">{{gal_star}}</figure><p class="pt">별 격자 (3.12.12)</p><p class="pd">사이트 212개, 좌절 58, 상태 3 58개</p></div>
+</div>
+<p class="legend"><span><i class="l1"></i>상태 1</span><span><i class="l2"></i>상태 2</span><span><i class="l3"></i>상태 3 (치유 사이트, 조금 크게 그림)</span><span>옅은 주황 면 = 홀수 면(좌절 전하)</span></p>
+<p style="font-size:14px;color:var(--ink2)">그림 11. 세 격자 모두 인증된 정확한 바닥상태다. 상태 3 사이트 수가 좌절 결합 수와 정확히 같다. 가까이 붙은 두 좌절 전하는 결합 하나로 함께 해소되므로, 좌절 결합 수가 홀수 면 수보다 작을 수 있다. 조각 가장자리의 면도 홀수 면으로 칠해져 있다.</p>
+
+<h3>항상 치유할 수 있을까</h3>
+<div class="new"><span class="tag">추측 C.5 <span class="badge b-num">계산 확인</span> <span class="badge b-open">증명 미완</span></span>
+<p><b>K₄(사면체)가 아닌 연결된 이웃 3 이하 그래프는 항상 치유 가능하다.</b></p>
+<p>정점 12개 이하인 연결 그래프 <b>27,523개를 전부</b> 조사했는데, 예외는 K₄뿐이었다. 격자와 무작위 그래프 약 3,700건에서도 예외가 없었다. 이 추측은 두 고전 결과의 강화판이다. Brooks 정리는 K₄가 아니면 세 색으로 칠할 수 있다고 말한다. Choi–Nakajima–Rim(1989)은 이웃 3 이하에서 "정점을 지워 이분 그래프로 만드는 최소 개수 = fr"임을 보였다. 이 추측은 그렇게 지우는 정점들을 서로 이웃하지 않게 고를 수 있다고 말한다.</p>
+<p><b>추측이 참이면</b> 이웃 3 평면 격자의 바닥상태는 모든 D3에서 다항 시간에 정확히 풀린다. 에너지는 닫힌 식 min(D3, 1) × fr이다. 증명 과정에서 "<b>어떤</b> 최대 컷이든 치유 가능하다"는 더 강한 명제는 거짓임을 확인했다(사이트 18개 반례). 그래서 증명에는 최대 컷을 바꾸는 조작이 필요하다.</p></div>
+
+<!-- ============================================================ 9 -->
+<h2 id="hard"><span class="num">9</span>어려운 쪽: 계산 복잡도</h2>
 <p>이제 반대 방향의 질문이다. D3가 0과 ⌊Δ/2⌋ 사이에 고정되어 있을 때, 바닥상태를 정확히 구하는 효율적인 방법이 있을까? 원래 추측은 "그 구간에서는 전부 NP-hard, 즉 효율적인 방법이 없다"였다. 지금까지의 지형은 다음과 같다.</p>
 <figure class="wide">
 <svg viewBox="0 0 760 250" role="img" aria-label="복잡도 지도: 가로축 D3, 세로축 최대 이웃 수 3에서 6. D3가 최대 이웃 수의 절반 이상이면 정확히 풀리고, D3=0은 이웃 수 3에서 쉽고 4 이상에서 NP-완전이며, 그 사이는 모두 미해결이다">
@@ -317,7 +372,8 @@ code{font-family:"IBM Plex Mono", monospace; font-size:.9em}
     <text class="dtext c m s" x="60" y="22">최대 이웃 수 Δ</text>
     <!-- rows -->
     <text class="dtext c" x="60" y="62">3</text>
-    <rect class="band-open" x="110" y="46" width="172" height="24"/>
+    <rect class="band-conj" x="110" y="46" width="172" height="24"/>
+    <text class="dtext s" x="118" y="40">정리 C: 치유 가능하면 P</text>
     <rect class="band-p" x="282" y="46" width="448" height="24"/>
     <circle class="pdot" cx="110" cy="58" r="7"/>
     <text class="dtext c" x="60" y="104">4</text>
@@ -343,7 +399,7 @@ code{font-family:"IBM Plex Mono", monospace; font-size:.9em}
     <text class="dtext" x="200" y="105">미해결</text>
   </g>
 </svg>
-<figcaption>그림 8. 복잡도 지도. 초록 띠는 다항 시간(정리 A), 빗금은 미해결이다. 네모는 NP-완전(평면 3색칠, Δ ≥ 4), 원은 다항 시간(Δ = 3이면 Brooks 정리로 3색칠이 쉬움)이다.</figcaption>
+<figcaption>그림 8. 복잡도 지도. 초록 띠는 다항 시간(정리 A), 빗금은 미해결이다. Δ = 3의 연한 띠는 정리 C로 "치유 가능하면 다항 시간"인 구간이다. 추측 C.5가 참이면 전부 다항 시간이 된다. 네모는 NP-완전(평면 3색칠, Δ ≥ 4), 원은 다항 시간(Δ = 3이면 Brooks 정리로 3색칠이 쉬움)이다.</figcaption>
 </figure>
 
 <h3>왜 어려운 쪽의 증명이 어려운가</h3>
@@ -411,19 +467,19 @@ code{font-family:"IBM Plex Mono", monospace; font-size:.9em}
 <div class="new"><span class="tag">새로 알아낸 것</span>
 <p><b>1. 인용하려던 문헌의 오류.</b> Johnson 외(arXiv:2211.12887)는 "평면·이웃 3 이하 그래프에서 이 종류의 문제가 NP-완전"이라고 주장한다. 그런데 그 구성은 일반적으로 평면이 아니다. 반례를 찾았고, 이 구성이 평면이 되는 경우에는 모든 절이 한 면 위에 놓여 공식이 쉬운 부류로 떨어진다는 것도 보였다(Pilz 2019의 결과와 결합). <span class="badge b-proof">증명</span></p>
 <p><b>2. 막히는 이유.</b> 이웃 수 3인 격자에서는 "비용이 정확히 (삼각형 수) × D3인 바닥상태가 있는가"가 평면 NAE류 문제가 된다. 평면 Boolean 제약 문제의 분류(Dvořák–Kupec, Kazda–Kolmogorov–Rolínek)에 비추어 보면 이 문제는 다항 시간일 가능성이 높다. 삼각형 4개까지로 된 부품 약 5만 개를 전수 조사했는데, 어려움을 만드는 부품은 하나도 없었다. <span class="badge b-num">계산 확인</span></p>
-<p><b>물리적 의미.</b> 세 번째 상태의 비용은 자기장과 달리 두 상태의 대칭을 깨지 않는다. 그 대칭 때문에 Barahona식 어려움이 자동으로 따라오지 않는다. 이웃 수 3인 평면 격자에서는 모든 D3에서 바닥상태가 정확히 풀릴 가능성이 실제로 남아 있다.</p></div>
+<p><b>물리적 의미.</b> 세 번째 상태의 비용은 자기장과 달리 두 상태의 대칭을 깨지 않는다. 그 대칭 때문에 Barahona식 어려움이 자동으로 따라오지 않는다. 실제로 이웃 3 격자에서는 8장의 치유 정리가 바닥상태를 정확히 준다.</p></div>
 
 <!-- ============================================================ 9 -->
-<h2 id="open"><span class="num">9</span>남은 질문</h2>
+<h2 id="open"><span class="num">10</span>남은 질문</h2>
 <ul>
   <li><b>이웃 수 4인 평면 격자(펜로즈 쌍대, 카고메형)에서 0 &lt; D3 &lt; 2는 NP-hard인가?</b> 삼각형 꼭짓점이 바깥 결합을 2개 가지므로 조건이 NAE보다 풍부하다. 같은 분류 기준으로 "어려움을 만드는 부품"을 찾으면 곧바로 NP-hard가 증명된다. 가장 가능성 높은 다음 단계다.</li>
-  <li><b>이웃 수 3에서 0 &lt; D3 &lt; 1은 다항 시간인가?</b> 그렇다면 원래 추측에 대한 반례가 된다. 좌절과 상태 3의 맞바꿈까지 다루는 알고리즘이 필요하다.</li>
+  <li><b>치유 추측(C.5)의 증명.</b> 참이면 이웃 3 평면 격자는 모든 D3에서 다항 시간이고, 원래 추측("0 &lt; D3 &lt; ⌊Δ/2⌋에서 NP-hard")은 Δ = 3에서 틀린다. 복잡도 결론에는 평면 그래프만 증명해도 충분하다.</li>
   <li><b>펜로즈 쌍대의 작은 꺾임(D3 = 1, 1.25)</b>이 가장자리 효과인지, 더 큰 조각이나 주기 근사로 확인해야 한다.</li>
 </ul>
 <div class="caution"><p><b>주의.</b> 계산 복잡도는 바닥상태를 "정확히" 구하는 난이도에 대한 말이다. 유리질 거동이나 느린 동역학과 관련이 있을 수 있지만, 직접적인 연결은 아니다.</p></div>
 
 <!-- ============================================================ 10 -->
-<h2 id="repro"><span class="num">10</span>결과의 상태와 재현</h2>
+<h2 id="repro"><span class="num">11</span>결과의 상태와 재현</h2>
 <div class="tablewrap"><table>
 <thead><tr><th>결과</th><th>상태</th><th>파일 (<code>d3_complexity/</code>)</th></tr></thead>
 <tbody>
@@ -433,7 +489,11 @@ code{font-family:"IBM Plex Mono", monospace; font-size:.9em}
 <tr><td>Johnson 외 구성의 평면성 반례</td><td><span class="badge b-proof">증명</span></td><td><code>planarity_gap.py</code>, <code>theorem_delta3.md</code></td></tr>
 <tr><td>삼각형 = NAE, 평면 NAE로의 번역</td><td><span class="badge b-proof">증명</span> (부분 부류)</td><td><code>perfect_colouring_obstruction.md</code></td></tr>
 <tr><td>삼각형 묶음 약 5만 개의 Δ-matroid 판정</td><td><span class="badge b-num">계산 확인</span></td><td><code>cluster_dmatroid.py</code></td></tr>
-<tr><td>0 &lt; D3 &lt; ⌊Δ/2⌋의 복잡도</td><td><span class="badge b-open">미해결</span></td><td><code>D3_RESEARCH_PLAN.md</code></td></tr>
+<tr><td>정리 C (치유 하한, 등호 조건, 허브 완화 = D3·fr)</td><td><span class="badge b-proof">증명</span></td><td><code>theorem_C.md</code></td></tr>
+<tr><td>매칭 + 2-SAT 바닥상태 인증 알고리즘</td><td><span class="badge b-num">구현·검증</span></td><td><code>ising_tjoin.py</code>, <code>heal_check.py</code>, <code>hub_tjoin.py</code></td></tr>
+<tr><td>치유 추측 C.5: 정점 ≤ 12 전수(27,523개), 격자 약 3,700건</td><td><span class="badge b-num">계산 확인</span></td><td><code>exhaustive_heal.py</code>, <code>gap_hunt.py</code>, <code>hub_test.py</code></td></tr>
+<tr><td>이웃 3 격자 생성(깎기, 결함 벌집, 거품)과 갤러리</td><td><span class="badge b-num">구현</span></td><td><code>lattices3.py</code>, <code>report/deg3_gallery.html</code></td></tr>
+<tr><td>0 &lt; D3 &lt; ⌊Δ/2⌋의 복잡도 (Δ ≥ 4)</td><td><span class="badge b-open">미해결</span></td><td><code>D3_RESEARCH_PLAN.md</code></td></tr>
 </tbody></table></div>
 <p>가젯 검증기(<code>gadget.py</code>)와 교차 가젯 탐색기(<code>crossover_search.py</code>)는 다음 단계에서 그대로 쓸 수 있다.</p>
 

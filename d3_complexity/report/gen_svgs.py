@@ -247,3 +247,79 @@ FIG["pen25"] = penrose_svg("2.5")
 
 json.dump(FIG, open("figs.json", "w"), ensure_ascii=False)
 print("figures:", len(FIG), {k: len(v) for k, v in FIG.items()})
+
+
+# ---------------------------------------------------------------- 8. degree-3 lattices: healing (Theorem C)
+import sys as _sys
+_sys.path.insert(0, "..")
+from ising_tjoin import ising_ground_state_tjoin
+from heal_check import two_sat_heal
+
+
+def fig_heal_prism():
+    # triangular prism: outer triangle 0,1,2 and inner triangle 3,4,5 with spokes i -- i+3
+    R1, R2, cx, cy = 78, 30, 110, 104
+    pos = {}
+    for i in range(3):
+        a = math.radians(-90 + 120 * i)
+        pos[i] = (cx + R1 * math.cos(a), cy + R1 * math.sin(a))
+        pos[i + 3] = (cx + R2 * math.cos(a), cy + R2 * math.sin(a))
+    E = [(0, 1), (1, 2), (0, 2), (3, 4), (4, 5), (3, 5), (0, 3), (1, 4), (2, 5)]
+    fr, col = ising_ground_state_tjoin(6, E)
+    chosen, M = two_sat_heal(6, E, col)
+    healed = list(col)
+    for v in chosen:
+        healed[v] = 3
+    a = graph_svg(pos, E, dict(enumerate(col)), 220, 200, r=12,
+                  aria=f"삼각 기둥의 Ising 바닥상태: 좌절 결합 {fr}개")
+    b = graph_svg(pos, E, dict(enumerate(healed)), 220, 200, r=12,
+                  aria="좌절 결합마다 한 끝점을 서로 이웃하지 않게 상태 3으로 바꾼 치유 배치: 같은 상태 결합 0개")
+    return a, b, fr
+
+
+FIG["heal_ising"], FIG["heal_done"], _fr = fig_heal_prism()
+
+
+def fig_truncation():
+    cx, cy, R = 100, 90, 62
+    pos = {"c": (cx, cy)}
+    for k in range(5):
+        a = math.radians(-90 + 72 * k)
+        pos[k] = (cx + R * math.cos(a), cy + R * math.sin(a))
+    before = graph_svg(pos, [("c", k) for k in range(5)], {}, 200, 180, r=8,
+                       aria="이웃이 5개인 꼭짓점", digits=False)
+    pos2 = {}
+    for k in range(5):
+        a = math.radians(-90 + 72 * k)
+        pos2[("in", k)] = (cx + 24 * math.cos(a), cy + 24 * math.sin(a))
+        pos2[("out", k)] = (cx + R * math.cos(a), cy + R * math.sin(a))
+    E2 = [(("in", k), ("in", (k + 1) % 5)) for k in range(5)] + [(("in", k), ("out", k)) for k in range(5)]
+    after = graph_svg(pos2, E2, {}, 200, 180, r=8, aria="깎은 뒤: 꼭짓점이 오각형이 되고 각 사이트의 이웃은 3개", digits=False)
+    return before, after
+
+
+FIG["trunc_before"], FIG["trunc_after"] = fig_truncation()
+
+FIG["chart_tpen"] = line_chart(
+    [("두 색만 (Ising): fr/N = 0.2", 0, 0.2, "l2", (0.08, 0.212)), ("치유 배치: 0.2·D3", 0.2, 0, "l3", (0.45, 0.06))],
+    xmax=1.6, ymax=0.26, xt=[0, 0.5, 1, 1.5], yt=[0, 0.1, 0.2], ylabel="사이트당 에너지",
+    mark=(1, 0.2, "꺾임은 D3 = 1에서 한 번"), aria="깎은 펜로즈(사이트 270개, 좌절 54): 정확한 에너지는 min(D3,1)·54이며 D3=1에서만 꺾인다")
+
+# gallery panels (class names prefixed so they do not collide with the page's graph styles)
+from deg3_gallery import LATTICES, geometric_faces, svg_for
+from heal_check import healed_state
+_gal = {}
+for key, name, desc, fn in LATTICES:
+    if key not in ("tpen", "foam", "star"):
+        continue
+    n, E, pos, info = fn()
+    fr, s = healed_state(n, E)
+    faces = geometric_faces(n, E, [tuple(p) for p in pos])
+    svg = svg_for(n, E, pos, faces, s, w=360)
+    svg = svg.replace('class="bond"', 'class="gbond"').replace('class="odd"', 'class="godd"').replace('class="site c', 'class="gsite c')
+    FIG["gal_" + key] = svg
+    _gal[key] = (n, fr, sum(1 for x in s if x == 3))
+FIG["_galstats"] = json.dumps(_gal)
+
+json.dump(FIG, open("figs.json", "w"), ensure_ascii=False)
+print("added degree-3 figures", _gal)
