@@ -1,0 +1,235 @@
+% Manuscript skeleton -- D3 project. Not yet compiled (no TeX in the build container).
+% TODO markers: [TODO-BC] Blume-Capel mapping (needs Zukovic-Bobak 2013), [TODO-LIT] literature,
+% [TODO-FIG] figure to be produced, [TODO-NUM] numerics to rerun at larger size.
+\documentclass[aps,pre,twocolumn,superscriptaddress,showpacs]{revtex4-2}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\fr}{\operatorname{fr}}
+\newcommand{\ioct}{\operatorname{ioct}}
+\newcommand{\OPT}{E_0}
+
+\begin{document}
+
+\title{How much is a third state worth? Exact ground states of the antiferromagnetic
+three-state Potts model with single-ion anisotropy on frustrated planar lattices}
+
+\author{[TODO authors]}
+\affiliation{[TODO affiliation]}
+\date{\today}
+
+\begin{abstract}
+We study the ground states of the antiferromagnetic three-state Potts model in which the third
+state carries a single-ion energy cost $D_3$, on arbitrary lattices.
+A single local recolouring argument shows that a site of coordination $d$ in the third state can
+relieve at most $\lfloor d/2\rfloor$ frustrated bonds.
+Consequently the third state disappears from every ground state once $D_3>\lfloor\Delta/2\rfloor$,
+where $\Delta$ is the maximum coordination, and for planar lattices the ground state is then
+computable exactly in polynomial time by matching.
+The threshold is attained for every $\Delta\ge 3$, and it explains the transition points
+observed on the triangular lattice ($D_3^*=3$), on the face-adjacency graph of Penrose tilings
+($D_3^*=2$) and around dilute frustrated defects ($D_c\simeq 2$).
+Below the threshold, ground states have a rigid local structure: third-state sites are isolated
+and, for coordination four and $1<D_3<2$, surrounded by exactly two neighbours of each other state.
+On lattices of coordination three the third state heals frustrated bonds one for one:
+$\OPT(D_3)\ge\min(D_3,1)\,\fr$, with equality whenever the frustrated bonds of some Ising ground
+state admit non-adjacent endpoints; this yields a matching-plus-2-SAT algorithm that constructs
+and certifies exact ground states of quasicrystalline, foam-like and defective lattices with
+thousands of sites in seconds.
+We conjecture that every connected graph of maximum degree three other than $K_4$ is healable,
+and verify this exhaustively for all 27\,523 such graphs with at most 12 vertices.
+\end{abstract}
+
+\maketitle
+
+%=====================================================================
+\section{Introduction}
+\label{sec:intro}
+% Story: frustration (triangle), third state as "cost to relieve frustration";
+% ground states of frustrated Ising/Potts; exact planar algorithms (Bieche et al 1980, Barahona 1982);
+% field makes planar Ising NP-hard (Barahona 1982) -- the third-state cost does NOT break 1<->2 symmetry;
+% relation to spin-1 Blume-Capel antiferromagnets [TODO-BC] (Zukovic & Bobak 2013, triangular);
+% results summary (bullet list): threshold law, sharpness, local structure, exact algorithm above
+% threshold, coordination-three healing theorem + certification algorithm, conjecture + exhaustive
+% evidence, examples (Penrose dual, truncated Penrose, foams).
+[TODO text]
+
+%=====================================================================
+\section{Model}
+\label{sec:model}
+Let $G=(V,E)$ be a finite simple graph (the lattice), $d(v)$ the coordination of site $v$ and
+$\Delta=\max_v d(v)$. A configuration is $s:V\to\{1,2,3\}$ with energy
+\begin{equation}
+E(s)=\#\{uv\in E:\ s_u=s_v\}+D_3\,\#\{v:\ s_v=3\},\qquad D_3\ge 0,
+\label{eq:H}
+\end{equation}
+i.e.\ the antiferromagnetic three-state Potts model with single-ion anisotropy $(0,0,D_3)$.
+State 3 is a genuine state, not a vacancy: two adjacent sites in state 3 cost one unit.
+Write $\OPT(D_3)=\min_s E(s)$ and $\fr(G)=\min_{t:V\to\{1,2\}}\#\{uv:\ t_u=t_v\}$, the number of
+frustrated bonds of the Ising (two-state) ground state; $\fr(G)=|E|-\mathrm{maxcut}(G)$.
+
+\paragraph*{Relation to the Blume--Capel antiferromagnet.} [TODO-BC]
+With $s=\pm1$ for states 1,2 and $s=0$ for state 3 and $J=1/2$,
+$E_{\rm BC}=E-\tfrac{|E|}{2}+\tfrac12\sum_{v:s_v=0}d(v)-\tfrac32\,e_{00}+(\text{single-ion term})$,
+where $e_{00}$ counts bonds between two $s=0$ sites. On lattices of constant coordination the
+degree term is a shift of $D_3$; the only genuine difference is the $0$--$0$ bond energy,
+which is irrelevant whenever third-state sites are independent in the ground state
+(Theorem~\ref{thm:local}). State precisely and check against Ref.~\cite{Zukovic2013}.
+
+\paragraph*{Reformulation.} With $S=s^{-1}(3)$ and $e(S)$ the number of bonds inside $S$,
+\begin{equation}
+\OPT(D_3)=\min_{S\subseteq V}\big[D_3|S|+e(S)+\fr(G-S)\big].
+\label{eq:reform}
+\end{equation}
+$\OPT$ is a nondecreasing concave piecewise-linear function of $D_3$; its slope is the number of
+third-state sites.
+
+%=====================================================================
+\section{Local recolouring and the universal threshold}
+\label{sec:threshold}
+
+\begin{lemma}[local recolouring]\label{lem:recolour}
+Let $s_v=3$, and let $n_1,n_2,a$ be the numbers of neighbours of $v$ in states $1,2,3$.
+Recolouring $v$ with the state $c\in\{1,2\}$ that is rarer among its neighbours changes the
+energy by
+$\min(n_1,n_2)-a-D_3\le\lfloor (d(v)-a)/2\rfloor-a-D_3\le\lfloor d(v)/2\rfloor-D_3 .$
+\end{lemma}
+\begin{proof}
+Only bonds at $v$ change: the $a$ bonds to state-3 neighbours stop being frustrated, the
+$n_c=\min(n_1,n_2)$ bonds to state-$c$ neighbours become frustrated, and the single-ion term
+drops by $D_3$. The bounds follow from $\min(n_1,n_2)\le\lfloor(n_1+n_2)/2\rfloor$.
+\end{proof}
+
+\begin{theorem}[threshold]\label{thm:threshold}
+Let $W=\{v:\lfloor d(v)/2\rfloor\le D_3\}$.
+(a) Every configuration can be turned, without raising its energy, into one with no state-3
+site in $W$. (b) If $\lfloor d(v)/2\rfloor<D_3$, no ground state has $s_v=3$.
+(c) In every ground state each state-3 site satisfies $\min(n_1,n_2)\ge a+D_3$.
+In particular, if $D_3\ge\lfloor\Delta/2\rfloor$ then $\OPT(D_3)=\fr(G)$, and if
+$D_3>\lfloor\Delta/2\rfloor$ no ground state uses state 3.
+\end{theorem}
+\begin{proof}
+(a) Apply Lemma~\ref{lem:recolour} to state-3 sites in $W$ one at a time; the bound depends
+only on $d(v)$, and each step removes one state-3 site. (b),(c) Lemma~\ref{lem:recolour}
+applied to a ground state.
+\end{proof}
+
+\begin{proposition}[sharpness for every $\Delta$]\label{prop:wheel}
+For $\Delta\ge3$ let $W_\Delta$ be the wheel (a hub joined to a $\Delta$-cycle). For every
+$D_3<\lfloor\Delta/2\rfloor$ every ground state of $W_\Delta$ uses state 3.
+\end{proposition}
+\begin{proof}
+Each of the $\Delta$ triangles needs a frustrated bond in any two-state configuration and each
+spoke lies in two triangles, so $\fr(W_\Delta)=\lceil\Delta/2\rceil$ (attained by alternating the
+rim). Putting the hub in state 3 costs $D_3+\fr(C_\Delta)=D_3+(\lceil\Delta/2\rceil-\lfloor\Delta/2\rfloor)$.
+\end{proof}
+
+\begin{remark}
+The same triangle counting gives $D_3^*=3$ on the triangular lattice ($\fr=N$ versus
+$N D_3/3$), in agreement with Ref.~\cite{Zukovic2013} [TODO-BC] and with our annealing data, and the
+octahedron gives a second $\Delta=4$ example.
+\end{remark}
+
+%=====================================================================
+\section{Structure of ground states below the threshold}
+\label{sec:structure}
+\begin{theorem}[local structure]\label{thm:local}
+In every ground state and at every state-3 site:
+(i) if $D_3>\lfloor(\Delta-1)/2\rfloor-1$ the state-3 sites are pairwise non-adjacent; in
+particular for $\Delta\le4$ and every $D_3>0$;
+(ii) if $k-1<D_3\le k$ then $\min(n_1,n_2)\ge a+k$ and $d(v)\ge 3a+2k$;
+(iii) if $\Delta=4$ and $1<D_3<2$, then $d(v)=4$ and the neighbours are two in state 1 and two
+in state 2;
+(iv) if $\Delta=3$ and $0<D_3<1$, then $d(v)=3$, $a=0$ and $\{n_1,n_2\}=\{1,2\}$.
+\end{theorem}
+\begin{proof}
+All items follow from Theorem~\ref{thm:threshold}(c) by integrality. [expand]
+\end{proof}
+
+%=====================================================================
+\section{Exact ground states above the threshold}
+\label{sec:exact}
+For planar $G$ and $D_3\ge\lfloor\Delta/2\rfloor$, $\OPT=\fr(G)$ is a planar max-cut, i.e.\ a
+minimum $T$-join between odd faces in the dual, solvable by minimum-weight perfect matching
+\cite{Hadlock1975,Bieche1980,Barahona1982}. The existing $D_3=\infty$ solver is therefore exact for
+$D_3\ge3$ on subgraphs of the triangular lattice and $D_3\ge2$ on coordination-four lattices.
+
+%=====================================================================
+\section{Coordination three: one-for-one healing}
+\label{sec:healing}
+\begin{theorem}[sandwich]\label{thm:sandwich}
+If $\Delta\le3$ and $0\le D_3\le1$ then
+$D_3\,\fr(G)\le\OPT(D_3)\le\min\{\fr(G),\,D_3\,\ioct(G)\}$, where $\ioct(G)$ is the minimum
+size of an independent set whose removal leaves a bipartite graph.
+\end{theorem}
+\begin{proof}
+Re-insert the state-3 sites one at a time with the rarer neighbouring state; each creates at
+most one frustrated bond, so $\fr(G)\le m_{12}+|S|$ and
+$E=m_{12}+e(S)+D_3|S|\ge D_3(m_{12}+|S|)$.
+\end{proof}
+
+\begin{theorem}[healing]\label{thm:healing}
+For $\Delta\le3$ and $0<D_3<1$ the following are equivalent:
+(i) $\OPT(D_3)=D_3\,\fr(G)$; (ii) $\ioct(G)=\fr(G)$; (iii) some Ising ground state has a set of
+pairwise non-adjacent sites containing exactly one endpoint of each frustrated bond.
+Then $\OPT(D_3)=\min(D_3,1)\,\fr(G)$ for all $D_3\ge0$.
+\end{theorem}
+% proof: theorem_C.md, C.2
+
+\paragraph*{Hub relaxation.} Dropping the cost of 3--3 bonds gives a relaxation whose optimum is
+exactly $D_3\fr(G)$ for $0\le D_3\le1$; on planar lattices it is a $T$-join with a hub of weight
+$D_3/2$ inside every dual triangle.
+
+\paragraph*{Certification algorithm.} (1) Ising ground state by matching; (2) choose endpoints of
+the frustrated matching by 2-SAT; (3) if satisfiable, the healed configuration has energy
+$D_3\fr$ and is certified optimal by Theorem~\ref{thm:sandwich}. [TODO-FIG timing table]
+
+\begin{conjecture}[healing conjecture]\label{conj:healing}
+Every connected graph with maximum degree at most three other than $K_4$ satisfies
+$\ioct(G)=\fr(G)$.
+\end{conjecture}
+Evidence: exhaustive for all 27\,523 connected graphs with $\Delta\le3$ on $\le12$ vertices; no
+exception among $\approx3\,700$ lattice and random instances. The stronger statement ``every
+maximum cut is healable'' is false (18-vertex example, App.~\ref{app:numerics}).
+Relation to Brooks' theorem and to Choi--Nakajima--Rim \cite{Choi1989} [TODO-LIT].
+If true, $\OPT(D_3)=\min(D_3,1)\fr(G)$ for every planar $\Delta\le3$ lattice, computable in
+polynomial time for all $D_3$.
+
+%=====================================================================
+\section{Lattices}
+\label{sec:lattices}
+% (a) triangular lattice: D3*=3 (known in BC form) -- short.
+% (b) Penrose face-adjacency graph (Delta=4): exact curve, D3*=2, 28/28 two-two sites. [TODO-NUM larger patches / approximants]
+% (c) truncation construction: odd faces = odd-degree vertices of the parent tiling.
+% (d) truncated Penrose, star lattice, truncated rhombille, defect honeycomb, 2D foam: certified ground states.
+[TODO text]
+
+%=====================================================================
+\section{Discussion}
+\label{sec:discussion}
+% complexity landscape (brief): Delta=3 polynomial if Conj. holds; Delta>=4, 0<D3<floor(Delta/2) open;
+% D3=0: planar 3-colourability. Symmetry vs field (Barahona). Open problems.
+[TODO text]
+
+\appendix
+\section{Numerical methods}
+\label{app:numerics}
+% MILP (HiGHS) exact solver; parametric envelope; T-join implementation; 2-SAT;
+% exhaustive generation of connected subcubic graphs (vertex addition + isomorphism rejection);
+% strong-version counterexample.
+[TODO text]
+
+\bibliography{refs}
+
+\end{document}
