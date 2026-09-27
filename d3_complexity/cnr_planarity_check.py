@@ -133,11 +133,12 @@ HAND = [
     # (nv, clauses)
     (3, [[1, 2, 3]]),
     (3, [[1, 2, 3], [-1, -2, -3]]),
-    (3, [[1, 2, 3], [-1, 2, -3], [1, -2, -3], [-1, -2, 3]]),
+    (4, [[1, 2, 3], [-1, 2, -4], [1, -2, -3], [-1, -2, 4]]),
     (4, [[1, 2, 3], [-1, 2, 4], [1, -3, -4], [-2, 3, 4]]),            # K4-like faces
     (4, [[1, 2, 3], [-1, -2, 4], [2, -3, -4], [1, 3, -4]]),
     (5, [[1, 2, 3], [1, 3, 4], [1, 4, 5], [1, 5, -2], [-2, -3, -4]]),  # wheel around x1
-    (3, [[1, 2, 3], [-1, 2, 3], [1, -2, 3], [1, 2, -3], [-1, -2, 3], [-1, 2, -3], [1, -2, -3], [-1, -2, -3]]),
+    # planar UNSAT: (x1 v x2),(x1 v -x2),(-x1 v x2),(-x1 v -x2), each split with a fresh variable
+    (6, [[1, 2, 3], [1, 2, -3], [1, -2, 4], [1, -2, -4], [-1, 2, 5], [-1, 2, -5], [-1, -2, 6], [-1, -2, -6]]),
 ]
 
 
@@ -248,10 +249,19 @@ def main():
         if shown >= 8:
             break
 
+    # C'. smallest obstruction found for the same-sense convention
+    obs = (4, [[-4, -1, 3], [1, -2, -4], [-1, -3, -4]])
+    _, emb = nx.check_planarity(incidence(*obs))
+    same = planar_ok(build_ordered(*obs, *orders_from_embedding(*obs, emb, 1, 1)))
+    opp = planar_ok(build_ordered(*obs, *orders_from_embedding(*obs, emb, 1, -1)))
+    g, t = brute_force(*obs)
+    print(f"   obstruction {obs[1]}: same-sense planar={same}, opposite-sense planar={opp}, "
+          f"all orders {g}/{t}")
+
     # D. MILP energy check
     print("D. MILP: OPT == 6 m D3  <=>  satisfiable  (on embedding-ordered planar G_phi)")
     milp_inst = [(nv, cl, cyc) for nv, cl, cyc, _ in inst if len(cl) <= 5][:10]
-    milp_inst.append(HAND[-1][:1] + (HAND[-1][1],) + (None,))  # unsat 8-clause (m = 8)
+    milp_inst.append((HAND[-1][0], HAND[-1][1], None))  # planar unsat, m = 8
     bad = 0
     for nv, cl, cyc in milp_inst:
         H = incidence(nv, cl, cyc)

@@ -15,7 +15,8 @@ since degrees are at most three, each insertion creates at most one monochromati
 In particular every odd cycle transversal has at least $\fr(G)$ vertices, so it suffices to
 find an independent $S$ with $\varphi(S)=\fr(G)$ and $\fr(G-S)=0$.
 An independent set $S$ is \emph{tight} if $\varphi(S)=\fr(G)$; the empty set is tight.
-We may assume $G$ connected. Fix a tight set $S$ of maximum size and suppose, for a
+Both $\fr$ and $\ioct$ are additive over connected components, so we may assume $G$
+connected and $G\ne K_4$. Fix a tight set $S$ of maximum size and suppose, for a
 contradiction, that $k:=\fr(G-S)\ge1$.
 
 \begin{lemma}[augmentation]\label{lem:aug}
@@ -38,8 +39,12 @@ Lemma~\ref{lem:aug} and maximality $v$ has a neighbour in $T$, so $\deg_K v\le2$
 $\deg_K v=1$, recolouring $v$ improves the colouring. Hence $v$ has a second neighbour $v_1$
 in $K$, of the other colour (otherwise recolouring $v$ gains two). Recolouring $v$ gives another
 optimal colouring in which $v v_1$ is the monochromatic edge, so $v_1$ has the same properties.
-Iterating, every vertex met has degree exactly two in $K$; since $K$ is finite and connected, $K$
-is a cycle, odd because $\fr(K)\ge1$. Each vertex of $K$ has a neighbour in $T$ and degree at most
+Iterating gives a walk $v=v_0,v_1,v_2,\dots$ in which each $v_i$ has degree exactly two in $K$
+and $v_{i+1}$ is the neighbour of $v_i$ other than $v_{i-1}$ ($v_{-1}=u$). By symmetry $u$ also has
+degree two. Let $v_m$ be the first vertex of the walk whose successor was already visited or is
+$u$; since all visited vertices have both neighbours accounted for, the successor must be $u$, so
+$u,v_0,\dots,v_m$ is a cycle in which every vertex has degree two in $K$. As $K$ is connected,
+$K$ is this cycle, odd because $\fr(K)\ge1$. Each vertex of $K$ has a neighbour in $T$ and degree at most
 three, hence exactly one such neighbour and degree three.
 \end{proof}
 
@@ -111,38 +116,20 @@ follows from (I1) for $T_{j+1}$ (each vertex of $Y_{j+1}$ has exactly one $T_{j+
 $T_{j+1}=T_j-w_{j+1}+p_{j+1}$.
 \end{proof}
 
-\paragraph*{Counting.}
-Call a component of $G-S$ a \emph{region path} if it equals $R_j$ for some chain and some
-$j\ge1$, and call the vertices of $Z$ and of all region paths \emph{region vertices}. Let
-$\Sigma$ be the set of $S$-neighbours of region vertices.
-\begin{enumerate}
-\item[(P)] Let $R=R_j$ be a region path with closing vertex $w=w_j$, $r\in R$, and $u\ne w$ an
-$S$-neighbour of $r$. Then $u$ is the $T_j$-neighbour of $r$, so by Lemma~\ref{lem:exchange} at
-$(T_j,Y_j,r)$ it has exactly one neighbour in $R$, and its other two neighbours are the endpoints
-of $R_{j+1}$ for the chain extended by $p_{j+1}=r$, a region path. The same holds for
-$r\in Z$ with $u$ its $S$-neighbour.
-\item[(U)] Each region path $R$ has exactly one $S$-vertex adjacent to both of its endpoints (its
-\emph{closer}): a second one would be an $S$-neighbour $\ne w$ of an endpoint with two
-neighbours in $R$, contradicting (P). ($R$ has at least two vertices since $R+w$ is an odd
-cycle.)
-\item[(B)] By Lemma~\ref{lem:stuck} and (I3), every region vertex $v$ has exactly one
-$S$-neighbour $\pi(v)$ that is not the closer of its own component.
-\end{enumerate}
-Let $x\in\Sigma$ be adjacent to a region vertex $v$. If $x=\pi(v)$, then by (P) the neighbours of
-$x$ are $v$ and the two endpoints of a region path $R_x$ that $x$ closes. If $x$ is the closer of
-$v$'s path $R_j$, then $x=w_j$ is the $T_{j-1}$-neighbour of $p_j$ and, being in
-$S\setminus W_{j-1}$, is not the closer of $p_j$'s component, so $x=\pi(p_j)$. Thus every
-$x\in\Sigma$ has degree three, equals $\pi(v)$ for exactly one region vertex $v$ (its third
-neighbour cannot be an endpoint $a$ of $R_x$ with $x=\pi(a)$, since $x$ closes $a$'s path), and
-closes exactly one region path. By (U) the map sending $x$ to the path it closes is a bijection
-between $\Sigma$ and the set $\mathcal R$ of region paths, and by (B) $\pi$ is a bijection between
-region vertices and $\Sigma$. Therefore
-\[
-|\mathcal R| \;=\; |\Sigma| \;=\; |Z|+\sum_{R\in\mathcal R}|R| \;\ge\; 3+2|\mathcal R| ,
-\]
-a contradiction. Hence $\fr(G-S)=0$ for a maximum tight set $S$, which is an independent odd
-cycle transversal of size $\fr(G)$. \hfill$\square$
+\paragraph*{Conclusion.}
+Every chain can be extended: $R_j$ is non-empty, so some $p_{j+1}\in R_j$ exists, and
+Lemma~\ref{lem:exchange} applies to $(T_j,Y_j,p_{j+1})$ because $T_j$ is a tight set of maximum
+size (I1) and $G\ne K_4$. By (I2) the paths $R_1,R_2,\dots$ of an infinite chain are pairwise
+distinct components of the finite graph $G-S$, a contradiction. Hence $\fr(G-S)=0$ for a maximum
+tight set $S$, which is therefore an independent odd cycle transversal of size $\fr(G)$.
 
-\paragraph*{Remarks.} Planarity is not used. The argument does not fix a maximum cut, consistent
+\paragraph*{Energy.} For $0<D_3\le1$ Theorem~\ref{thm:sandwich} and $\ioct=\fr$ give
+$\OPT=D_3\fr$. For $D_3\ge1$, $\OPT\le\fr$ (no state 3) and
+$E=m_{12}+e(S)+D_3|S|\ge m_{12}+|S|\ge\fr$ by the re-insertion argument. For $D_3=0$ the
+independent odd cycle transversal gives a proper 3-colouring, $\OPT=0$. \hfill$\square$
+
+\paragraph*{Remarks.} Planarity is not used. (An earlier draft closed the argument by a
+counting of ``private'' edges, $|\Sigma|=|Z|+\sum|R|\ge3+2|\Sigma|$; the finiteness argument above
+is shorter and avoids defining a region through different $T_j$.) The argument does not fix a maximum cut, consistent
 with the fact that not every maximum cut is healable (App.~\ref{app:numerics}). For planar $G$ the
 theorem makes $\OPT(D_3)$ computable in polynomial time for all $D_3$.
