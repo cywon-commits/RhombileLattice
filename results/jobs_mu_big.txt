@@ -109,3 +109,21 @@ python3 annealed_long.py 32 0.88 500000 10 20000 1 1 2 | tail -n 1 >> results/lo
 python3 annealed_long.py 32 0.9 500000 10 20000 1 1 2 | tail -n 1 >> results/long/log_mu_big.txt
 python3 annealed_long.py 32 0.92 500000 10 20000 1 1 2 | tail -n 1 >> results/long/log_mu_big.txt
 python3 annealed_long.py 32 0.94 500000 10 20000 1 1 2 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 64 0.6 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 64 0.64 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 64 0.67 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 64 0.44 500000 10 20000 2 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 64 0.47 500000 10 20000 2 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 64 0.5 500000 10 20000 2 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 48 0.6 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 48 0.64 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 48 0.67 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 48 0.44 500000 10 20000 2 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 48 0.47 500000 10 20000 2 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 48 0.5 500000 10 20000 2 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 32 0.6 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 32 0.64 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 32 0.67 500000 10 20000 1 1 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 32 0.44 500000 10 20000 2 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 32 0.47 500000 10 20000 2 1 | tail -n 1 >> results/long/log_mu_big.txt
+python3 annealed_long.py 32 0.5 500000 10 20000 2 1 | tail -n 1 >> results/long/log_mu_big.txt
