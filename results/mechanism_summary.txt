@@ -13,3 +13,11 @@ Part IX mechanism tests (a), (b) -- 2026-09-27
     mu=0 0.528(2) | 0.5 0.620(7) | 1 0.696(4) | 2 ~0.87 (L=16/24) | 5 ~1.1 (L=16; ordered and random starts agree)
     -> frustrated triangles lower T_c; mu->inf (no thermal frustration) approaches the unfrustrated scale
        (Ising on the pristine rhombile/dice lattice: T_c=1.2027) -- to be checked.
+
+Roadmap priority 1 (2026-09-27, later):
+- Pipeline validation: fixed-bond TAFM at h/J=3 (D2=3), L=24-64: T_c=0.6718(10) -> T_c/J=1.3436(20);
+  CTMRG (Nyckees et al., arXiv:2306.09046) 1.3440/1.3437. Exponents 1/nu 1.18(10), gamma/nu 1.757(46), 2beta/nu 0.242(76).
+- mu=10 (no thermal frustration), L=24-48, 5e5 sweeps: T_c(spin psi_s)=1.141(3), T_c(hub psi)=1.154(6); dice Ising 1.2027.
+  NOT Potts-like: gamma/nu~1.33, 2beta/nu~0.67; below T_c U~0.46 for all L while psi_s^2 decreases with L
+  (T=1.10: 0.185/0.164/0.140 for L=24/32/48) -> possible quasi-long-range (KT-type) phase; hub psi^2~0.005 (tiling rough).
+  Energy and |psi_s| histograms single-peaked (the analysis "barrier" is an artefact of the mu=10 energy comb).
