@@ -24,6 +24,7 @@ import sys
 
 import numpy as np
 import matplotlib
+import matplotlib.ticker
 
 matplotlib.use("pdf")
 import matplotlib.pyplot as plt
@@ -168,7 +169,7 @@ def save(fig, name):
 
 # ================================================================== 1. recolouring
 def fig_recolour():
-    W, H = COL1, 2.55
+    W, H = COL1, 2.40
     fig = plt.figure(figsize=(W, H))
     ax = fig.add_axes([0, 0, 1, 1])
     ax.set_xlim(0, W); ax.set_ylim(0, H)
@@ -179,15 +180,15 @@ def fig_recolour():
     for cx, cols, t1, t2 in ((0.95, (1, 2, 1), "two states", "$E=1$"),
                              (2.35, (1, 2, 3), "third state", "$E=D_3$")):
         s = 0.27
-        pos = {0: (cx, 2.43), 1: (cx - s, 2.43 - 1.732 * s), 2: (cx + s, 2.43 - 1.732 * s)}
+        pos = {0: (cx, 2.28), 1: (cx - s, 2.28 - 1.732 * s), 2: (cx + s, 2.28 - 1.732 * s)}
         draw_graph(ax, pos, [(0, 1), (1, 2), (0, 2)], dict(enumerate(cols)), r=r)
-        ax.text(cx + 0.42, 2.18, t1 + "\n" + t2, ha="left", va="center", fontsize=8, linespacing=1.3)
+        ax.text(cx + 0.42, 2.03, t1 + "\n" + t2, ha="left", va="center", fontsize=8, linespacing=1.3)
     # (b) local recolouring, d = 4
-    ax.plot([0.05, W - 0.05], [1.80, 1.80], color="0.75", lw=0.5)
-    ax.text(0.02, 1.76, "(b)", fontsize=9, va="top")
+    ax.plot([0.05, W - 0.05], [1.66, 1.66], color="0.75", lw=0.5)
+    ax.text(0.02, 1.62, "(b)", fontsize=9, va="top")
     R = 0.27
-    for y, nb, lab in ((1.33, [1, 2, 1, 2], "$n_1{:}n_2=2{:}2$\n$\\Delta E=2-D_3$"),
-                       (0.42, [1, 2, 2, 2], "$n_1{:}n_2=1{:}3$\n$\\Delta E=1-D_3$")):
+    for y, nb, lab in ((1.22, [1, 2, 1, 2], "$n_1{:}n_2=2{:}2$\n$\\Delta E=2-D_3$"),
+                       (0.40, [1, 2, 2, 2], "$n_1{:}n_2=1{:}3$\n$\\Delta E=1-D_3$")):
         for cx, cc in ((0.62, 3), (1.72, 1)):
             pos = star_pos(cx, y, R, 4, start=45)
             col = {"c": cc}; col.update(dict(enumerate(nb)))
@@ -234,11 +235,11 @@ def fig_wheel():
     x = np.linspace(0, 3.5, 200)
     for (two, off), ls, name in (((2, 0), "-", "W_4"), ((3, 1), "--", "W_5")):
         ax.plot(x, np.minimum(two, x + off), color="k", ls=ls, lw=1.3, label=f"${name}$", zorder=3)
-        ax.plot(x, np.full_like(x, two), color="0.6", ls=":", lw=0.8)
-        ax.plot(x, x + off, color="0.6", ls=":", lw=0.8)
+        ax.plot([0, 2], [two, two], color="0.6", ls=":", lw=0.8)
+        ax.plot([2, 3.5], [2 + off, 3.5 + off], color="0.6", ls=":", lw=0.8)
     ax.axvline(2, color=FR, lw=0.7, ls=(0, (4, 2)))
     ax.text(2.06, 0.25, "$\\lfloor\\Delta/2\\rfloor=2$", color=FR, fontsize=7.5, ha="left")
-    ax.text(0.35, 1.68, "hub in state 3", fontsize=7, rotation=0, color="0.25")
+    ax.text(0.62, 0.30, "hub in state 3", fontsize=7, color="0.25")
     ax.text(2.55, 3.12, "two states", fontsize=7, color="0.25")
     ax.set_xlim(0, 3.5); ax.set_ylim(0, 4)
     ax.set_xlabel("$D_3$"); ax.set_ylabel("$E_0$")
@@ -323,7 +324,7 @@ def fig_penrose():
     fig = plt.figure(figsize=(COL2, 2.25))
     w = 0.215
     for k, key in enumerate(("0.5", "1.5", "2.5")):
-        ax = fig.add_axes([0.005 + k * (w + 0.01), 0.04, w, 0.83])
+        ax = fig.add_axes([0.005 + k * (w + 0.01), 0.02, w, 0.76])
         st = d["states"][key]
         col = st["col"]
         for c in (1, 2, 3):
@@ -338,21 +339,19 @@ def fig_penrose():
         allp = np.vstack(polys)
         ax.set_xlim(allp[:, 0].min() - 0.1, allp[:, 0].max() + 0.1)
         ax.set_ylim(allp[:, 1].min() - 0.1, allp[:, 1].max() + 0.1)
-        blank(ax)
-        panel_label(ax, "(" + "abc"[k] + ")", x=0.0, y=1.08)
-        ax.text(0.99, 1.08, f"$D_3={key}$\n$n_3={st['n3']}$, $m={st['mono']}$", transform=ax.transAxes,
-                ha="right", va="top", fontsize=7.5, linespacing=1.2)
+        ax.set_aspect("equal", adjustable="datalim"); ax.axis("off")
+        panel_label(ax, "(" + "abc"[k] + ")", x=0.0, y=1.12)
+        ax.text(0.13, 1.12, f"$D_3={key}$:  $n_3={st['n3']}$, $m={st['mono']}$", transform=ax.transAxes,
+                ha="left", va="top", fontsize=7.5)
     state_legend(fig, "upper left", ncol=4, marker=False, bbox=(0.005, 1.0))
 
-    ax = fig.add_axes([0.735, 0.19, 0.255, 0.66])
+    ax = fig.add_axes([0.735, 0.17, 0.255, 0.63])
     curves = load_penrose_curves()
     x = np.linspace(0, 3, 601)
     for key, (n, lines) in curves.items():
         if key != "r6_s0":
             ax.plot(x, envelope(lines, x) / n, color="0.72", lw=0.6, zorder=1)
     n, lines = curves["r6_s0"]
-    for m, k3 in lines:
-        ax.plot(x, (m + k3 * x) / n, color="0.5", ls=":", lw=0.6, zorder=2)
     ax.plot(x, envelope(lines, x) / n, color="k", lw=1.3, zorder=3)
     kinks = []
     for (m1, k1), (m2, k2) in zip(lines, lines[1:]):
@@ -368,7 +367,7 @@ def fig_penrose():
     ax.set_xlim(0, 3); ax.set_ylim(0, 0.6)
     ax.set_xticks([0, 1, 2, 3]); ax.set_yticks([0, 0.2, 0.4, 0.6])
     ax.set_xlabel("$D_3$"); ax.set_ylabel("$E_0/N$", labelpad=2)
-    panel_label(ax, "(d)", x=-0.30, y=1.1)
+    panel_label(ax, "(d)", x=-0.30, y=1.13)
     save(fig, "fig_penrose.pdf")
     return curves
 
@@ -395,7 +394,7 @@ def fig_healing():
     axg = fig.add_axes([0, 0.60, 1, 0.40])
     Wd, Hd = COL1, 0.40 * 2.85
     axg.set_xlim(0, Wd); axg.set_ylim(0, Hd); blank(axg)
-    R1, R2, cy = 0.40, 0.15, 0.66
+    R1, R2, cy = 0.36, 0.14, 0.66
     titles = ("Ising g.s., $\\mathrm{fr}=2$", "one endpoint each", "healed, $E=2D_3$")
     for k, (cx, cc, ring) in enumerate(((0.52, col, ()), (1.70, col, set(chosen)), (2.88, healed, ()))):
         pos = {}
@@ -404,7 +403,7 @@ def fig_healing():
             pos[i] = (cx + R1 * math.cos(a), cy + 0.03 + R1 * math.sin(a))
             pos[i + 3] = (cx + R2 * math.cos(a), cy + 0.03 + R2 * math.sin(a))
         draw_graph(axg, pos, E, dict(enumerate(cc)), r=0.065, fs=6, ring=ring)
-        axg.text(cx, 0.06, titles[k], ha="center", va="center", fontsize=7.5)
+        axg.text(cx, 0.17, titles[k], ha="center", va="center", fontsize=7.5)
         if k < 2:
             arrow(axg, cx + 0.40, cy - 0.05, cx + 0.78, cy - 0.05)
     panel_label(axg, "(a)", x=0.005, y=1.0)
@@ -424,8 +423,8 @@ def fig_healing():
     ax = fig.add_axes([0.15, 0.11, 0.82, 0.42])
     x = np.linspace(0, 2, 200)
     ax.plot(x, np.minimum(x, 1) * frt / n, color="k", lw=1.3, label="$\\min(D_3,1)\\,\\mathrm{fr}/N$", zorder=2)
-    ax.plot(x, x * frt / n, color="0.55", ls=":", lw=0.8)
-    ax.axhline(frt / n, color="0.55", ls=":", lw=0.8)
+    ax.plot([1, 2], [frt / n, 2 * frt / n], color="0.55", ls=":", lw=0.8)
+    ax.plot([0, 1], [frt / n, frt / n], color="0.55", ls=":", lw=0.8)
     ax.plot(xs, ex / n, ls="", marker="o", ms=3.8, mfc="white", mec="k", mew=0.8, zorder=3,
             label="exact (MILP)")
     ax.set_xlim(0, 2); ax.set_ylim(0, 0.3)
@@ -488,7 +487,7 @@ def fig_truncation():
         pad = 0.03 * np.ptp(P, axis=0).max()
         ax.set_xlim(P[:, 0].min() - pad, P[:, 0].max() + pad)
         ax.set_ylim(P[:, 1].min() - pad, P[:, 1].max() + pad)
-        blank(ax)
+        ax.set_aspect("equal", adjustable="datalim"); ax.axis("off")
         n3 = sum(1 for x in s if x == 3)
         stats[name] = (n, fr, n3)
         panel_label(ax, lab, x=0.0, y=1.08)
@@ -522,20 +521,29 @@ def load_timing():
 def fig_timing(rows):
     fig = plt.figure(figsize=(COL1, 2.35))
     ax = fig.add_axes([0.15, 0.17, 0.82, 0.80])
+    fam_h = []
     for fam in FAMNAME:
         R = sorted((r for r in rows if r["fam"] == fam), key=lambda r: r["n"])
         if not R:
             continue
         mk, c = FAMSTYLE[fam]
         n = [r["n"] for r in R]
-        ax.plot(n, [r["t_match"] for r in R], marker=mk, color=c, ms=3.8, mec=c, lw=1.0,
-                label=f"{FAMNAME[fam]}, matching")
-        ax.plot(n, [max(r["t_2sat"], 5e-4) for r in R], marker=mk, color=c, ms=3.8, mfc="white",
-                mec=c, lw=0.9, ls="--", label=f"{FAMNAME[fam]}, 2-SAT")
+        ax.plot(n, [r["t_match"] for r in R], marker=mk, color=c, ms=3.8, mec=c, lw=1.0)
+        R2 = [r for r in R if r["t_2sat"] > 0]          # 0.0 = below the 1 ms resolution
+        ax.plot([r["n"] for r in R2], [r["t_2sat"] for r in R2], marker=mk, color=c, ms=3.8,
+                mfc="white", mec=c, lw=0.9, ls="--")
+        fam_h.append(Line2D([], [], marker=mk, color=c, ms=3.8, lw=1.0, label=FAMNAME[fam]))
     ax.set_xscale("log"); ax.set_yscale("log")
     ax.set_xlabel("number of sites $N$"); ax.set_ylabel("time (s)")
-    ax.set_ylim(4e-4, 200)
-    ax.legend(loc="upper left", frameon=False, fontsize=6.8, handlelength=2.4, borderaxespad=0.3)
+    ax.set_ylim(3e-4, 1e3)
+    ax.set_xticks([200, 500, 1000, 2000, 5000])
+    ax.xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:g}"))
+    ax.xaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
+    l1 = ax.legend(handles=fam_h, loc="upper left", frameon=False, handlelength=2.0, borderaxespad=0.3)
+    ax.add_artist(l1)
+    step_h = [Line2D([], [], color="0.3", marker="o", ms=3.8, lw=1.0, label="matching"),
+              Line2D([], [], color="0.3", marker="o", ms=3.8, mfc="white", ls="--", lw=0.9, label="2-SAT")]
+    ax.legend(handles=step_h, loc="center right", frameon=False, handlelength=2.4, borderaxespad=0.3)
     save(fig, "fig_timing.pdf")
 
 
@@ -545,7 +553,7 @@ def timing_table_tex(rows):
          r"\caption{Certification algorithm on coordination-three lattices: number of sites $N$,",
          r"Ising frustration $\fr$, wall-clock times of the matching step (Ising ground state as a",
          r"minimum $T$-join) and of the 2-SAT step (choice of endpoints), and whether the first Ising",
-         r"ground state was healed, which certifies $E_0(D_3)=\min(D_3,1)\fr$. Single core, Python/NetworkX.}",
+         r"ground state was healed, which certifies $E_0(D_3)=\min(D_3,1)\fr$. Python/NetworkX implementation.}",
          r"\label{tab:timing}",
          r"\begin{ruledtabular}",
          r"\begin{tabular}{lrrrrc}",
@@ -553,8 +561,9 @@ def timing_table_tex(rows):
          r"\hline"]
     for f in fams:
         for r in sorted((r for r in rows if r["fam"] == f), key=lambda r: r["n"]):
-            L.append(f"{FAMNAME[f]} & {r['n']} & {r['fr']} & {r['t_match']:.2f} & "
-                     f"{1000 * r['t_2sat']:.0f} & {'yes' if r['healed'] else 'no'}\\\\")
+            t2 = f"{1000 * r['t_2sat']:.0f}" if r["t_2sat"] > 0 else "$<1$"
+            ok = "yes" if r["healed"] else "no"
+            L.append(f"{FAMNAME[f]} & {r['n']} & {r['fr']} & {r['t_match']:.2f} & {t2} & {ok}\\\\")
     L += [r"\end{tabular}", r"\end{ruledtabular}", r"\end{table}"]
     return "\n".join(L)
 

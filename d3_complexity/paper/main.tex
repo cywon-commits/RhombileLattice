@@ -47,7 +47,7 @@ at most $\lfloor d/2\rfloor$ frustrated bonds, so the third state is useless onc
 $D_3\ge\lfloor\Delta/2\rfloor$; this threshold is sharp for every $\Delta\ge3$ and reproduces
 the triangular-lattice point $D_3^*=3$ of the equivalent spin-1 Blume--Capel antiferromagnet.
 A matching-plus-2-SAT algorithm constructs and certifies exact ground states of quasicrystalline,
-foam-like and defective lattices with thousands of sites in seconds.
+foam-like and defective lattices with thousands of sites in seconds to minutes.
 \end{abstract}
 
 \maketitle
@@ -57,7 +57,7 @@ foam-like and defective lattices with thousands of sites in seconds.
 \label{sec:intro}
 Geometric frustration arises whenever the interactions of a system cannot all be satisfied at
 once. The smallest example is a triangle of antiferromagnetically coupled two-state spins: however
-the spins are chosen, one bond remains unsatisfied. A third local state changes this. With three
+the spins are chosen, one bond remains unsatisfied [Fig.~\ref{fig:recolour}(a)]. A third local state changes this. With three
 states the triangle can be satisfied completely, and on the triangular lattice the
 antiferromagnetic three-state Potts model has an extensive set of unfrustrated ground states.
 In many physical realisations, however, the third state is not free. It may be a non-magnetic
@@ -171,6 +171,21 @@ Only bonds at $v$ change: the $a$ bonds to state-3 neighbours stop being frustra
 $n_c=\min(n_1,n_2)$ bonds to state-$c$ neighbours become frustrated, and the single-ion term
 drops by $D_3$. The bounds follow from $\min(n_1,n_2)\le\lfloor(n_1+n_2)/2\rfloor$.
 \end{proof}
+A state-3 site thus relieves at most $\lfloor d(v)/2\rfloor$ frustrated bonds, and only when its
+neighbours are split evenly between states 1 and 2 [Fig.~\ref{fig:recolour}(b)].
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{figs/fig_recolour}
+\caption{(a) An antiferromagnetic triangle with two states always has one frustrated bond
+($E=1$); with a third state it is satisfied at cost $E=D_3$. (b) Local recolouring
+(Lemma~\ref{lem:recolour}) of a state-3 site of coordination $d=4$: recolouring it to the rarer
+neighbouring state creates $\min(n_1,n_2)$ frustrated bonds, so $\Delta E=\min(n_1,n_2)-D_3$.
+A balanced neighbourhood ($2{:}2$, top) relieves $\lfloor d/2\rfloor=2$ bonds, an unbalanced one
+($1{:}3$, bottom) only one. Throughout, sites in states 1, 2, 3 are drawn blue, orange and
+yellow (digits give the state; in lattices circles, squares and triangles), and frustrated
+(same-state) bonds are drawn thick and red.}
+\label{fig:recolour}
+\end{figure}
 
 \begin{theorem}[threshold]\label{thm:threshold}
 Let $W=\{v:\lfloor d(v)/2\rfloor\le D_3\}$.
@@ -195,10 +210,23 @@ Each of the $\Delta$ triangles needs a frustrated bond in any two-state configur
 spoke lies in two triangles, so $\fr(W_\Delta)=\lceil\Delta/2\rceil$ (attained by alternating the
 rim). Putting the hub in state 3 costs $D_3+\fr(C_\Delta)=D_3+(\lceil\Delta/2\rceil-\lfloor\Delta/2\rfloor)$.
 \end{proof}
+The two ground states of $W_4$ and $W_5$ and their level crossing at $D_3=\lfloor\Delta/2\rfloor$
+are shown in Fig.~\ref{fig:wheel}.
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{figs/fig_wheel}
+\caption{Sharpness of the threshold (Proposition~\ref{prop:wheel}). (a) Wheels $W_4$ and $W_5$:
+the best two-state configurations, with $\fr(W_\Delta)=\lceil\Delta/2\rceil=2$ and $3$
+frustrated bonds, and the configurations with the hub in state 3, with energies $D_3$ and $D_3+1$
+(the odd rim of $W_5$ keeps one frustrated bond). (b) Ground-state energy $E_0(D_3)$ of $W_4$
+(solid) and $W_5$ (dashed); dotted lines continue the excited branches. For both wheels the
+level crossing lies at $D_3=\lfloor\Delta/2\rfloor=2$.}
+\label{fig:wheel}
+\end{figure}
 
 \begin{remark}
 The same triangle counting gives $D_3^*=3$ on the triangular lattice ($\fr=N$ versus
-$N D_3/3$), in agreement with Ref.~\cite{Zukovic2013} via Eq.~\eqref{eq:BC} and with our annealing data, and the
+$N D_3/3$, Fig.~\ref{fig:triangular}), in agreement with Ref.~\cite{Zukovic2013} via Eq.~\eqref{eq:BC} and with our annealing data, and the
 octahedron gives a second $\Delta=4$ example.
 \end{remark}
 
@@ -265,7 +293,23 @@ $D_3/2$ inside every dual triangle.
 
 \paragraph*{Certification algorithm.} (1) Ising ground state by matching; (2) choose endpoints of
 the frustrated matching by 2-SAT; (3) if satisfiable, the healed configuration has energy
-$D_3\fr$ and is certified optimal by Theorem~\ref{thm:sandwich}. [TODO-FIG timing table]
+$D_3\fr$ and is certified optimal by Theorem~\ref{thm:sandwich}. Figure~\ref{fig:healing}(a)
+illustrates the three steps; running times are given in App.~\ref{app:numerics}
+(Table~\ref{tab:timing}, Fig.~\ref{fig:timing}).
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{figs/fig_healing}
+\caption{Healing at coordination three. (a) Certification algorithm on the triangular prism:
+an Ising ground state with $\fr=2$ frustrated bonds, which form a matching; one endpoint of each
+frustrated bond is chosen (dashed rings) such that the chosen sites are non-adjacent, a 2-SAT
+problem (here the spokes forbid choosing both top or both lower-left endpoints); putting the
+chosen sites in state 3 gives a proper three-colouring with $E=2D_3=D_3\fr$, optimal for
+$0\le D_3\le1$ by Theorem~\ref{thm:sandwich}. (b) Ground-state energy per site of a truncated
+Penrose patch ($N=270$, $\fr=54$): the certified curve $E_0=\min(D_3,1)\,\fr$ (line) agrees with
+exact mixed-integer solutions (circles) and has a single kink at $D_3=1$; dotted lines continue
+the two branches.}
+\label{fig:healing}
+\end{figure}
 
 The certification algorithm succeeds whenever the chosen Ising ground state is healable. Not every
 maximum cut is healable (18-vertex example, App.~\ref{app:numerics}), but every graph is:
@@ -337,7 +381,17 @@ $2N$ triangles), and the Wannier states attain $N$~\cite{Wannier1950}. The three
 configuration has energy $ND_3/3$. The ground state therefore changes at $D_3^*=3=\lfloor6/2\rfloor$
 by a level crossing, in agreement with simulated annealing and with the Blume--Capel
 result~\cite{Zukovic2013} ($D=0$ in Eq.~\eqref{eq:BC}). The triangular lattice is thus an extremal lattice for
-Theorem~\ref{thm:threshold}.
+Theorem~\ref{thm:threshold}. The two competing states are shown in Fig.~\ref{fig:triangular}.
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{figs/fig_triangular}
+\caption{Triangular lattice ($\Delta=6$). (a) Three-sublattice state: a proper three-colouring
+with one third of the sites in state 3, $E=ND_3/3$. (b) Two-state stripe configuration, one of
+the Wannier ground states, with exactly one frustrated bond per triangle, $E=\fr=N$. (c) Energy
+per site of the two states and the ground-state energy $E_0/N=\min(D_3/3,1)$; the level crossing
+is at $D_3^*=3=\lfloor6/2\rfloor$.}
+\label{fig:triangular}
+\end{figure}
 
 \paragraph*{Penrose face-adjacency graph ($\Delta=4$).} Taking the rhombi of a Penrose P3 tiling
 as sites and edge-sharing rhombi as neighbours gives a four-coordinated planar graph. Odd
@@ -349,13 +403,27 @@ state-3 rhombi relieves exactly $\lfloor4/2\rfloor=2$ frustrated bonds. At $D_3=
 two neighbours in each of the other states, as required by Theorem~\ref{thm:local}(iii).
 The two principal kinks are those allowed by Theorem~\ref{thm:local}: below $D_3=1$ state-3
 rhombi may have a $1{:}3$ neighbourhood, above it only $2{:}2$, and at $D_3=2$ all state-3 rhombi
-disappear. Between them the exact curves of ten patches (97--248 rhombi, four radii, three phason
+disappear [Fig.~\ref{fig:penrose}]. Between them the exact curves of ten patches (97--248 rhombi, four radii, three phason
 offsets) show one to three further kinks at patch-dependent positions ($4/3$, $5/4$, $7/5$,
 $3/2$, $5/3$). They are not repairs confined to the patch edge: most of the rhombi that change lie
 two or more steps from the edge, and the changes reach the patch centre. Their energy gain
 relative to the two-line envelope, however, fluctuates strongly ($0.004$--$0.024$ per rhombus, the
 smallest value for the largest patch), so whether these kinks survive in the thermodynamic limit
 cannot be decided from open patches and requires periodic approximants.
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{figs/fig_penrose}
+\caption{Penrose face-adjacency graph ($\Delta=4$), patch of 140 rhombi. (a)--(c) Exact ground
+states at $D_3=0.5$, $1.5$ and $2.5$; rhombi are coloured by their state (state 3 hatched) and
+edges shared by two rhombi in the same state (frustrated bonds) are drawn in red; $n_3$ is the
+number of state-3 rhombi and $m$ the number of frustrated bonds. At $D_3=1.5$ every state-3
+rhombus has two neighbours in each of the other states; at $D_3=2.5$ the state is an Ising ground
+state with $m=\fr=66$. (d) Exact ground-state energy per rhombus $E_0/N$ of this patch (black,
+kinks at $D_3=1$, $5/4$ and $2$ marked by circles) and of nine further patches with 97--248
+rhombi (grey). The dashed line marks the threshold $D_3^*=\lfloor4/2\rfloor=2$; dotted lines mark
+the values of panels (a)--(c).}
+\label{fig:penrose}
+\end{figure*}
 
 \paragraph*{Truncated lattices ($\Delta=3$).} Replacing every vertex of degree $d$ of a planar
 tiling by a $d$-gon (truncation) produces a three-coordinated lattice. Faces of the parent tiling
@@ -365,14 +433,28 @@ lattice, truncating the rhombille lattice gives triangles and hexagons, and trun
 tiling gives a quasiperiodic arrangement of triangles, pentagons and heptagons. The truncated
 Penrose lattice carries its frustration at the same places as the Penrose face-adjacency graph,
 so the two allow a direct comparison between coordination four and three.
+Figure~\ref{fig:truncation} shows the construction and certified ground states of three such
+lattices.
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{figs/fig_truncation}
+\caption{Truncated lattices ($\Delta=3$). (a) Truncation replaces a vertex of degree $d$ by a
+$d$-gon; the new face is odd (grey) exactly when $d$ is odd, while faces of the parent tiling
+double in length. (b)--(d) Certified ground states for $0<D_3<1$ obtained by the
+matching-plus-2-SAT algorithm: (b) truncated Penrose tiling ($N=190$ sites, $\fr=40$),
+(c) Voronoi foam of 45 random points ($N=78$, $\fr=10$), (d) star (3.12.12) lattice ($N=92$,
+$\fr=22$). Odd faces are shaded. In each case $\fr$ pairwise non-adjacent sites are in state 3
+(triangles), no frustrated bond remains, and $E_0=D_3\fr$.}
+\label{fig:truncation}
+\end{figure*}
 
 \paragraph*{Certified ground states at coordination three.} For truncated Penrose patches,
 the star lattice, the truncated rhombille lattice, honeycombs with 5--7 defects and random
 Voronoi (foam) networks, the matching-plus-2-SAT algorithm of Sec.~\ref{sec:healing} succeeded on
 the first Ising ground state in every case. The resulting energy curve is
-$E_0(D_3)=\min(D_3,1)\fr$, with a single kink at $D_3=1$. This contrasts with the several kinks of
-the four-coordinated Penrose graph. Patches with about $3\times10^3$ sites were solved and
-certified in under 15\,s. [TODO-FIG: timing table.]
+$E_0(D_3)=\min(D_3,1)\fr$, with a single kink at $D_3=1$ [Fig.~\ref{fig:healing}(b)]. This contrasts with the several kinks of
+the four-coordinated Penrose graph. Patches with $3$--$4\times10^3$ sites were solved and
+certified in 3--35\,s (Table~\ref{tab:timing}, Fig.~\ref{fig:timing}).
 
 %=====================================================================
 \section{Discussion}
@@ -425,7 +507,48 @@ of NetworkX. The 2-SAT step of the certification algorithm has one Boolean varia
 bond (which endpoint takes state 3) and one clause per bond joining two such endpoints.
 \paragraph*{Timing.} Table~\ref{tab:timing} lists the certification algorithm on three families of
 coordination-three lattices. Every instance was healed on the first Ising ground state. The
-matching step dominates; the 2-SAT step takes milliseconds. [TIMING-TABLE]
+matching step dominates; the 2-SAT step takes milliseconds. Figure~\ref{fig:timing} shows
+how both steps scale with the number of sites.
+
+% BEGIN generated timing table (make_figs.py)
+\begin{table}
+\caption{Certification algorithm on coordination-three lattices: number of sites $N$,
+Ising frustration $\fr$, wall-clock times of the matching step (Ising ground state as a
+minimum $T$-join) and of the 2-SAT step (choice of endpoints), and whether the first Ising
+ground state was healed, which certifies $E_0(D_3)=\min(D_3,1)\fr$. Python/NetworkX implementation.}
+\label{tab:timing}
+\begin{ruledtabular}
+\begin{tabular}{lrrrrc}
+lattice & $N$ & $\fr$ & matching (s) & 2-SAT (ms) & healed\\
+\hline
+truncated Penrose & 270 & 54 & 0.03 & 2 & yes\\
+truncated Penrose & 624 & 122 & 0.14 & 2 & yes\\
+truncated Penrose & 1062 & 226 & 0.44 & 3 & yes\\
+truncated Penrose & 1654 & 334 & 0.94 & 5 & yes\\
+truncated Penrose & 2368 & 490 & 2.04 & 7 & yes\\
+truncated Penrose & 3168 & 674 & 4.55 & 10 & yes\\
+Voronoi foam & 482 & 71 & 0.12 & 1 & yes\\
+Voronoi foam & 980 & 124 & 0.55 & 2 & yes\\
+Voronoi foam & 1982 & 269 & 4.62 & 4 & yes\\
+Voronoi foam & 3982 & 518 & 34.52 & 8 & yes\\
+Voronoi foam & 7974 & 1059 & 340.28 & 16 & yes\\
+defect honeycomb & 173 & 15 & 0.01 & $<1$ & yes\\
+defect honeycomb & 749 & 50 & 0.07 & 1 & yes\\
+defect honeycomb & 1713 & 95 & 0.46 & 5 & yes\\
+defect honeycomb & 3847 & 208 & 3.35 & 4 & yes\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+% END generated timing table
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{figs/fig_timing}
+\caption{Wall-clock time of the certification algorithm versus the number of sites $N$ for
+truncated Penrose patches, Voronoi foams and defect honeycombs. Filled symbols and solid lines:
+matching step (Ising ground state as a minimum $T$-join); open symbols and dashed lines: 2-SAT
+step. 2-SAT times below the 1\,ms resolution are omitted. Data as in Table~\ref{tab:timing}.}
+\label{fig:timing}
+\end{figure}
 \paragraph*{Exhaustive enumeration.} Every connected graph has a vertex whose removal leaves it
 connected, so all connected graphs with $\Delta\le3$ on $n+1$ vertices arise from those on $n$
 vertices by adding a vertex joined to one, two or three vertices of degree at most two.

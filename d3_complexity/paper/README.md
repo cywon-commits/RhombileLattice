@@ -21,21 +21,22 @@
 | 9 논의 | 복잡도 지형(짧게), 대칭 대 장, 열린 문제 | `perfect_colouring_obstruction.md`, `theorem_delta3.md` |
 | 부록 A | 수치 방법, 전수 생성, 강한 판 반례 | `potts_exact.py`, `exhaustive_heal.py`, `hub_runs/` |
 
-## 그림 목록 (계획)
+## 그림 목록
 
-| 번호 | 내용 | 원천 |
-|---|---|---|
-| 1 | 삼각형 좌절과 세 번째 상태 (개념도) | `report/gen_svgs.py` `triangle` |
-| 2 | 국소 재색칠: 이웃 반반 대 치우침 | `star_*` |
-| 3 | 바퀴 W₄, W₅와 에너지 교차 | `w*_*`, `chart_w5` |
-| 4 | 삼각 격자: 세 색 배치, Wannier 배치, 에너지 | `tri3`, `tri2`, `chart_tri` |
-| 5 | 국소 구조: 허용·금지 모양 | `loc_*` |
-| 6 | 펜로즈 쌍대: 바닥상태 세 장면과 정확한 에너지 곡선 [TODO-NUM 더 큰 조각] | `pen*`, `chart_pen` |
-| 7 | 이웃 3 치유: 삼각 기둥, 깎은 펜로즈 에너지 곡선 | `heal_*`, `chart_tpen` |
-| 8 | 깎기 구성과 갤러리(깎은 펜로즈, 거품, 별 격자) | `trunc_*`, `gal_*` |
-| 9 | 인증 알고리즘 시간표 [TODO-FIG] | `heal_check.py` |
+`python3 make_figs.py` (이 폴더에서)가 `figs/*.pdf`(matplotlib 벡터)를 만들고, `main.tex` 부록의 시간표(`% BEGIN generated timing table` 표지 사이)를 `../hub_runs/timing_cert.jsonl`로 다시 쓴다. `python3 make_figs.py penrose timing`처럼 일부만 만들 수도 있다. 색: 상태 1 파랑 원, 상태 2 주황 사각형, 상태 3 노랑 삼각형(타일은 빗금), 좌절 결합 굵은 빨강. 작은 그래프에는 상태 숫자를 넣어 흑백에서도 읽힌다.
 
-그림은 현재 SVG다. 원고용으로는 벡터 PDF로 변환하거나 matplotlib으로 다시 그린다.
+| 파일 | label | 위치 | 내용 | 원천 |
+|---|---|---|---|---|
+| `figs/fig_recolour.pdf` | `fig:recolour` | §3 보조정리 뒤 | (a) 삼각형 좌절과 세 번째 상태, (b) d = 4 국소 재색칠: 2:2 대 1:3 | `report/gen_svgs.py` `triangle`, `star_*` |
+| `figs/fig_wheel.pdf` | `fig:wheel` | §3 명제(바퀴) 뒤 | W₄, W₅ 바닥상태와 D3 = 2 교차 | `w*_*`, `chart_w5` |
+| `figs/fig_triangular.pdf` | `fig:triangular` | §8 삼각 격자 | 세 부격자 배치, Wannier 줄무늬, 사이트당 에너지 | `tri3`, `tri2`, `chart_tri` |
+| `figs/fig_penrose.pdf` (figure*) | `fig:penrose` | §8 펜로즈 쌍대 | 140 마름모 조각의 바닥상태(D3 = 0.5, 1.5, 2.5)와 정확한 곡선 + 다른 조각 9개 | `report/penrose_states.json`, `penrose_runs/r*_s*.json` |
+| `figs/fig_healing.pdf` | `fig:healing` | §6 인증 알고리즘 | (a) 삼각 기둥 치유 3단계, (b) 깎은 펜로즈(N = 270) 곡선과 MILP 점 | `ising_tjoin.py`, `heal_check.py`, `potts_exact.py` |
+| `figs/fig_truncation.pdf` (figure*) | `fig:truncation` | §8 깎은 격자 | 깎기 구성, 깎은 펜로즈·거품·별 격자의 인증 바닥상태 | `lattices3.py`, `report/deg3_gallery.py` |
+| `figs/fig_timing.pdf` | `fig:timing` | 부록 A 시간 | 인증 알고리즘 시간(매칭, 2-SAT) 대 사이트 수 | `hub_runs/timing_cert.jsonl` |
+| 표 `tab:timing` | `tab:timing` | 부록 A 시간 | 같은 자료의 표 (make_figs.py가 생성) | `hub_runs/timing_cert.jsonl` |
+
+계획에 있던 "국소 구조: 허용·금지 모양"(`loc_*`) 그림은 넣지 않았다(정리 문장으로 충분하다고 보고 뺌; 필요하면 추가).
 
 ## 남은 일
 1. ~~[TODO-BC]~~ 완료: 정확한 BC 대응(식 BC)과 Žukovič–Bobák 확인을 반영했다.
