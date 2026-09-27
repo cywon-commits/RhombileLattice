@@ -22,8 +22,8 @@
 
 \begin{document}
 
-\title{Coordination three heals, coordination four is hard: ground states of the
-antiferromagnetic three-state Potts model with a costly third state}
+\title{Coordination three heals, coordination four is hard:\\ the antiferromagnetic Potts model
+with a costly third state}
 
 \author{[TODO authors]}
 \affiliation{[TODO affiliation]}
@@ -212,10 +212,21 @@ particular for $\Delta\le4$ and every $D_3>0$;
 (ii) if $k-1<D_3\le k$ then $\min(n_1,n_2)\ge a+k$ and $d(v)\ge 3a+2k$;
 (iii) if $\Delta=4$ and $1<D_3<2$, then $d(v)=4$ and the neighbours are two in state 1 and two
 in state 2;
-(iv) if $\Delta=3$ and $0<D_3<1$, then $d(v)=3$, $a=0$ and $\{n_1,n_2\}=\{1,2\}$.
+(iv) if $\Delta=3$ and $0<D_3<1$, then $a=0$ and $n_1,n_2\ge1$; hence $d(v)\in\{2,3\}$, and
+$\{n_1,n_2\}=\{1,2\}$ when $d(v)=3$.
 \end{theorem}
 \begin{proof}
-All items follow from Theorem~\ref{thm:threshold}(c) by integrality. [expand]
+Let $v$ be a state-3 site of a ground state and $k=\lceil D_3\rceil\ge1$. By
+Theorem~\ref{thm:threshold}(c), $\min(n_1,n_2)\ge a+D_3>a+k-1$, and since the left side is an
+integer, $\min(n_1,n_2)\ge a+k$. Then $d(v)\ge n_1+n_2+a\ge 3a+2k$, which is (ii).
+(i) If $a\ge1$ then $\Delta\ge d(v)\ge3+2k$, i.e.\ $\lceil D_3\rceil\le\lfloor(\Delta-3)/2\rfloor
+=\lfloor(\Delta-1)/2\rfloor-1$; this is excluded when $D_3>\lfloor(\Delta-1)/2\rfloor-1$. For
+$\Delta\le4$ the right side is $0$, so $a=0$ for every $D_3>0$.
+(iii) Here $k=2$ and $a=0$ by (i), so $n_1,n_2\ge2$; with $d(v)\le4$ this forces $n_1=n_2=2$ and
+$d(v)=4$.
+(iv) Here $k=1$ and $a=0$, so $n_1,n_2\ge1$ and $n_1+n_2=d(v)\le3$.
+Degree-two sites can indeed carry state 3: on a triangle with one pendant edge and
+$0<D_3<1$, putting a degree-two triangle vertex in state 3 is a ground state.
 \end{proof}
 
 %=====================================================================
@@ -398,10 +409,43 @@ Theorem~\ref{thm:local} suggests constrained low-energy excitations below the th
 \appendix
 \section{Numerical methods}
 \label{app:numerics}
-% MILP (HiGHS) exact solver; parametric envelope; T-join implementation; 2-SAT;
-% exhaustive generation of connected subcubic graphs (vertex addition + isomorphism rejection);
-% strong-version counterexample.
-[TODO text]
+\paragraph*{Exact solver.} For moderate sizes we minimise Eq.~\eqref{eq:H} exactly as a mixed-integer
+linear programme: binary variables $x_{v,c}$ ($c=1,2,3$, one colour per site) and, for each bond
+and colour, a variable $y_{uv,c}\ge x_{u,c}+x_{v,c}-1$ counting monochromatic bonds (the $c=3$
+terms can be dropped to obtain the hub relaxation). The programme is solved with HiGHS through
+SciPy.
+\paragraph*{Energy curves.} Since $\OPT(D_3)$ is concave and piecewise linear, its exact lower
+envelope on an interval is obtained by bisection on the intersections of the supporting lines
+$m+D_3 n_3$ returned by the solver; a segment is accepted when the solver at the intersection
+point returns no line below the two neighbouring ones.
+\paragraph*{Ising ground states.} For planar lattices $\fr$ is computed as a minimum $T$-join between
+the odd faces of a planar embedding, i.e.\ a minimum-weight perfect matching on the odd faces with
+dual shortest-path distances~\cite{Hadlock1975,Barahona1982}; we use the blossom implementation
+of NetworkX. The 2-SAT step of the certification algorithm has one Boolean variable per frustrated
+bond (which endpoint takes state 3) and one clause per bond joining two such endpoints.
+\paragraph*{Timing.} Table~\ref{tab:timing} lists the certification algorithm on three families of
+coordination-three lattices. Every instance was healed on the first Ising ground state. The
+matching step dominates; the 2-SAT step takes milliseconds. [TIMING-TABLE]
+\paragraph*{Exhaustive enumeration.} Every connected graph has a vertex whose removal leaves it
+connected, so all connected graphs with $\Delta\le3$ on $n+1$ vertices arise from those on $n$
+vertices by adding a vertex joined to one, two or three vertices of degree at most two.
+Isomorphism classes were separated by Weisfeiler--Lehman hashes followed by exact isomorphism
+tests. This gives 2, 6, 10, 29, 64, 194, 531, 1733, 5524, 19430 graphs for $n=3,\dots,12$ (27\,523
+in total); for each, some maximum cut was checked to admit an independent transversal of its
+frustrated matching. Only $K_4$ fails.
+\paragraph*{Strong version.} The statement that \emph{every} maximum cut is healable is false: an
+18-vertex, 27-edge graph with $\fr=5$ has 13 maximum cuts, one of which is not
+healable. The obstruction consists of two triangles joined by a frustrated bond whose own
+frustrated bonds point to opposite sides.
+\paragraph*{Further checks.} Random connected subcubic graphs with 12--20 vertices: greedy
+augmentation (Lemma~\ref{lem:aug}) reached $\fr(G-S)=0$ in all 972 runs. Exact optimisation on
+251 further graphs with up to 60 vertices (cubic, triangle-rich, truncated, and reduction graphs
+$G_\varphi$) gave $\ioct=\fr$ in every case. For Theorem~\ref{thm:hard4}, 307 planar 3-SAT formulas
+gave planar $G_\varphi$ under the ordering rule, and the energy criterion was confirmed by exact
+optimisation on satisfiable and unsatisfiable instances.
+\paragraph*{Penrose patches.} Patches of the Penrose face-adjacency graph were generated by the
+de Bruijn pentagrid method with random phason offsets; exact energy curves were computed on
+$0.9\le D_3\le2.1$ for patches of 97--248 rhombi.
 
 \bibliography{refs}
 

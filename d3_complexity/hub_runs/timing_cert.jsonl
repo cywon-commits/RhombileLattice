@@ -1,0 +1,10 @@
+{"fam": "truncated_penrose", "arg": 4, "n": 270, "fr": 54, "healed": true, "t_match": 0.03, "t_2sat": 0.002}
+{"fam": "truncated_penrose", "arg": 6, "n": 624, "fr": 122, "healed": true, "t_match": 0.14, "t_2sat": 0.002}
+{"fam": "truncated_penrose", "arg": 8, "n": 1062, "fr": 226, "healed": true, "t_match": 0.44, "t_2sat": 0.003}
+{"fam": "truncated_penrose", "arg": 10, "n": 1654, "fr": 334, "healed": true, "t_match": 0.94, "t_2sat": 0.005}
+{"fam": "truncated_penrose", "arg": 12, "n": 2368, "fr": 490, "healed": true, "t_match": 2.04, "t_2sat": 0.007}
+{"fam": "truncated_penrose", "arg": 14, "n": 3168, "fr": 674, "healed": true, "t_match": 4.55, "t_2sat": 0.01}
+{"fam": "voronoi_foam", "arg": 250, "n": 482, "fr": 71, "healed": true, "t_match": 0.12, "t_2sat": 0.001}
+{"fam": "voronoi_foam", "arg": 500, "n": 980, "fr": 124, "healed": true, "t_match": 0.55, "t_2sat": 0.002}
+{"fam": "voronoi_foam", "arg": 1000, "n": 1982, "fr": 269, "healed": true, "t_match": 4.62, "t_2sat": 0.004}
+{"fam": "voronoi_foam", "arg": 2000, "n": 3982, "fr": 518, "healed": true, "t_match": 34.52, "t_2sat": 0.008}
