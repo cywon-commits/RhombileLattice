@@ -58,3 +58,12 @@ wrote results/long/long_L32_d21_mu5_T1.12_s1.npz
 wrote results/long/long_L32_d21_mu5_T1.14_s1.npz
 wrote results/long/long_L32_d21_mu5_T1.16_s1.npz
 wrote results/long/long_L32_d21_mu5_T1.18_s1.npz
+wrote results/long/long_L64_d21_mu3_T0.9_s1.npz
+wrote results/long/long_L64_d21_mu3_T0.88_s1.npz
+wrote results/long/long_L64_d21_mu3_T0.92_s1.npz
+wrote results/long/long_L64_d21_mu3_T0.94_s1.npz
+wrote results/long/long_L64_d21_mu3_T0.96_s1.npz
+wrote results/long/long_L64_d21_mu3_T0.98_s1.npz
+wrote results/long/long_L64_d21_mu3_T1_s1.npz
+wrote results/long/long_L64_d21_mu3_T1.02_s1.npz
+wrote results/long/long_L48_d21_mu3_T0.88_s1.npz
