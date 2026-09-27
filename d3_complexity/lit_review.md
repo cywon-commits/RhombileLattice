@@ -71,6 +71,9 @@ J = 1/2로 맞추면 BC 에너지 = (우리 에너지) − |E|/2 + Σ_{v: s=0} d
 ## 3. 복잡도 쪽 (이미 확인)
 - Johnson 외, *Complexity Framework for Forbidden Subgraphs I*
     - arXiv:2211.12887v5는 확인했다(평면성 빈틈 발견).
+    - arXiv v5는 2023-07-21 판이다(PDF 생성일). 표지에 저널 정보는 없다. 사용자가 두 번 올린 파일은 같은 파일이다(md5 동일).
+    - 저자 소속: Johnson, Martin, Paulusma, Smith는 Durham 대학, Oostveen, Pandey, van Leeuwen은 Utrecht 대학이다.
+    - 시리즈 후속편(v5 참고문헌 기준): II (Martin 외, arXiv:2211.14214, 변 분할로 어려움이 보존되지 않는 경우), III (Johnson 외, MFCS 2023, 이웃-3에서 쉬운 문제), IV (Bodlaender 외, arXiv:2305.01613, Steiner Forest).
     - **저널판: Algorithmica 87(3):429–464 (2025)** [원문 필요]. 정리 11의 평면성 논증이 고쳐졌는지 확인해야 한다. 고쳐지지 않았으면 저자들에게 알린다.
 - Pilz 2019, Kazda–Kolmogorov–Rolínek, Fulla–Živný, Barahona 1982: 확인 완료
 
