@@ -1,0 +1,4 @@
+wrote results/long/long_L48_d21_mu10_T1.04_s1.npz
+wrote results/long/long_L48_d21_mu10_T1.02_s1.npz
+wrote results/long/long_L48_d21_mu10_T1.08_s1.npz
+wrote results/long/long_L48_d21_mu10_T1.06_s1.npz
