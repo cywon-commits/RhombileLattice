@@ -56,14 +56,60 @@ and verify this exhaustively for all 27\,523 such graphs with at most 12 vertice
 %=====================================================================
 \section{Introduction}
 \label{sec:intro}
-% Story: frustration (triangle), third state as "cost to relieve frustration";
-% ground states of frustrated Ising/Potts; exact planar algorithms (Bieche et al 1980, Barahona 1982);
-% field makes planar Ising NP-hard (Barahona 1982) -- the third-state cost does NOT break 1<->2 symmetry;
-% relation to spin-1 Blume-Capel antiferromagnets [TODO-BC] (Zukovic & Bobak 2013, triangular);
-% results summary (bullet list): threshold law, sharpness, local structure, exact algorithm above
-% threshold, coordination-three healing theorem + certification algorithm, conjecture + exhaustive
-% evidence, examples (Penrose dual, truncated Penrose, foams).
-[TODO text]
+Geometric frustration arises whenever the interactions of a system cannot all be satisfied at
+once. The smallest example is a triangle of antiferromagnetically coupled two-state spins: however
+the spins are chosen, one bond remains unsatisfied. A third local state changes this. With three
+states the triangle can be satisfied completely, and on the triangular lattice the
+antiferromagnetic three-state Potts model has an extensive set of unfrustrated ground states.
+In many physical realisations, however, the third state is not free. It may be a non-magnetic
+level split off by a crystal field, a different orbital, or a different species on the site.
+The natural question is then quantitative: \emph{how much frustration does a costly third state
+remove, and at which cost does it stop being worth using?}
+
+We address this question for the antiferromagnetic three-state Potts model in which the third
+state carries a single-ion energy $D_3$. The two limits are classical. For $D_3\to\infty$ only
+two states remain, the model is the Ising antiferromagnet, and on planar lattices its ground state
+is found exactly in polynomial time by a matching algorithm~\cite{Hadlock1975,Bieche1980,Barahona1982}.
+For $D_3\to0$ the question ``is there an unfrustrated ground state'' contains planar
+3-colourability, an NP-complete problem~\cite{GareyJohnsonStockmeyer1976}. The model interpolates
+between an exactly solvable and a computationally hard problem, and the location of the crossover
+is a property of the lattice.
+
+The model is closely related to the spin-1 Blume--Capel antiferromagnet, in which the
+non-magnetic state $s=0$ plays the role of the third state; on the triangular lattice the
+non-magnetic sublattice phase and its stability window are known~\cite{Zukovic2013}. [TODO-BC:
+precise mapping.] Most studies of such models fix a lattice and map the phase diagram
+numerically. Here we instead prove statements that hold on \emph{every} lattice, controlled only
+by the local coordination.
+
+Our results are as follows.
+(i) A single local recolouring argument shows that a site of coordination $d$ in the third state
+relieves at most $\lfloor d/2\rfloor$ frustrated bonds. Hence the third state disappears from all
+ground states once $D_3>\lfloor\Delta/2\rfloor$, with $\Delta$ the maximum coordination
+(Theorem~\ref{thm:threshold}). On planar lattices the ground state is then computable exactly
+by matching for all such $D_3$.
+(ii) The threshold cannot be improved for any $\Delta\ge3$ (Proposition~\ref{prop:wheel}). It
+accounts for the transition points found on the triangular lattice ($D_3^*=3$), on the
+face-adjacency graph of Penrose tilings ($D_3^*=2$), and around dilute frustrated defects on the
+rhombille lattice ($D_c\simeq2$).
+(iii) Below the threshold, ground states have a rigid local structure. Third-state sites are
+isolated, and on lattices of coordination four with $1<D_3<2$ every third-state site has
+exactly two neighbours in each of the other states (Theorem~\ref{thm:local}).
+(iv) On lattices of coordination three the third state heals frustrated bonds one for one:
+$E_0(D_3)\ge\min(D_3,1)\fr$, with equality whenever the frustrated bonds of an Ising ground
+state admit non-adjacent endpoints (Theorems~\ref{thm:sandwich} and~\ref{thm:healing}). This
+yields an algorithm that constructs \emph{and certifies} exact ground states by matching and
+2-SAT. We apply it to quasicrystalline, foam-like and defective lattices with thousands of sites.
+(v) We conjecture that every connected graph of maximum degree three other than $K_4$ is
+healable (Conjecture~\ref{conj:healing}), which would make the coordination-three problem
+polynomial for all $D_3$. We verify the conjecture exhaustively up to 12 vertices.
+
+The paper is organised as follows. Section~\ref{sec:model} defines the model and its relation to
+the Blume--Capel antiferromagnet. Sections~\ref{sec:threshold}--\ref{sec:exact} prove the
+threshold law, the local structure and the exact algorithm above threshold.
+Section~\ref{sec:healing} treats coordination three, and Section~\ref{sec:lattices} applies the
+results to specific lattices. Section~\ref{sec:discussion} discusses the computational-complexity
+landscape and open problems.
 
 %=====================================================================
 \section{Model}
@@ -209,18 +255,67 @@ polynomial time for all $D_3$.
 %=====================================================================
 \section{Lattices}
 \label{sec:lattices}
-% (a) triangular lattice: D3*=3 (known in BC form) -- short.
-% (b) Penrose face-adjacency graph (Delta=4): exact curve, D3*=2, 28/28 two-two sites. [TODO-NUM larger patches / approximants]
-% (c) truncation construction: odd faces = odd-degree vertices of the parent tiling.
-% (d) truncated Penrose, star lattice, truncated rhombille, defect honeycomb, 2D foam: certified ground states.
-[TODO text]
+\paragraph*{Triangular lattice ($\Delta=6$).} Every two-state configuration has at least one
+frustrated bond per triangle. Each bond lies in two triangles, so $\fr\ge N$ for $N$ sites (with
+$2N$ triangles), and the Wannier states attain $N$~\cite{Wannier1950}. The three-sublattice
+configuration has energy $ND_3/3$. The ground state therefore changes at $D_3^*=3=\lfloor6/2\rfloor$
+by a level crossing, in agreement with simulated annealing and with the Blume--Capel
+result~\cite{Zukovic2013} [TODO-BC]. The triangular lattice is thus an extremal lattice for
+Theorem~\ref{thm:threshold}.
+
+\paragraph*{Penrose face-adjacency graph ($\Delta=4$).} Taking the rhombi of a Penrose P3 tiling
+as sites and edge-sharing rhombi as neighbours gives a four-coordinated planar graph. Odd
+cycles surround the tiling vertices of odd degree (3, 5, 7), so the graph is frustrated. We
+computed exact ground-state energy curves of patches by mixed-integer programming, together with
+the exact lower envelope over $D_3$ (App.~\ref{app:numerics}). All state-3 rhombi disappear
+together at $D_3^*=2$. For a 140-rhombus patch the energies obey $66=10+2\times28$: each of the 28
+state-3 rhombi relieves exactly $\lfloor4/2\rfloor=2$ frustrated bonds. At $D_3=1.5$ all 28 have
+two neighbours in each of the other states, as required by Theorem~\ref{thm:local}(iii).
+[TODO-NUM: kinks at $D_3=1$ and $1.25$ -- boundary or bulk; see size scaling.]
+
+\paragraph*{Truncated lattices ($\Delta=3$).} Replacing every vertex of degree $d$ of a planar
+tiling by a $d$-gon (truncation) produces a three-coordinated lattice. Faces of the parent tiling
+double in length and stay even, so \emph{the odd faces of the truncated lattice sit exactly at
+the odd-degree vertices of the parent}. Truncating the honeycomb gives the star (3.12.12)
+lattice, truncating the rhombille lattice gives triangles and hexagons, and truncating a Penrose
+tiling gives a quasiperiodic arrangement of triangles, pentagons and heptagons. The truncated
+Penrose lattice carries its frustration at the same places as the Penrose face-adjacency graph,
+so the two allow a direct comparison between coordination four and three.
+
+\paragraph*{Certified ground states at coordination three.} For truncated Penrose patches,
+the star lattice, the truncated rhombille lattice, honeycombs with 5--7 defects and random
+Voronoi (foam) networks, the matching-plus-2-SAT algorithm of Sec.~\ref{sec:healing} succeeded on
+the first Ising ground state in every case. The resulting energy curve is
+$E_0(D_3)=\min(D_3,1)\fr$, with a single kink at $D_3=1$. This contrasts with the several kinks of
+the four-coordinated Penrose graph. Patches with about $3\times10^3$ sites were solved and
+certified in under 15\,s. [TODO-FIG: timing table.]
 
 %=====================================================================
 \section{Discussion}
 \label{sec:discussion}
-% complexity landscape (brief): Delta=3 polynomial if Conj. holds; Delta>=4, 0<D3<floor(Delta/2) open;
-% D3=0: planar 3-colourability. Symmetry vs field (Barahona). Open problems.
-[TODO text]
+\paragraph*{Complexity landscape.} Theorem~\ref{thm:threshold} makes the ground-state problem
+polynomial on planar lattices for $D_3\ge\lfloor\Delta/2\rfloor$. At $D_3=0$ it is polynomial
+for $\Delta\le3$ (Brooks' theorem~\cite{Brooks1941}) and NP-complete for $\Delta\ge4$ (planar
+3-colourability~\cite{GareyJohnsonStockmeyer1976}). For $\Delta\le3$, Theorem~\ref{thm:healing}
+settles every healable lattice, and Conjecture~\ref{conj:healing} would settle all of them.
+The window $0<D_3<\lfloor\Delta/2\rfloor$ for $\Delta\ge4$ remains open.
+
+\paragraph*{A cost is not a field.} Barahona showed that a magnetic field turns the planar Ising
+ground-state problem from polynomial into NP-hard~\cite{Barahona1982}. The third-state cost looks
+like a field on one state, but unlike a field it preserves the symmetry between states 1 and 2.
+Standard hardness constructions need a global reference for ``true'' and ``false'', which a
+symmetric cost does not provide. We found that a published planar reduction for the related
+independent-odd-cycle-transversal problem~\cite{Johnson2025} cannot be planar on hard instances
+[TODO-LIT: check the journal version]. Formulated as a planar Boolean constraint problem, the
+symmetric structure falls close to the tractable side of the planar CSP
+classification~\cite{KazdaKolmogorovRolinek2018,FullaZivny2017}. Coordination three is exactly
+where healing makes the problem easy.
+
+\paragraph*{Open problems.} (1) Prove Conjecture~\ref{conj:healing}, at least for planar graphs,
+which suffices for the complexity statement. (2) Decide the complexity of the window
+$0<D_3<\lfloor\Delta/2\rfloor$ for $\Delta\ge4$; the Penrose face-adjacency graph and kagome-type
+lattices are natural test cases. (3) Finite temperature: the rigid local structure of
+Theorem~\ref{thm:local} suggests constrained low-energy excitations below the threshold.
 
 \appendix
 \section{Numerical methods}
