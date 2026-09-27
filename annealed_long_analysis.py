@@ -8,7 +8,7 @@ multi-histogram reweighting of annealed_fss_analysis.py; errors come from a
 jackknife over NB time blocks (block b of every run is dropped together),
 which replaces the seed-group jackknife of the PT analysis.
 
-Usage: [DIR=results/tafm] [MU=<mu>] [TC=<T_c>] [DISCARD=100000] [NB=8] [CKPT=1] \
+Usage: [DIR=results/tafm] [ORDER=spin] [MU=<mu>] [TC=<T_c>] [DISCARD=100000] [NB=8] [CKPT=1] \
        python3 annealed_long_analysis.py <D2> L1 L2 ...
 CKPT=1 also reads unfinished checkpoints (monitoring only).
 """
@@ -25,6 +25,9 @@ NB = int(os.environ.get("NB", 8))
 USE_CKPT = os.environ.get("CKPT") == "1"
 MU = float(os.environ["MU"]) if os.environ.get("MU") else 0.0
 DIR = os.environ.get("DIR", "results/long")   # results/tafm for the fixed-bond TAFM reference
+# ORDER=spin: use the spin order parameter psi_s (minority-spin fraction per sublattice; stored as
+# sre/sim by annealed_long.py) instead of the hub order parameter psi (re/im)
+ORDER = os.environ.get("ORDER", "hub")
 
 
 def tau_int(x):
@@ -52,6 +55,9 @@ def files(D2, L):
 
 def read(f):
     d = np.load(f)
+    if ORDER == "spin":
+        d = dict(d)
+        d["re"], d["im"] = d["sre"], d["sim"]
     if "betas" in d:
         thin = int(d["thin"])
         out = dict(beta=float(d["betas"][0]), E=d["E"][:, 0].astype(float), re=d["re"][:, 0].astype(float),
