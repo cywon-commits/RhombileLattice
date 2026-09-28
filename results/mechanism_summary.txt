@@ -21,3 +21,12 @@ Roadmap priority 1 (2026-09-27, later):
   NOT Potts-like: gamma/nu~1.33, 2beta/nu~0.67; below T_c U~0.46 for all L while psi_s^2 decreases with L
   (T=1.10: 0.185/0.164/0.140 for L=24/32/48) -> possible quasi-long-range (KT-type) phase; hub psi^2~0.005 (tiling rough).
   Energy and |psi_s| histograms single-peaked (the analysis "barrier" is an artefact of the mu=10 energy comb).
+
+Large-mu FSS (2026-09-27/28), D2=1, L=32/48/64 (mu=10 also L=96), 5e5 sweeps, spin order parameter psi_s:
+- T_c: mu=2 ~0.83, mu=3 ~0.95, mu=5 1.03-1.07 (crossings drift), mu=10 1.141(3).
+- Below T_c at the same T/T_c~0.96: mu=0 (T=0.50, seed 2) eta~0, U->0.5; mu=1 (T=0.67) eta=0.04, U rises with L;
+  mu=2 (T=0.80) eta=0.32, mu=3/5/10 eta~0.35-0.5 with U~0.45-0.46 size-independent -> quasi-long-range phase.
+- mu=10: eta grows continuously 0.07 (T/T_c=0.61) -> 0.4 (0.98); true LRO only at T/T_c<~0.6.
+- mu=5 at T_c: gamma/nu 1.38(9), 2beta/nu 0.62(9), C_max flat (1.20,1.20,1.18) -> not Potts, KT-like.
+=> multicritical mu_c between 1 and 2 separating a single 3-state Potts transition (mu<=1) from an
+   intermediate critical phase (mu>=2). Caveats: one seed, L<=64 (96 at mu=10); eta above Z6-clock window (1/9-1/4).
