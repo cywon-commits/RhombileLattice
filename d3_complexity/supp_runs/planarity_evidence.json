@@ -1,0 +1,559 @@
+{
+ "phi_star": {
+  "phi": [
+   [
+    1,
+    2
+   ],
+   [
+    -1,
+    2
+   ],
+   [
+    1,
+    -2
+   ]
+  ],
+  "m": 3,
+  "nv": 2,
+  "cond": {
+   "max_lit": 2,
+   "max_var": 3,
+   "sizes": [
+    2
+   ]
+  },
+  "incidence_planar": true,
+  "apex_minor_planar": false,
+  "H_planar": false,
+  "plain_incidence_planar": true,
+  "G_n": 31,
+  "G_edges": 43,
+  "G_planar": false,
+  "satisfiable": true,
+  "kuratowski": {
+   "branch_vertices": 6,
+   "type": "K3,3 subdivision",
+   "vertices": 26,
+   "edges": 29
+  },
+  "kuratowski_branch": [
+   "('x', 0, 1)",
+   "('g', 0, 'd')",
+   "('g', 2, 'd')",
+   "('g', 1, 'd')",
+   "('x', 1, 1)",
+   "('g', 1, 'e')"
+  ],
+  "milp": {
+   "0.3": 1.7999999999999998,
+   "0.6": 3.5999999999999996,
+   "0.9": 5.4
+  },
+  "milp_equiv_ok": true
+ },
+ "phi0": {
+  "phi": [
+   [
+    5,
+    2
+   ],
+   [
+    4,
+    -5
+   ],
+   [
+    1,
+    -6
+   ],
+   [
+    6,
+    3
+   ],
+   [
+    3,
+    -4
+   ],
+   [
+    6,
+    4,
+    -2
+   ],
+   [
+    -2,
+    1
+   ],
+   [
+    -1,
+    5
+   ],
+   [
+    -6,
+    -1
+   ]
+  ],
+  "m": 9,
+  "nv": 6,
+  "cond": {
+   "max_lit": 2,
+   "max_var": 4,
+   "sizes": [
+    2,
+    3
+   ]
+  },
+  "incidence_planar": true,
+  "apex_minor_planar": false,
+  "H_planar": false,
+  "plain_incidence_planar": true,
+  "G_n": 92,
+  "G_edges": 130,
+  "G_planar": false,
+  "satisfiable": true,
+  "kuratowski": {
+   "branch_vertices": 6,
+   "type": "K3,3 subdivision",
+   "vertices": 55,
+   "edges": 58
+  },
+  "kuratowski_branch": [
+   "('g', 5, 'd')",
+   "('x', 5, 1)",
+   "('x', 5, 0)",
+   "('g', 2, 'e')",
+   "('g', 3, 'e')",
+   "('P', 10)"
+  ],
+  "milp": {
+   "0.3": 5.3999999999999995,
+   "0.6": 10.799999999999999,
+   "0.9": 16.2
+  },
+  "milp_equiv_ok": true
+ },
+ "phi_B2": {
+  "phi": [
+   [
+    -5,
+    -4,
+    2
+   ],
+   [
+    -6,
+    -3,
+    4
+   ],
+   [
+    3,
+    5,
+    1
+   ],
+   [
+    -6,
+    3,
+    1
+   ],
+   [
+    4,
+    6,
+    -2
+   ],
+   [
+    -1,
+    -5,
+    2
+   ],
+   [
+    5,
+    -4,
+    -3
+   ],
+   [
+    -2,
+    -1,
+    6
+   ]
+  ],
+  "m": 8,
+  "nv": 6,
+  "cond": {
+   "max_lit": 2,
+   "max_var": 4,
+   "sizes": [
+    3
+   ]
+  },
+  "incidence_planar": true,
+  "apex_minor_planar": false,
+  "H_planar": false,
+  "plain_incidence_planar": true,
+  "G_n": 76,
+  "G_edges": 109,
+  "G_planar": false,
+  "satisfiable": true,
+  "kuratowski": {
+   "branch_vertices": 6,
+   "type": "K3,3 subdivision",
+   "vertices": 45,
+   "edges": 48
+  },
+  "kuratowski_branch": [
+   "('x', 5, 0)",
+   "('P', 2)",
+   "('P', 4)",
+   "('P', 6)",
+   "('P', 10)",
+   "('P', 12)"
+  ],
+  "milp": {
+   "0.3": 4.8,
+   "0.6": 9.6,
+   "0.9": 14.4
+  },
+  "milp_equiv_ok": true,
+  "variable_cycle_order": [
+   1,
+   2,
+   4,
+   5,
+   3,
+   6
+  ],
+  "variable_cycle_planar": true
+ },
+ "phi_u": {
+  "phi": [
+   [
+    -4,
+    -2
+   ],
+   [
+    4,
+    5
+   ],
+   [
+    3,
+    1
+   ],
+   [
+    -2,
+    4,
+    -5
+   ],
+   [
+    -5,
+    -3
+   ],
+   [
+    2,
+    -1
+   ],
+   [
+    1,
+    -3
+   ]
+  ],
+  "m": 7,
+  "nv": 5,
+  "cond": {
+   "max_lit": 2,
+   "max_var": 3,
+   "sizes": [
+    2,
+    3
+   ]
+  },
+  "incidence_planar": true,
+  "apex_minor_planar": false,
+  "H_planar": false,
+  "plain_incidence_planar": true,
+  "G_n": 72,
+  "G_edges": 101,
+  "G_planar": false,
+  "satisfiable": false,
+  "kuratowski": {
+   "branch_vertices": 6,
+   "type": "K3,3 subdivision",
+   "vertices": 39,
+   "edges": 42
+  },
+  "kuratowski_branch": [
+   "('g', 3, 'd')",
+   "('g', 1, 'd')",
+   "('x', 4, 0)",
+   "('g', 3, 'c')",
+   "('P', 6)",
+   "('g', 4, 'e')"
+  ],
+  "milp": {
+   "0.3": 4.5,
+   "0.6": 8.99999999999975,
+   "0.9": 13.499999999999376
+  },
+  "milp_equiv_ok": true,
+  "variable_cycle_order": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "variable_cycle_planar": true
+ },
+ "phi_2u": {
+  "phi": [
+   [
+    1,
+    -3
+   ],
+   [
+    4,
+    -2
+   ],
+   [
+    -2,
+    1
+   ],
+   [
+    -3,
+    4
+   ],
+   [
+    -4,
+    -1
+   ],
+   [
+    3,
+    2
+   ]
+  ],
+  "m": 6,
+  "nv": 4,
+  "cond": {
+   "max_lit": 2,
+   "max_var": 3,
+   "sizes": [
+    2
+   ]
+  },
+  "incidence_planar": true,
+  "apex_minor_planar": false,
+  "H_planar": false,
+  "plain_incidence_planar": true,
+  "G_n": 62,
+  "G_edges": 87,
+  "G_planar": false,
+  "satisfiable": false,
+  "kuratowski": {
+   "branch_vertices": 6,
+   "type": "K3,3 subdivision",
+   "vertices": 46,
+   "edges": 49
+  },
+  "kuratowski_branch": [
+   "('x', 2, 0)",
+   "('g', 3, 'd')",
+   "('x', 3, 1)",
+   "('g', 1, 'e')",
+   "('g', 3, 'e')",
+   "('g', 4, 'e')"
+  ],
+  "milp": {
+   "0.3": 3.9,
+   "0.6": 7.799999999999988,
+   "0.9": 11.699999999999962
+  },
+  "milp_equiv_ok": true,
+  "variable_cycle_order": null,
+  "variable_cycle_planar": null
+ },
+ "random_strict": {
+  "formulas": 131,
+  "apex_nonplanar": 130,
+  "G_nonplanar": 130,
+  "lemma_violations": 0
+ },
+ "smallest_strict": {
+  "phi": [
+   [
+    -3,
+    -2
+   ],
+   [
+    -2,
+    -5
+   ],
+   [
+    2,
+    -5
+   ],
+   [
+    -3,
+    5
+   ],
+   [
+    -1,
+    3,
+    -4
+   ]
+  ],
+  "m": 5,
+  "nv": 5,
+  "cond": {
+   "max_lit": 2,
+   "max_var": 3,
+   "sizes": [
+    2,
+    3
+   ]
+  },
+  "incidence_planar": true,
+  "apex_minor_planar": false,
+  "H_planar": false,
+  "plain_incidence_planar": true,
+  "G_n": 54,
+  "G_edges": 73,
+  "G_planar": false,
+  "satisfiable": true,
+  "kuratowski": {
+   "branch_vertices": 6,
+   "type": "K3,3 subdivision",
+   "vertices": 35,
+   "edges": 38
+  },
+  "kuratowski_branch": [
+   "('g', 2, 'd')",
+   "('g', 0, 'd')",
+   "('g', 3, 'd')",
+   "('x', 4, 0)",
+   "('g', 1, 'e')",
+   "('g', 2, 'e')"
+  ],
+  "milp": {
+   "0.3": 3.0,
+   "0.6": 6.0,
+   "0.9": 9.0
+  },
+  "milp_equiv_ok": true
+ },
+ "exact3_sizes23": {
+  "phi": [
+   [
+    2,
+    -1,
+    -3
+   ],
+   [
+    1,
+    2
+   ],
+   [
+    -3,
+    1
+   ],
+   [
+    -2,
+    3
+   ]
+  ],
+  "m": 4,
+  "nv": 3,
+  "cond": {
+   "max_lit": 2,
+   "max_var": 3,
+   "sizes": [
+    2,
+    3
+   ]
+  },
+  "incidence_planar": true,
+  "apex_minor_planar": false,
+  "H_planar": false,
+  "plain_incidence_planar": true,
+  "G_n": 41,
+  "G_edges": 57,
+  "G_planar": false,
+  "satisfiable": true,
+  "kuratowski": {
+   "branch_vertices": 6,
+   "type": "K3,3 subdivision",
+   "vertices": 33,
+   "edges": 36
+  },
+  "kuratowski_branch": [
+   "('g', 1, 'd')",
+   "('g', 2, 'd')",
+   "('g', 3, 'd')",
+   "('x', 2, 0)",
+   "('g', 1, 'e')",
+   "('g', 2, 'e')"
+  ],
+  "milp": {
+   "0.3": 2.4,
+   "0.6": 4.8,
+   "0.9": 7.2
+  },
+  "milp_equiv_ok": true
+ },
+ "exact3_sizes3": {
+  "phi": [
+   [
+    -1,
+    -2,
+    4
+   ],
+   [
+    1,
+    2,
+    -3
+   ],
+   [
+    -4,
+    -2,
+    -3
+   ],
+   [
+    -4,
+    3,
+    1
+   ]
+  ],
+  "m": 4,
+  "nv": 4,
+  "cond": {
+   "max_lit": 2,
+   "max_var": 3,
+   "sizes": [
+    3
+   ]
+  },
+  "incidence_planar": true,
+  "apex_minor_planar": false,
+  "H_planar": false,
+  "plain_incidence_planar": true,
+  "G_n": 40,
+  "G_edges": 55,
+  "G_planar": false,
+  "satisfiable": true,
+  "kuratowski": {
+   "branch_vertices": 6,
+   "type": "K3,3 subdivision",
+   "vertices": 25,
+   "edges": 28
+  },
+  "kuratowski_branch": [
+   "('x', 2, 0)",
+   "('g', 3, 'd')",
+   "('g', 2, 'c')",
+   "('x', 3, 0)",
+   "('P', 2)",
+   "('P', 4)"
+  ],
+  "milp": {
+   "0.3": 2.4,
+   "0.6": 4.8,
+   "0.9": 7.2
+  },
+  "milp_equiv_ok": true
+ }
+}

@@ -136,6 +136,14 @@ E(s) = #{같은 상태 결합} + D3 · #{상태 3 사이트}
 - **2026-09-27 컴파일 성공**(TeX Live + `texlive-publishers`로 revtex4-2 설치, `latexmk -pdf main.tex`): 9쪽, 오류·미정의 참조 0, overfull 박스 2개(식 (1), 표 `tab:timing`)를 고쳐 0개.
 - 남은 표시: `[TODO authors]`, `[TODO affiliation]`.
 
+## 7a. 보충자료 (2026-09-28)
+
+- `paper/supplementary.tex`(Note A): Johnson 외 정리 11(평면 이웃-3 IOCT NP-완전)과의 관계를 자세히 기술. 본문·초록은 "refute" 등 강한 표현을 빼고 보충자료를 가리키도록 완화했다.
+- 내용: 합의점(환원 동치성, 일반 이웃-3 NP-완전성) / 쓰는 구조 (F0)–(F3) / 보조정리: H(φ) = 연결 그래프 + 모든 절에 붙은 꼭짓점이 G_φ의 minor / 가장 작은 예 φ* = (x∨y)(x̄∨y)(x∨ȳ)에서 H = K₃,₃ / 변형별 사례 표(절 크기 3, 변수 4회, 불충족 사례, Lichtenstein 변수 사이클 조건 포함) / 무작위 131개 중 130개 비평면 / 구조적 이유(co-nested 식은 다항).
+- 근거 스크립트: `supp_planarity.py`(출력 `supp_runs/planarity_evidence.json`), 그림 `paper/make_supp_figs.py`.
+- 적대적 검토: `reviews/supp_s1_review.md`(치명 0, 주요 3건 반영: ioct ≥ fr의 차수 조건, co-nested 논증 정밀화, Tovey 부류 사례 교체).
+- **남은 확인(빨간 [VERIFY] 표시):** 정리 11 원문 인용, 구성 (F0)–(F3)과 그림 3 대조, 쓰인 평면 3-SAT 변형, Kratochvíl–Křivánek·Pilz 진술, Yannakakis 인용, 저장소 URL. **저널판 PDF가 필요하다.**
+
 ## 8. 남은 일 (우선순위 순)
 
 1. ~~컴파일~~ 완료(2026-09-27). 남은 것은 내용 교정.

@@ -38,8 +38,8 @@ On lattices of coordination three the third state heals frustrated bonds one for
 that every graph of maximum degree three other than $K_4$ has an independent set of $\fr$ sites,
 $\fr$ being the number of frustrated bonds of the Ising ground state, that meets every odd cycle.
 Hence $\OPT(D_3)=\min(D_3,1)\,\fr$ for all $D_3$, computable in polynomial time on planar
-lattices; this also refutes a published NP-completeness claim for independent odd cycle
-transversal on planar subcubic graphs.
+lattices. In graph-theoretic terms, independent odd cycle transversal is solvable in polynomial
+time on planar subcubic graphs.
 On planar lattices of coordination four, in contrast, deciding the ground-state energy is
 NP-complete for every fixed $0\le D_3<2$ and polynomial for $D_3\ge2$.
 The boundary is set by a local principle: a site of coordination $d$ in the third state relieves
@@ -474,9 +474,11 @@ Standard hardness constructions use a global reference for ``true'' and ``false'
 symmetric cost does not provide. The reduction of Theorem~\ref{thm:hard4} avoids this: truth is
 the choice of one of the two alternating state-3 patterns on each variable cycle, a local
 symmetry-breaking that the cost itself enforces. Theorem~\ref{thm:healing-full} implies that independent odd cycle transversal is
-polynomial on planar subcubic graphs, contrary to the NP-completeness stated in
-Ref.~\cite{Johnson2025}; we traced the discrepancy to the planarity argument of that reduction,
-which fails on hard instances (the argument is unchanged in the journal version). Formulated as a planar Boolean constraint problem, the
+solvable in polynomial time on planar subcubic graphs. This differs from Theorem~11 of
+Ref.~\cite{Johnson2025}, which states NP-completeness for this class; we find no problem with the
+reduction as a reduction to general subcubic graphs, and the difference concerns only the
+planarity of the constructed graphs. The Supplemental Material gives the details, including
+explicit instances. Formulated as a planar Boolean constraint problem, the
 symmetric structure falls close to the tractable side of the planar CSP
 classification~\cite{KazdaKolmogorovRolinek2018,FullaZivny2017}. At coordination three healing makes the problem easy;
 at coordination four it does not, because a state-3 site can relieve two bonds and the choice of
