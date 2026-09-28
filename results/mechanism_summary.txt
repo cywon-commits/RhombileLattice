@@ -30,3 +30,11 @@ Large-mu FSS (2026-09-27/28), D2=1, L=32/48/64 (mu=10 also L=96), 5e5 sweeps, sp
 - mu=5 at T_c: gamma/nu 1.38(9), 2beta/nu 0.62(9), C_max flat (1.20,1.20,1.18) -> not Potts, KT-like.
 => multicritical mu_c between 1 and 2 separating a single 3-state Potts transition (mu<=1) from an
    intermediate critical phase (mu>=2). Caveats: one seed, L<=64 (96 at mu=10); eta above Z6-clock window (1/9-1/4).
+
+CORRECTION (2026-09-28) after mu=1.25-1.75 scan and lower-T runs for mu=2,3,5:
+- mu=2 T_c ~0.80 (not 0.83); at T=0.76 (T/T_c 0.95) eta~0, U->0.5 => long-range order. Earlier "critical at mu=2" was a near-T_c point.
+- mu=1.25 (T_c~0.72), 1.5 (~0.74), 1.75 (~0.79): long-range order below T_c.
+- mu=3 (T_c~0.95): critical-like only for T/T_c~0.9-0.97; at 0.82-0.87 U rises with L, psi_s^2 flat 48->64 => marginal.
+- mu=5 (T_c~1.03-1.07): eta 0.32-0.51 down to T/T_c=0.80 with size-independent U~0.46 => extended critical window.
+- mu=10: critical window T/T_c ~0.7-0.98, LRO at ~0.6.
+=> mu_c ~3 (between 2 and 5); the intermediate quasi-long-range window opens near mu~3 and widens with mu.
