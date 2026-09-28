@@ -7,3 +7,5 @@ results/*/*_s99*.npz
 results/tafm/ckpt_*.npz
 results/long/log_mu_big.txt
 results/jobs_mu_big.log
+results/long/log_mu_c.txt
+results/jobs_mu_c.log
