@@ -38,3 +38,11 @@ CORRECTION (2026-09-28) after mu=1.25-1.75 scan and lower-T runs for mu=2,3,5:
 - mu=5 (T_c~1.03-1.07): eta 0.32-0.51 down to T/T_c=0.80 with size-independent U~0.46 => extended critical window.
 - mu=10: critical window T/T_c ~0.7-0.98, LRO at ~0.6.
 => mu_c ~3 (between 2 and 5); the intermediate quasi-long-range window opens near mu~3 and widens with mu.
+
+== Roadmap 2: extra seeds (3 per point at L=32/48/64) + L=96 (seed 1), 2026-09-28 ==
+psi_s^2 ~ L^-eta, weighted fit over L>=32 (errors inflated by seed scatter); see results/long/seeds_summary.txt
+  mu=5: T=0.86 eta=0.185(37), T=0.93 0.287(36), T=1.00 0.355(37); chi2/dof<=0.1 -> clean power law through L=96: critical
+  mu=3: T=0.88 eta=0.272(44) (power law); T=0.83 0.107(30); T=0.78 0.095(83) with non-monotonic L=48->64 and
+        seed scatter chi2/dof~3 -> consistent with saturation (LRO) at T<=0.83; mu_c ~ 3 stands, not resolved sharper.
+  seed-to-seed scatter exceeds tau-based errors by up to 2x (chi2/dof up to 4): single-seed errors were optimistic.
+  Running: L=96 second seeds (mu=3 T=0.78 s1, 0.83 s2; mu=5 T=0.86 s2, 0.93 s2), results/jobs_l96b.txt.
