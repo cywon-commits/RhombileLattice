@@ -9,3 +9,5 @@ results/long/log_mu_big.txt
 results/jobs_mu_big.log
 results/long/log_mu_c.txt
 results/jobs_mu_c.log
+results/long/log_seeds.txt
+results/jobs_seeds.log
