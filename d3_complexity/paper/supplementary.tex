@@ -36,8 +36,8 @@ the antiferromagnetic Potts model with a costly third state''}
 
 The healing theorem of the main text (restated as Theorem~\ref{thm:S-heal}) implies that
 independent odd cycle transversal is solvable in polynomial time on planar graphs of maximum
-degree three. Theorem~11 of Ref.~\cite{Johnson2025} states that this problem is NP-complete. This
-note explains the difference in detail. We separate what the proof in Ref.~\cite{Johnson2025}
+degree three. Reference~\cite{Johnson2025} states that this problem is NP-complete on that class.
+This note explains the difference in detail. We separate what the proof in Ref.~\cite{Johnson2025}
 establishes, what our theorem implies, and the one step, the planarity of the constructed graphs,
 where our analysis differs from that proof. All numbers are reproducible with the scripts listed
 in Sec.~A.7.
@@ -55,9 +55,17 @@ larger degree the inequality can fail; the wheel $W_4$ has $\ioct=1<2=\fr$.)
 Every graph of maximum degree at most three without a $K_4$ component satisfies $\ioct(G)=\fr(G)$.
 \end{theorem}
 
-Theorem~11 of Ref.~\cite{Johnson2025} states, among other results, that IOCT is NP-complete on
-planar graphs of maximum degree three. \verify{quote the exact sentence of Theorem 11 and the
-problem definition (decision version with parameter $k$) from the journal version}.
+In Ref.~\cite{Johnson2025} the problem is defined as deciding whether a graph has an independent
+odd cycle transversal of size at most $k$ for a given integer $k$ (p.~445). Theorem~11 there reads:
+``List Colouring, Odd Cycle Transversal and Independent Odd Cycle Transversal are C123-problems''
+(p.~445). Condition C2 is that the problem is ``computationally hard for the class of subcubic
+graphs'' (p.~434), without planarity. \emph{Theorem~11 itself is therefore consistent with
+Theorem~\ref{thm:S-heal}}; see Sec.~A.2. The statement that differs is an additional one, made
+in the text around Theorem~11: ``Our proof shows in particular that all three problems are in
+fact NP-complete for planar subcubic graphs'' (p.~445), repeated on p.~438 (``we prove, as new
+results, that List Colouring, Odd Cycle Transversal, Independent Odd Cycle Transversal, and
+C$_5$-Colouring are NP-complete for planar subcubic graphs''), and reflected in the entries of
+Table~1 for planar and subcubic planar graphs.
 
 On planar graphs $\fr(G)$ is computable in polynomial time (maximum cut of a planar graph via a
 minimum $T$-join in the dual~\cite{Hadlock1975,Barahona1982}). By Theorem~\ref{thm:S-heal} the
@@ -67,13 +75,24 @@ and $\fr$ are additive over components; vertices of degree below three are cover
 theorem.) The question is therefore decidable in polynomial time. If the problem were also
 NP-complete on this class, P would equal NP.
 
+The same construction is used in Ref.~\cite{Johnson2025} for (not necessarily independent) Odd
+Cycle Transversal. For that problem, polynomial-time solvability on planar subcubic graphs already
+follows from Theorem~1 of Choi, Nakajima and Rim~\cite{Choi1989}, which states that for graphs of
+maximum degree three the minimum odd cycle transversal (vertex bipartization) has the same size as
+the minimum edge bipartization, $\fr(G)$, combined with planar maximum cut. Theorem~\ref{thm:S-heal}
+strengthens that result by requiring the transversal to be independent. We make no statement
+about the other problems treated with the same construction.
+
 \subsection*{A.2 Points of agreement}
 
 \begin{enumerate}
+\item \emph{Theorem~11 as stated.} C2 asks for hardness on subcubic graphs, and C3 for hardness
+under edge subdivision of subcubic graphs; neither requires planarity (p.~434). The arguments
+below do not affect either.
 \item \emph{The reduction's equivalence.} The proof in Ref.~\cite{Johnson2025} builds, from a
-3-SAT formula $\varphi$ with $m$ clauses, a graph $G_\varphi$ of maximum degree three with $2m$
-vertex-disjoint triangles, such that $G_\varphi$ has an IOCT of size $2m$ if and only if
-$\varphi$ is satisfiable \verify{attribution of the $2m$ triangles and the size-$2m$ criterion}. We
+3-SAT formula $\varphi$ with $m$ clauses, a subcubic graph $G_\varphi$ with $2m$ vertex-disjoint
+triangles (two in each clause gadget), such that $G_\varphi$ has an IOCT of size $2m$ if and only
+if $\varphi$ is satisfiable (pp.~445--446). We
 have found no problem with this equivalence and checked it by exact integer programming on 80
 random formulas (70 satisfiable, 10 unsatisfiable) and on every instance of Table~\ref{tab:S-inst},
 with agreement in all cases.
@@ -84,12 +103,24 @@ cubic graphs~\cite{Yannakakis1978} \verify{cubic max-cut NP-hardness reference}.
 \item \emph{Other results.} This note concerns no other result of Ref.~\cite{Johnson2025}.
 \end{enumerate}
 The difference concerns only whether $G_\varphi$ is planar for every instance $\varphi$ of the
-planar 3-SAT variant used in Ref.~\cite{Johnson2025}.
+planar 3-SAT variant used in Ref.~\cite{Johnson2025}. Consequences drawn in that paper from
+hardness on planar subcubic graphs (for instance through its Theorem~2) would, for Odd Cycle
+Transversal and Independent Odd Cycle Transversal, need to be revisited; we do not pursue this.
 
 \subsection*{A.3 The construction and the features used here}
 
-We use only the following features of $G_\varphi$ \verify{check each against the text and Fig.~3
-of the journal version; our implementation is \texttt{verify\_delta3\_reduction.build}}:
+The instances are those of Planar 3-Satisfiability ``when each literal appears in at most two
+clauses'', with two-literal or three-literal clauses, where planar means that ``the bipartite
+incidence graph of clauses with variables is planar'' (p.~445--446, citing Theorem~2 of
+Ref.~\cite{DarmannDockerDorn2018}). From $\varphi$ the graph $G_\varphi$ is built as follows
+(p.~445--446): literal vertices $x_i$, $\bar x_i$ with the edge $x_i\bar x_i$; a path $P$ of $2m$
+vertices; for each clause a copy of the gadget of Fig.~3 there, whose input vertices
+$c_{j1},c_{j2},c_{j3}$ are identified with the literal vertices of the clause; an edge from the
+output $c_j$ to the $j$th odd vertex of $P$; and an edge from any unused input $c_{j3}$ to the
+$j$th even vertex of $P$. Our implementation \texttt{verify\_delta3\_reduction.build} follows this
+description; its clause gadget (vertices $a,b,d,e,f,c$ with edges $ab$, $ad$, $bd$, $de$, $ef$, $ec$,
+$fc$ and inputs attached to $a$, $b$, $f$) agrees with Fig.~3 of Ref.~\cite{Johnson2025}. We use
+only the following features:
 \begin{enumerate}
 \item[(F0)] the literal vertices, the vertices $u_j$ below, the gadgets $Q_j$ and the path $P$ are
 pairwise disjoint vertex sets;
@@ -100,11 +131,13 @@ connecting edges) that is adjacent to the literal vertex of every literal of $C_
 two-literal clause the third input of $Q_j$ is a private vertex $u_j$;
 \item[(F3)] a path $P$, which carries the truth values, is adjacent to every gadget $Q_j$.
 \end{enumerate}
-In Ref.~\cite{Johnson2025} planarity of $G_\varphi$ is argued by placing the literal vertices on one
-side of the gadgets and the path $P$ on the other, together with planarity of the variable--clause
-incidence graph of $\varphi$. \verify{quote the planarity sentence. Our earlier comparison found the
-proof text of arXiv:2211.12887v5 and of the journal version identical up to figure numbering, one
-verb and citation numbers; re-check against the journal PDF}.
+Planarity of $G_\varphi$ is argued in Ref.~\cite{Johnson2025} as follows (p.~446): ``In Planar
+3-Satisfiability, the bipartite incidence graph of clauses with variables is planar. We build $G$
+so as to be planar in the following way. Uppermost we place the literals assigned to the inputs
+of the clause gadgets in just the manner prescribed in the bipartite incidence graph. Lowermost,
+we place the path of length $2m$ that will be joined on the odd vertices to the output nodes of the
+clause gadgets.'' The step from planarity of the incidence graph to planarity of $G_\varphi$ is the
+one examined below.
 
 \subsection*{A.4 A minor of $G_\varphi$}
 
@@ -165,8 +198,9 @@ each literal edge and deleting the $u_j$ gives $H(\varphi^*)=K_{3,3}$ (Lemma~\re
 Planar 3-SAT is used in several variants: ``planar'' may refer to $I(\varphi)$ alone or to $I(\varphi)$
 plus a cycle through the variables (Lichtenstein's original formulation~\cite{Lichtenstein1982}),
 and variants restrict clause sizes and the number of occurrences. Table~\ref{tab:S-inst} lists
-instances covering these conditions, including unsatisfiable ones. \verify{state which variant
-Ref.~[Johnson2025] invokes and confirm that the instances satisfy its conditions}. Formulas with
+instances covering these conditions, including unsatisfiable ones. Every instance in the table
+satisfies the conditions used in Ref.~\cite{Johnson2025}: two- or three-literal clauses, each
+literal in at most two clauses, and planar incidence graph. Formulas with
 exactly three literals per clause and at most three occurrences per variable are always
 satisfiable~\cite{Tovey1984}; for that reason the instance $\varphi_{\mathrm B}$ uses four
 occurrences per variable.

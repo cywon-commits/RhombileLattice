@@ -142,7 +142,8 @@ E(s) = #{같은 상태 결합} + D3 · #{상태 3 사이트}
 - 내용: 합의점(환원 동치성, 일반 이웃-3 NP-완전성) / 쓰는 구조 (F0)–(F3) / 보조정리: H(φ) = 연결 그래프 + 모든 절에 붙은 꼭짓점이 G_φ의 minor / 가장 작은 예 φ* = (x∨y)(x̄∨y)(x∨ȳ)에서 H = K₃,₃ / 변형별 사례 표(절 크기 3, 변수 4회, 불충족 사례, Lichtenstein 변수 사이클 조건 포함) / 무작위 131개 중 130개 비평면 / 구조적 이유(co-nested 식은 다항).
 - 근거 스크립트: `supp_planarity.py`(출력 `supp_runs/planarity_evidence.json`), 그림 `paper/make_supp_figs.py`.
 - 적대적 검토: `reviews/supp_s1_review.md`(치명 0, 주요 3건 반영: ioct ≥ fr의 차수 조건, co-nested 논증 정밀화, Tovey 부류 사례 교체).
-- **남은 확인(빨간 [VERIFY] 표시):** 정리 11 원문 인용, 구성 (F0)–(F3)과 그림 3 대조, 쓰인 평면 3-SAT 변형, Kratochvíl–Křivánek·Pilz 진술, Yannakakis 인용, 저장소 URL. **저널판 PDF가 필요하다.**
+- **저널판 대조 완료(2026-09-28, 사용자 제공 PDF):** 정리 11 본문은 "C123-problems"이고 C2는 평면성 없는 이웃-3 어려움(p. 434)이라 **정리 11 자체는 우리 결과와 충돌하지 않는다.** 다른 것은 p. 445의 부연 "Our proof shows in particular that all three problems are in fact NP-complete for planar subcubic graphs", p. 438의 같은 진술, 표 1의 평면 열이다. 구성(그림 3 가젯 포함)은 `build()`와 일치. 쓰인 변형: 각 리터럴 ≤ 2회, 2·3-리터럴 절, 연결 그래프 평면(Darmann–Döcker–Dorn 2018 정리 2). 같은 구성을 쓴 OCT(비독립)의 평면 이웃-3 주장도 Choi–Nakajima–Rim 1989 정리 1 + 평면 max-cut으로 이미 다항이다(보충자료에 추가).
+- **남은 [VERIFY]:** Yannakakis 1978, Kratochvíl–Křivánek 1993·Pilz 2019 진술, 저장소 URL.
 
 ## 8. 남은 일 (우선순위 순)
 
