@@ -1,0 +1,50 @@
+# per-run diagnostics (discard 100000 sweeps): T, kept sweeps, tau(psi2), tau(E) [sweeps], n_tau, <psi2>, drift(psi2) in sigma, <E>/N_tri
+  L= 32 T=0.5150 kept=  900000 tau_psi=   5343 tau_E=   168 n_tau= 168.4 <psi2>=0.1112 drift= +1.2 E=0.31533
+  L= 32 T=0.5250 kept=  900000 tau_psi=   5757 tau_E=   906 n_tau= 156.3 <psi2>=0.0779 drift= +1.9 E=0.32468
+  L= 32 T=0.5200 kept=  900000 tau_psi=   1598 tau_E=   113 n_tau= 563.2 <psi2>=0.1063 drift= -1.4 E=0.31888
+  L= 32 T=0.5350 kept=  900000 tau_psi=  10868 tau_E=  1621 n_tau=  82.8 <psi2>=0.0518 drift= -1.7 E=0.33417
+  L= 32 T=0.5300 kept=  900000 tau_psi=   4944 tau_E=   480 n_tau= 182.0 <psi2>=0.0692 drift= -0.4 E=0.32884
+  L= 32 T=0.5450 kept=  900000 tau_psi=   5939 tau_E=   418 n_tau= 151.5 <psi2>=0.0326 drift= +1.3 E=0.34357
+  L= 32 T=0.5400 kept=  900000 tau_psi=   4735 tau_E=   871 n_tau= 190.1 <psi2>=0.0440 drift= +1.3 E=0.33867
+  L= 32 T=0.5550 kept=  900000 tau_psi=   2654 tau_E=   125 n_tau= 339.1 <psi2>=0.0167 drift= +1.9 E=0.35312
+  L= 32 T=0.5500 kept=  900000 tau_psi=   4638 tau_E=   280 n_tau= 194.1 <psi2>=0.0269 drift= -0.9 E=0.34785
+  L= 48 T=0.5150 kept=  900000 tau_psi=   3777 tau_E=   143 n_tau= 238.3 <psi2>=0.1105 drift= +1.0 E=0.31528
+  L= 48 T=0.5190 kept=  900000 tau_psi=  20546 tau_E=  1211 n_tau=  43.8 <psi2>=0.0918 drift= -0.7 E=0.31914
+  L= 48 T=0.5230 kept=  900000 tau_psi=   3983 tau_E=   233 n_tau= 226.0 <psi2>=0.0884 drift= -0.4 E=0.32224
+  L= 48 T=0.5270 kept=  900000 tau_psi=   7961 tau_E=   756 n_tau= 113.0 <psi2>=0.0744 drift= +0.2 E=0.32600
+  L= 48 T=0.5310 kept=  900000 tau_psi=  28418 tau_E=  1981 n_tau=  31.7 <psi2>=0.0544 drift= +1.4 E=0.33044
+  L= 48 T=0.5350 kept=  900000 tau_psi=   9033 tau_E=  1080 n_tau=  99.6 <psi2>=0.0360 drift= +1.1 E=0.33505
+  L= 48 T=0.5390 kept=  900000 tau_psi=  10628 tau_E=   480 n_tau=  84.7 <psi2>=0.0247 drift= -1.0 E=0.33906
+  L= 48 T=0.5430 kept=  900000 tau_psi=   7855 tau_E=   625 n_tau= 114.6 <psi2>=0.0168 drift= -0.9 E=0.34306
+  L= 64 T=0.5160 kept=  900000 tau_psi=  23543 tau_E=   710 n_tau=  38.2 <psi2>=0.1012 drift= -1.5 E=0.31648
+  L= 64 T=0.5190 kept=  900000 tau_psi=   2179 tau_E=   175 n_tau= 413.0 <psi2>=0.1021 drift= +1.4 E=0.31847
+  L= 64 T=0.5220 kept=  900000 tau_psi=   9943 tau_E=   963 n_tau=  90.5 <psi2>=0.0859 drift= -1.5 E=0.32159
+  L= 64 T=0.5250 kept=  900000 tau_psi=   5809 tau_E=   411 n_tau= 154.9 <psi2>=0.0799 drift= +1.9 E=0.32412
+  L= 64 T=0.5280 kept=  900000 tau_psi=   7933 tau_E=  1153 n_tau= 113.4 <psi2>=0.0602 drift= -0.1 E=0.32763
+  L= 64 T=0.5310 kept=  900000 tau_psi=  23858 tau_E=  3165 n_tau=  37.7 <psi2>=0.0388 drift= -2.2 E=0.33130
+  L= 64 T=0.5340 kept=  900000 tau_psi=  14280 tau_E=  4188 n_tau=  63.0 <psi2>=0.0302 drift= +1.1 E=0.33429
+  L= 64 T=0.5370 kept=  900000 tau_psi=  30904 tau_E=   502 n_tau=  29.1 <psi2>=0.0172 drift= +0.2 E=0.33776
+  L= 64 T=0.5400 kept=  900000 tau_psi=  14110 tau_E=   465 n_tau=  63.8 <psi2>=0.0122 drift= -1.6 E=0.34055
+D2=1.0  sizes [32, 48, 64]  seeds per size 8
+  Binder crossing L=32/48: T = 0.5300 +- 0.0018
+  Binder crossing L=48/64: T = 0.5280 +- 0.0020
+  T_c (largest pair) = 0.5280 +- 0.0020
+  1/nu (max dU)          = 1.684 +- 0.307
+  1/nu (dU at T_c)       = 1.234 +- 0.398
+  gamma/nu (max chi')    = 1.786 +- 0.140
+  gamma/nu (chi at T_c)  = 1.668 +- 0.156
+  2beta/nu               = 0.332 +- 0.156
+  alpha/nu               = 0.225 +- 0.054
+  candidates (1/nu, gamma/nu, 2beta/nu, alpha/nu):
+    2D 3-state Potts   1.200 1.733 0.267 0.400
+    2D Ising           1.000 1.750 0.250 0.000
+    first order        2.000 2.000 0.000 2.000
+  per L: max dU/dbeta, dU/dbeta(T_c), max chi', chi(T_c), <|psi|^2>(T_c), C_max, min U4
+    L= 32     4.123     2.429     35.624     438.55  0.07537  0.9867  +0.049
+    L= 48     7.704     3.736     70.944     872.16  0.06662  1.0991  +0.059
+    L= 64    13.335     5.764    123.373    1392.15  0.05981  1.1505  -0.023
+  energy distribution at the C peak: T_peak, #maxima, barrier ln(Pmax/Pmin_between)
+    L= 32  T=0.5335  maxima=3  barrier=0.037
+    L= 48  T=0.5327  maxima=3  barrier=0.011
+    L= 64  T=0.5306  maxima=3  barrier=0.008
+saved annealed_long_fss_d21_figure.png

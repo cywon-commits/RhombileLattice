@@ -1,0 +1,56 @@
+D2=1.0  sizes [24, 32, 48]  seeds per size 8
+  Binder crossing L=24/32: T = 0.6201 +- 0.0110
+  Binder crossing L=32/48: T = 0.6203 +- 0.0071
+  T_c (largest pair) = 0.6203 +- 0.0071
+  1/nu (max dU)          = 1.376 +- 0.260
+  1/nu (dU at T_c)       = 1.232 +- 0.572
+  gamma/nu (max chi')    = 1.554 +- 0.102
+  gamma/nu (chi at T_c)  = 1.425 +- 0.208
+  2beta/nu               = 0.575 +- 0.208
+  alpha/nu               = 0.034 +- 0.032
+  candidates (1/nu, gamma/nu, 2beta/nu, alpha/nu):
+    2D 3-state Potts   1.200 1.733 0.267 0.400
+    2D Ising           1.000 1.750 0.250 0.000
+    first order        2.000 2.000 0.000 2.000
+  per L: max dU/dbeta, dU/dbeta(T_c), max chi', chi(T_c), <|psi|^2>(T_c), C_max, min U4
+    L= 24     3.063     2.078     11.367     119.65  0.04295  1.0473  +0.145
+    L= 32     4.922     2.856     17.550     180.51  0.03645  1.0568  +0.057
+    L= 48     8.015     4.862     33.340     321.33  0.02884  1.0721  +0.027
+  energy distribution at the C peak: T_peak, #maxima, barrier ln(Pmax/Pmin_between)
+    L= 24  T=0.6480  maxima=7  barrier=2.924
+    L= 32  T=0.6365  maxima=7  barrier=0.033
+    L= 48  T=0.6264  maxima=7  barrier=0.068
+saved annealed_long_fss_d21_mu0.5_figure.png
+D2=1.0  sizes [24, 32, 48]  seeds per size 8
+  Binder crossing L=24/32: T = 0.6987 +- 0.0043
+  Binder crossing L=32/48: T = 0.6956 +- 0.0036
+  T_c (largest pair) = 0.6956 +- 0.0036
+  1/nu (max dU)          = 0.448 +- 0.462
+  1/nu (dU at T_c)       = 1.667 +- 0.140
+  gamma/nu (max chi')    = 1.545 +- 0.084
+  gamma/nu (chi at T_c)  = 1.458 +- 0.086
+  2beta/nu               = 0.542 +- 0.086
+  alpha/nu               = -0.051 +- 0.023
+  candidates (1/nu, gamma/nu, 2beta/nu, alpha/nu):
+    2D 3-state Potts   1.200 1.733 0.267 0.400
+    2D Ising           1.000 1.750 0.250 0.000
+    first order        2.000 2.000 0.000 2.000
+  per L: max dU/dbeta, dU/dbeta(T_c), max chi', chi(T_c), <|psi|^2>(T_c), C_max, min U4
+    L= 24     3.867     1.422      6.439      80.24  0.03230  1.0762  +0.120
+    L= 32     4.288     2.273     10.192     123.59  0.02798  1.0191  +0.093
+    L= 48     5.259     4.511     18.813     220.71  0.02221  1.0346  -0.020
+  energy distribution at the C peak: T_peak, #maxima, barrier ln(Pmax/Pmin_between)
+    L= 24  T=0.7380  maxima=12  barrier=2.909
+    L= 32  T=0.7380  maxima=9  barrier=2.947
+    L= 48  T=0.7380  maxima=12  barrier=2.225
+saved annealed_long_fss_d21_mu1_figure.png
+# C_mu, C_n (canonical, fixed frustrated number), corr(E,n) at T_c, and the C_mu peak position, per L
+mu=0.5 L=24: T_c=0.62  C_mu=0.9401  C_n=0.3124  rho=0.817  nmon=0.0624 | C_mu max in window at T=0.648, C_n max 0.3489 at T=0.648
+mu=0.5 L=32: T_c=0.62  C_mu=0.9759  C_n=0.3251  rho=0.817  nmon=0.0626 | C_mu max in window at T=0.637, C_n max 0.3457 at T=0.638
+mu=0.5 L=48: T_c=0.62  C_mu=1.0138  C_n=0.3351  rho=0.818  nmon=0.0627 | C_mu max in window at T=0.627, C_n max 0.3478 at T=0.627
+mu=1 L=24: T_c=0.696  C_mu=0.7729  C_n=0.2524  rho=0.821  nmon=0.0272 | C_mu max in window at T=0.738, C_n max 0.3329 at T=0.738
+mu=1 L=32: T_c=0.696  C_mu=0.8039  C_n=0.2600  rho=0.823  nmon=0.0273 | C_mu max in window at T=0.738, C_n max 0.3241 at T=0.738
+mu=1 L=48: T_c=0.696  C_mu=0.8668  C_n=0.2714  rho=0.829  nmon=0.0274 | C_mu max in window at T=0.738, C_n max 0.3252 at T=0.738
+mu=0 L=32: T_c=0.528  C_mu=0.9719  C_n=0.4782  rho=0.713  nmon=0.1635 | C_mu max in window at T=0.533, C_n max 0.4924 at T=0.535
+mu=0 L=48: T_c=0.528  C_mu=1.0302  C_n=0.5104  rho=0.710  nmon=0.1635 | C_mu max in window at T=0.533, C_n max 0.5421 at T=0.533
+mu=0 L=64: T_c=0.528  C_mu=1.1166  C_n=0.5526  rho=0.711  nmon=0.1636 | C_mu max in window at T=0.531, C_n max 0.5713 at T=0.531
