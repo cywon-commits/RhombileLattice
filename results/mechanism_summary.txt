@@ -54,3 +54,16 @@ psi_s^2 ~ L^-eta, weighted fit over L>=32 (errors inflated by seed scatter); see
      eta~0.3 near T_c. The earlier hint that mu=3 saturates (LRO) at T<=0.83 did not survive L=96.
      With L<=96 we cannot separate "critical with eta~0.1" from "LRO with slow crossover" at the lowest T.
      mu_c: >=2 (mu=2 LRO) and possibly <3; claim "mu_c ~ 3" should be weakened to "2 <~ mu_c <~ 3-5, unresolved".
+
+== mu=10 clock anisotropy (results/long/clock_analysis.py -> clock_mu10.txt), 2026-09-29 ==
+  <cos 3theta> = 0.3-0.45 and <cos 6theta> = 0.1-0.2 at T=1.02-1.10 (T/T_c 0.89-0.96), L=24-96, no decay with L
+  (errors 0.03-0.17, single seed). Irrelevant Z6 anisotropy at eta~0.4 would need cos6theta ~ L^(2-18 eta) ~ L^-5: ruled out.
+  RG: cos(q theta) has dimension q^2 eta/2 -> Z3 anisotropy relevant for eta < 4/9. Measured eta < 4/9 below T_c
+  -> asymptotically LRO below T_c; the power-law window is a crossover, not a phase. Resolves the "eta above Z6 range" puzzle.
+  eta_eff (psi_s^2 ~ L^-eta, L=32-96) at mu=10: plateau 0.39-0.40 at T=1.04-1.10, 0.48(6) at 1.12, 0.57(12) at 1.14,
+  >1.5 at T>=1.16. Plateau near the Z3 locking value 4/9=0.444, well above 3-state Potts 4/15=0.267.
+  Small mu (1.25-2): eta jumps from ~0 to >0.8 within ~0.05 in T, no plateau. Plateau widens with mu (mu=5: ~0.1 in T).
+  Hypothesis: large mu = nearly defect-free height model -> KT-like locking with eta=4/9; vortices (monomers, spin-defect
+  triangles; dimension 1/(2 eta)=9/8 < 2, relevant) drive an eventual crossover to Potts at lengths set by their fugacity.
+  -> "mu_c" is likely a crossover scale, not a sharp multicritical point. Needs: eta at the Potts T_c for mu=0 (expect 4/15),
+     KT-form fits at mu=10, more seeds.
