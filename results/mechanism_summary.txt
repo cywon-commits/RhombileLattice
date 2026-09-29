@@ -46,3 +46,11 @@ psi_s^2 ~ L^-eta, weighted fit over L>=32 (errors inflated by seed scatter); see
         seed scatter chi2/dof~3 -> consistent with saturation (LRO) at T<=0.83; mu_c ~ 3 stands, not resolved sharper.
   seed-to-seed scatter exceeds tau-based errors by up to 2x (chi2/dof up to 4): single-seed errors were optimistic.
   Running: L=96 second seeds (mu=3 T=0.78 s1, 0.83 s2; mu=5 T=0.86 s2, 0.93 s2), results/jobs_l96b.txt.
+== Update 2026-09-29: L=96 second seeds done (mu=3 T=0.83, mu=5 T=0.86/0.93 now 2 seeds; mu=3 T=0.78 1 seed) ==
+  fit psi_s^2 ~ L^-eta, L=32-96:
+  mu=3: T=0.78 eta=0.108(55) chi2/dof 1.6; T=0.83 0.103(26); T=0.88 0.272(44)
+  mu=5: T=0.86 eta=0.139(28);            T=0.93 0.300(35); T=1.00 0.355(37, L<=64)
+  -> at comparable T/T_c, mu=3 and mu=5 now look alike: slow power-law decay with small eta~0.1-0.14 at the lowest T,
+     eta~0.3 near T_c. The earlier hint that mu=3 saturates (LRO) at T<=0.83 did not survive L=96.
+     With L<=96 we cannot separate "critical with eta~0.1" from "LRO with slow crossover" at the lowest T.
+     mu_c: >=2 (mu=2 LRO) and possibly <3; claim "mu_c ~ 3" should be weakened to "2 <~ mu_c <~ 3-5, unresolved".
