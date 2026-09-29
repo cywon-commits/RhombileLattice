@@ -1,0 +1,32 @@
+D2=1.0  sizes [24, 32, 48]  seeds per size 8
+  Binder crossing L=24/32: T = 0.6093 +- 0.0062
+  Binder crossing L=32/48: T = 0.6137 +- 0.0120
+  T_c (largest pair) = 0.6137 +- 0.0120
+  1/nu (max dU)          = 1.747 +- 0.269
+  1/nu (dU at T_c)       = 1.150 +- 0.533
+  gamma/nu (max chi')    = 1.965 +- 0.125
+  gamma/nu (chi at T_c)  = 1.687 +- 0.243
+  2beta/nu               = 0.313 +- 0.243
+  alpha/nu               = 0.034 +- 0.032
+  per L: max dU/dbeta, dU/dbeta(T_c), max chi', chi(T_c), <|psi|^2>(T_c), C_max, min U4
+    L= 24     1.928     0.922     62.538    1071.13  0.38042  1.0473  +0.294
+    L= 32     3.687     1.600    111.692    1743.03  0.34822  1.0568  +0.185
+    L= 48     6.574     2.095    244.572    3449.14  0.30625  1.0721  +0.106
+saved annealed_long_fss_d21_mu0.5_spin_figure.png
+/home/user/RhombileLattice/annealed_fss_analysis.py:184: RuntimeWarning: Mean of empty slice
+  Tc = TC_FIXED if TC_FIXED else (tcs[-1] if np.isfinite(tcs[-1]) else np.nanmean(tcs))
+D2=1.0  sizes [24, 32, 48]  seeds per size 8
+  Binder crossing L=24/32: T = nan +- nan
+  Binder crossing L=32/48: T = nan +- nan
+  T_c (largest pair) = nan +- nan
+  1/nu (max dU)          = 0.818 +- 0.513
+  1/nu (dU at T_c)       = nan +- nan
+  gamma/nu (max chi')    = 1.839 +- 0.091
+  gamma/nu (chi at T_c)  = nan +- nan
+  2beta/nu               = nan +- nan
+  alpha/nu               = -0.051 +- 0.023
+  per L: max dU/dbeta, dU/dbeta(T_c), max chi', chi(T_c), <|psi|^2>(T_c), C_max, min U4
+    L= 24     2.542       nan     47.944        nan  nan  1.0762  +0.300
+    L= 32     2.914       nan     83.298        nan  nan  1.0191  +0.232
+    L= 48     4.434       nan    171.927        nan  nan  1.0346  +0.074
+saved annealed_long_fss_d21_mu1_spin_figure.png

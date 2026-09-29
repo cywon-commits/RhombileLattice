@@ -1,0 +1,66 @@
+python3 annealed_long.py 48 1.02 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 48 1.04 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 48 1.06 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 48 1.08 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 48 1.1 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 48 1.12 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 48 1.14 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 48 1.16 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 48 1.18 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 48 1.2 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 32 1.02 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 32 1.04 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 32 1.06 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 32 1.08 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 32 1.1 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 32 1.12 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 32 1.14 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 32 1.16 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 32 1.18 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 32 1.2 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 24 1.02 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 24 1.04 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 24 1.06 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 24 1.08 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 24 1.1 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 24 1.12 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 24 1.14 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 24 1.16 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 24 1.18 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_long.py 24 1.2 500000 10 20000 1 1 10 | tail -n 1 >> results/long/log_mu10.txt
+python3 annealed_tafm.py 64 0.66 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 64 0.663 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 64 0.666 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 64 0.669 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 64 0.672 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 64 0.675 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 64 0.678 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 64 0.681 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 64 0.684 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 48 0.66 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 48 0.663 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 48 0.666 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 48 0.669 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 48 0.672 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 48 0.675 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 48 0.678 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 48 0.681 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 48 0.684 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 32 0.66 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 32 0.663 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 32 0.666 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 32 0.669 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 32 0.672 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 32 0.675 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 32 0.678 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 32 0.681 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 32 0.684 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 24 0.66 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 24 0.663 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 24 0.666 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 24 0.669 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 24 0.672 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 24 0.675 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 24 0.678 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 24 0.681 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt
+python3 annealed_tafm.py 24 0.684 300000 10 50000 1 3 | tail -n 1 >> results/tafm/log_h3.txt

@@ -1,0 +1,11 @@
+p=0.0794  monomers=122  frustrated_check=122  edge_pairs=0  site_pairs=0  isolated=122  sharing=0
+D3=1.00  E=128.0  n_state3_sites=95  resolved_isolated=91/122  resolved_sharing=0/0
+D3=1.25  E=143.8  n_state3_sites=51  resolved_isolated=45/122  resolved_sharing=0/0
+D3=1.50  E=146.0  n_state3_sites=44  resolved_isolated=43/122  resolved_sharing=0/0
+D3=1.75  E=162.2  n_state3_sites=43  resolved_isolated=40/122  resolved_sharing=0/0
+D3=2.00  E=171.0  n_state3_sites=20  resolved_isolated=20/122  resolved_sharing=0/0
+D3=2.25  E=163.0  n_state3_sites=0  resolved_isolated=0/122  resolved_sharing=0/0
+D3=2.50  E=169.5  n_state3_sites=1  resolved_isolated=1/122  resolved_sharing=0/0
+D3=2.75  E=167.0  n_state3_sites=0  resolved_isolated=0/122  resolved_sharing=0/0
+D3=3.00  E=175.0  n_state3_sites=0  resolved_isolated=0/122  resolved_sharing=0/0
+D3=3.30  E=165.0  n_state3_sites=0  resolved_isolated=0/122  resolved_sharing=0/0

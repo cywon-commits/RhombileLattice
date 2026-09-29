@@ -3,7 +3,11 @@
 Lattice: 3-site basis (r1, r2, r3) per unit cell, bond offsets and geometry
 follow rhombile_topo_report.md / rhombile_classical_proposal.md.
 """
+from collections import deque
+
 import numpy as np
+from scipy.sparse import csr_matrix
+from scipy.sparse.csgraph import maximum_flow
 import matplotlib.pyplot as plt
 
 A1 = np.array([1.0, 0.0])
@@ -54,8 +58,9 @@ class RhombileLattice:
                     for dn, dm in offsets:
                         j = self._site_index(n + dn, m + dm, s2)
                         p2 = self._position(n + dn, m + dm, s2)
+                        wraps = not (0 <= n + dn < self.nx and 0 <= m + dm < self.ny)
                         self.bonds.append({
-                            "i": i, "j": j, "type": s1 + s2,
+                            "i": i, "j": j, "type": s1 + s2, "wraps": wraps,
                             "J": self.j0[s1 + s2], "p1": p1, "p2": p2,
                         })
 
@@ -156,6 +161,540 @@ def matched_bonds(lattice, states):
     contributing +|J| to total_energy (the real physical cost), as opposed
     to bonds that were merely toggled when a string defect was drawn."""
     return [b for b in lattice.bonds if b["J"] != 0.0 and states[b["i"]] == states[b["j"]]]
+
+
+def enumerate_triangles(lattice):
+    """Every elementary (r1, r2, r3) triangle whose 3 edges all stay
+    inside the box (regardless of J), keyed by edge type. Each triangle
+    has exactly one r1-r2 edge, one r1-r3 edge (the two default-active
+    "outer" edges of a rhombus), and one r2-r3 edge (the default-inactive
+    "diagonal" of that rhombus).
+
+    Triangles that touch a periodic-wraparound bond are left out: with
+    PBC, a bond crossing the box edge is a real short bond on the torus,
+    but its stored p1/p2 uses one endpoint's *unwrapped* position (see
+    RhombileLattice._build), so such a triangle's naive centroid can land
+    a full box-width away from where it physically is. That's harmless
+    for frustrated_triangles (which never averages positions across
+    triangles), but build_rhombi/build_triangle_hop_graph do, so string
+    routing is restricted to the box's interior, away from that seam.
+
+    Returns a list of dicts {"sites", "r1r2", "r1r3", "r2r3", "centroid"};
+    the 3 edge entries are bond dicts shared by reference with
+    lattice.bonds, so toggling their "J" is visible everywhere else.
+    """
+    bond_by_pair = {frozenset((b["i"], b["j"])): b for b in lattice.bonds}
+    triangles = []
+    for m in range(lattice.ny):
+        for n in range(lattice.nx):
+            r1_idx = lattice._site_index(n, m, "r1")
+            r1_pos = lattice._position(n, m, "r1")
+            nbrs = []
+            for other_idx, b in lattice.neighbor_table()[r1_idx]:
+                other_pos = b["p2"] if b["i"] == r1_idx else b["p1"]
+                ang = np.arctan2(*(other_pos - r1_pos)[::-1])
+                nbrs.append((ang, other_idx, other_pos, b))
+            nbrs.sort(key=lambda x: x[0])
+            k = len(nbrs)
+            for i in range(k):
+                _, idx1, pos1, b1 = nbrs[i]
+                _, idx2, pos2, b2 = nbrs[(i + 1) % k]
+                closing = bond_by_pair.get(frozenset((idx1, idx2)))
+                if closing is None or closing["type"] != "r2r3":
+                    continue
+                edges = {b1["type"]: b1, b2["type"]: b2, "r2r3": closing}
+                if "r1r2" not in edges or "r1r3" not in edges:
+                    continue
+                if edges["r1r2"]["wraps"] or edges["r1r3"]["wraps"] or closing["wraps"]:
+                    continue
+                centroid = (r1_pos + pos1 + pos2) / 3
+                triangles.append({
+                    "sites": (r1_idx, idx1, idx2), "r1r2": edges["r1r2"],
+                    "r1r3": edges["r1r3"], "r2r3": edges["r2r3"], "centroid": centroid,
+                })
+    return triangles
+
+
+def build_rhombi(triangles):
+    """Pair triangles that share a diagonal (r2-r3 edge) into rhombi, and
+    connect rhombi that share an outer edge (r1-r2 or r1-r3) into an
+    adjacency graph -- the dual graph a "string" is routed through.
+
+    Returns (rhombi, adjacency): rhombi[i] = {"halves": (tri_a, tri_b),
+    "diagonal": bond, "centroid"}; adjacency[i] = [(j, shared_outer_bond), ...].
+    """
+    by_diagonal = {}
+    for ti, tri in enumerate(triangles):
+        by_diagonal.setdefault(id(tri["r2r3"]), []).append(ti)
+
+    rhombi = []
+    tri_to_rhombus = {}
+    for tri_ids in by_diagonal.values():
+        if len(tri_ids) != 2:
+            continue  # only possible with a too-small non-periodic patch
+        rid = len(rhombi)
+        centroid = np.mean([triangles[t]["centroid"] for t in tri_ids], axis=0)
+        rhombi.append({
+            "halves": tuple(tri_ids), "diagonal": triangles[tri_ids[0]]["r2r3"],
+            "centroid": centroid,
+        })
+        for t in tri_ids:
+            tri_to_rhombus[t] = rid
+
+    by_outer = {}
+    for ti, tri in enumerate(triangles):
+        if ti not in tri_to_rhombus:
+            continue
+        for key in ("r1r2", "r1r3"):
+            by_outer.setdefault(id(tri[key]), []).append((ti, tri[key]))
+
+    adjacency = [[] for _ in rhombi]
+    for entries in by_outer.values():
+        if len(entries) != 2:
+            continue
+        (t1, b1), (t2, _) = entries
+        r1_id, r2_id = tri_to_rhombus[t1], tri_to_rhombus[t2]
+        if r1_id != r2_id:
+            adjacency[r1_id].append((r2_id, b1))
+            adjacency[r2_id].append((r1_id, b1))
+    return rhombi, adjacency
+
+
+def nearest_rhombus(rhombi, point):
+    """Index of the rhombus whose centroid is closest to `point`."""
+    point = np.asarray(point, dtype=float)
+    dists = [np.linalg.norm(r["centroid"] - point) for r in rhombi]
+    return int(np.argmin(dists))
+
+
+def nearest_triangle(triangles, point):
+    """Index of the triangle (rhombus half) whose centroid is closest to
+    `point` -- the fine-grained counterpart of nearest_rhombus, needed
+    because a string's routing must pick a specific half, not just a
+    rhombus (see build_triangle_hop_graph)."""
+    point = np.asarray(point, dtype=float)
+    dists = [np.linalg.norm(t["centroid"] - point) for t in triangles]
+    return int(np.argmin(dists))
+
+
+def build_triangle_hop_graph(triangles):
+    """The graph a string is actually routed through, one level finer than
+    build_rhombi's rhombus graph: nodes are triangle halves, and crossing
+    a rhombus's diagonal to its sibling half is forced, not a free choice.
+
+    Naively routing on rhombi (pick any of a rhombus's up to 4 outer
+    edges to enter/exit by) can enter and leave through the *same* half,
+    leaving the other, untouched half with a bare diagonal flip and no
+    compensating outer-edge change -- a spurious frustrated triangle in
+    the middle of the path. Forcing every hop to land on the sibling half
+    (this function) rules that out structurally: every interior half ends
+    up with exactly one outer edge toggled plus the (shared) diagonal
+    toggle, i.e. still 2-active/1-inactive, just with a different edge
+    inactive -- the domain-wall picture -- so frustration is confined to
+    the two ends of the path regardless of its shape.
+
+    Returns (sibling, hop): sibling[t] = t's diagonal partner; hop[t] =
+    [(next_far_half, outer_bond, entered_near_half), ...], where
+    next_far_half is already the sibling of whatever near half the outer
+    bond leads to (the forced cross is baked in).
+    """
+    sibling = {}
+    diag_groups = {}
+    for ti, tri in enumerate(triangles):
+        diag_groups.setdefault(id(tri["r2r3"]), []).append(ti)
+    for tis in diag_groups.values():
+        if len(tis) == 2:
+            a, b = tis
+            sibling[a], sibling[b] = b, a
+
+    outer_groups = {}
+    outer_bond_of = {}
+    for ti, tri in enumerate(triangles):
+        for key in ("r1r2", "r1r3"):
+            bond = tri[key]
+            outer_groups.setdefault(id(bond), []).append(ti)
+            outer_bond_of[id(bond)] = bond
+
+    hop = [[] for _ in triangles]
+    for bond_id, tis in outer_groups.items():
+        if len(tis) != 2:
+            continue
+        ta, tb = tis
+        if ta not in sibling or tb not in sibling:
+            continue
+        bond = outer_bond_of[bond_id]
+        hop[ta].append((sibling[tb], bond, tb))
+        hop[tb].append((sibling[ta], bond, ta))
+    return sibling, hop
+
+
+def route_string(sibling, hop, t_start, t_end):
+    """Shortest path from t_start to t_end through the triangle hop graph.
+
+    t_start and t_end are left as the two path *endpoints* (the ones that
+    end up frustrated); the walk itself starts at sibling[t_start] (the
+    half that is immediately ready to hop onward) and must arrive
+    exactly at t_end. Returns (nodes, bonds): nodes = every rhombus-half
+    visited (whose diagonal gets toggled once each, including the
+    endpoints), bonds = the outer edges crossed between them.
+    """
+    start_node = sibling[t_start]
+    if start_node == t_end:
+        return [t_end], []
+    prev, prev_bond = {start_node: None}, {}
+    queue = deque([start_node])
+    while queue:
+        cur = queue.popleft()
+        if cur == t_end:
+            break
+        for nxt, bond, _near_half in hop[cur]:
+            if nxt not in prev:
+                prev[nxt] = cur
+                prev_bond[nxt] = bond
+                queue.append(nxt)
+    if t_end not in prev:
+        raise ValueError("no path between the two triangles (graph disconnected?)")
+    nodes, bonds, node = [t_end], [], t_end
+    while prev[node] is not None:
+        bonds.append(prev_bond[node])
+        node = prev[node]
+        nodes.append(node)
+    nodes.reverse()
+    bonds.reverse()
+    return nodes, bonds
+
+
+def route_string_between_points(rhombi, sibling, hop, p_start, p_end):
+    """Convenience wrapper around route_string for two arbitrary points.
+
+    Each rhombus's 2 triangle halves have opposite up/down parity, and
+    route_string can only connect same-parity endpoints (crossing a
+    diagonal then an outer edge always returns to the starting parity),
+    so only 2 of the 4 (half-of-start, half-of-end) combinations are
+    actually reachable. This tries all 4 and keeps the shortest that
+    works. Returns (t_start, t_end, nodes, bonds).
+    """
+    rid_s = nearest_rhombus(rhombi, p_start)
+    rid_e = nearest_rhombus(rhombi, p_end)
+    best = None
+    for ts in rhombi[rid_s]["halves"]:
+        for te in rhombi[rid_e]["halves"]:
+            try:
+                nodes, bonds = route_string(sibling, hop, ts, te)
+            except ValueError:
+                continue
+            if best is None or len(nodes) < len(best[2]):
+                best = (ts, te, nodes, bonds)
+    if best is None:
+        raise ValueError("no valid string between these two rhombi")
+    return best
+
+
+def _toggle_bond(b):
+    b["J"] = 0.0 if b["J"] != 0.0 else -1.0
+
+
+def apply_dual_string_defect(triangles, nodes, bonds):
+    """Toggle ON the diagonal of every rhombus-half in `nodes` (one
+    toggle per rhombus, since a diagonal is shared by both its halves)
+    and toggle OFF every outer edge in `bonds` connecting consecutive
+    halves. See route_string / build_triangle_hop_graph for why this
+    confines the resulting frustration to exactly nodes[0] and nodes[-1].
+    """
+    flipped = []
+    for t in nodes:
+        d = triangles[t]["r2r3"]
+        _toggle_bond(d)
+        flipped.append(d)
+    for b in bonds:
+        _toggle_bond(b)
+        flipped.append(b)
+    return flipped
+
+
+def min_state2_assignment(lattice):
+    """The actual D3=0 ground state for a diluted/reconnected lattice:
+    r1 sites fixed at state 0 (always mismatches every r1-rim bond, active
+    or not); every rim (r2/r3) site defaults to state 1. The only bonds
+    that can still cost anything are *active* r2-r3 (diagonal) edges,
+    since both endpoints default to 1. Recoloring one endpoint of each to
+    the otherwise-unused state 2 clears it for free -- as long as the two
+    recolored endpoints of any two such edges never coincide by being
+    forced onto opposite requirements, which is exactly the 2-coloring
+    (bipartition) of the graph formed by those diagonal edges.
+
+    A naive minimum *vertex cover* of that graph is NOT the same thing --
+    it only guarantees every edge has >=1 endpoint in the cover, not that
+    the two endpoints differ, so 2 cover vertices sharing an edge would
+    silently reintroduce a cost. Bipartition (proper 2-coloring, taking
+    the smaller color class per component as state 2) is both correct and
+    minimal, since each connected component's smaller side is the fewest
+    sites that can possibly cover its edges 1-for-1.
+
+    Returns (states, n_state2, n_non_bipartite_components). A nonzero
+    last value means that component contains an odd cycle of active
+    diagonals -- no zero-cost 2-coloring exists there, and the true D3=0
+    ground state (found separately, e.g. by SA) has residual energy.
+    """
+    edges = [(b["i"], b["j"]) for b in lattice.bonds if b["type"] == "r2r3" and b["J"] != 0.0]
+    adj = {}
+    for a, b in edges:
+        adj.setdefault(a, []).append(b)
+        adj.setdefault(b, []).append(a)
+
+    pos, sub_of = lattice.site_positions()
+    states = np.where(sub_of == "r1", 0, 1).astype(int)
+
+    color, non_bipartite = {}, 0
+    for start in adj:
+        if start in color:
+            continue
+        color[start] = 0
+        comp, queue = [start], deque([start])
+        ok = True
+        while queue:
+            u = queue.popleft()
+            for v in adj[u]:
+                if v not in color:
+                    color[v] = 1 - color[u]
+                    comp.append(v)
+                    queue.append(v)
+                elif color[v] == color[u]:
+                    ok = False
+        if not ok:
+            non_bipartite += 1
+        side0 = [v for v in comp if color[v] == 0]
+        side1 = [v for v in comp if color[v] == 1]
+        for v in (side0 if len(side0) <= len(side1) else side1):
+            states[v] = 2
+    return states, int(np.sum(states == 2)), non_bipartite
+
+
+def conflict_graph_bipartition(lattice):
+    """2-color the graph of active r2-r3 (diagonal) bonds -- the same
+    graph min_state2_assignment works with, but returning the raw edges
+    plus a single global 2-coloring (one side per color, pooled across
+    every connected component) rather than picking the smaller side per
+    component. That per-component choice is what makes D3=0 minimal;
+    a global 2-coloring is what energy_via_mincut needs instead, since
+    it lets the flow solver pick the right combination itself for
+    whatever D3 is asked for.
+
+    Returns (edges, side_a, side_b, non_bipartite) -- same meaning as
+    in min_state2_assignment.
+    """
+    edges = [(b["i"], b["j"]) for b in lattice.bonds if b["type"] == "r2r3" and b["J"] != 0.0]
+    adj = {}
+    for a, b in edges:
+        adj.setdefault(a, []).append(b)
+        adj.setdefault(b, []).append(a)
+    color, non_bipartite = {}, 0
+    for start in adj:
+        if start in color:
+            continue
+        color[start] = 0
+        queue, ok = deque([start]), True
+        while queue:
+            u = queue.popleft()
+            for v in adj[u]:
+                if v not in color:
+                    color[v] = 1 - color[u]
+                    queue.append(v)
+                elif color[v] == color[u]:
+                    ok = False
+        if not ok:
+            non_bipartite += 1
+    side_a = [v for v, c in color.items() if c == 0]
+    side_b = [v for v, c in color.items() if c == 1]
+    return edges, side_a, side_b, non_bipartite
+
+
+def energy_via_mincut(lattice, D3, scale=10000):
+    """D3=0 always gives the true exact energy (0), which is provably
+    optimal regardless of anything below. For D3>0, treat the result as
+    an UPPER BOUND, not a confirmed exact minimum: this function fixes
+    every r1 site to Potts state 0 and only lets rim sites choose
+    between 1 and 2, and a later investigation
+    (exact_ground_state_investigation.py) found configurations where
+    letting r1 vary too gives a strictly lower energy at large D3 (a
+    bent/detour string: 15 found vs. 53 claimed here). An attempted fix
+    via Toulouse/Barahona planar-matching theory produced smaller
+    numbers but could not be verified with a working reconstruction,
+    and simulated annealing sided with THIS function's numbers at one
+    clearly-discriminating test point. Net effect: this is the best
+    verified upper bound at D3>0, but neither this nor the "fix" has a
+    fully confirmed lower bound to match it -- see that file's docstring
+    before trusting D3>0 numbers from this function in anything meant
+    to be exact.
+
+    Exact ground-state energy at a given D3, for a lattice whose
+    active-diagonal conflict graph is bipartite (checked; raises if not,
+    since the reduction below assumes it).
+
+    Minimizing E(x) = D3*sum(x_v) + sum_edges[x_u == x_v] over x in
+    {0,1}^rim (x_v=1 meaning "site v is state 2") is an antiferromagnetic
+    binary MRF -- NP-hard in general, but exactly solvable in polynomial
+    time here because the conflict graph is bipartite: relabeling one
+    side (y_v = x_v on side A, y_v = 1-x_v on side B) turns it into a
+    *ferromagnetic* (submodular) energy, which reduces to a standard
+    minimum s-t cut: source->v capacity D3 for v in A, v->sink capacity
+    D3 for v in B, and capacity 1 both ways on every original edge
+    (see rhombile_lattice module notes / the research doc for the
+    algebra). The reduction is exact -- min-cut value equals E(D3)
+    with no leftover additive constant -- and was checked against a
+    brute-force search over all state-2 subsets on a small case.
+
+    This is what makes it possible to sweep D3 on conflict graphs with
+    hundreds of vertices (e.g. a dense grid of many strings), where the
+    2^n brute force used for the first single-string check is hopeless.
+    """
+    edges, side_a, side_b, non_bipartite = conflict_graph_bipartition(lattice)
+    if non_bipartite:
+        raise ValueError(
+            f"conflict graph has {non_bipartite} non-bipartite component(s); "
+            "the min-cut reduction here assumes bipartite (no odd cycles)."
+        )
+    idx_a = {v: i + 1 for i, v in enumerate(side_a)}
+    idx_b = {v: i + 1 + len(side_a) for i, v in enumerate(side_b)}
+    n = len(side_a) + len(side_b) + 2
+    source, sink = 0, n - 1
+    rows, cols, caps = [], [], []
+    cap_d3 = int(round(D3 * scale))
+    for v in side_a:
+        rows.append(source); cols.append(idx_a[v]); caps.append(cap_d3)
+    for v in side_b:
+        rows.append(idx_b[v]); cols.append(sink); caps.append(cap_d3)
+    for a, b in edges:
+        u, w = (a, b) if a in idx_a else (b, a)
+        rows.append(idx_a[u]); cols.append(idx_b[w]); caps.append(scale)
+        rows.append(idx_b[w]); cols.append(idx_a[u]); caps.append(scale)
+    capacity = csr_matrix((caps, (rows, cols)), shape=(n, n))
+    return maximum_flow(capacity, source, sink).flow_value / scale
+
+
+def state2_and_violations_via_mincut(lattice, D3, scale=10000):
+    """See energy_via_mincut's docstring first: for D3>0 this shares its
+    r1-fixed restriction and the same open reliability question (exact
+    at D3=0 only; an upper bound, not a confirmed exact value, above
+    that). exact_ground_state_investigation.py has the details.
+
+    Same exact optimum as energy_via_mincut, but split into its two
+    physical pieces instead of just the total: n_state2 (node-type
+    excitations -- sites that took the 3rd Potts state) and n_violated
+    (link-type excitations -- active diagonals whose endpoints still
+    match). E(D3) = D3*n_state2 + n_violated exactly.
+
+    Recovers the actual minimum cut (not just its value) by BFS-ing the
+    residual capacity graph from the source; the reachable set is one
+    side of the optimal cut.
+
+    Returns (n_state2, n_violated).
+    """
+    edges, side_a, side_b, non_bipartite = conflict_graph_bipartition(lattice)
+    if non_bipartite:
+        raise ValueError(
+            f"conflict graph has {non_bipartite} non-bipartite component(s); "
+            "the min-cut reduction here assumes bipartite (no odd cycles)."
+        )
+    idx_a = {v: i + 1 for i, v in enumerate(side_a)}
+    idx_b = {v: i + 1 + len(side_a) for i, v in enumerate(side_b)}
+    n = len(side_a) + len(side_b) + 2
+    source, sink = 0, n - 1
+    rows, cols, caps = [], [], []
+    cap_d3 = int(round(D3 * scale))
+    for v in side_a:
+        rows.append(source); cols.append(idx_a[v]); caps.append(cap_d3)
+    for v in side_b:
+        rows.append(idx_b[v]); cols.append(sink); caps.append(cap_d3)
+    for a, b in edges:
+        u, w = (a, b) if a in idx_a else (b, a)
+        rows.append(idx_a[u]); cols.append(idx_b[w]); caps.append(scale)
+        rows.append(idx_b[w]); cols.append(idx_a[u]); caps.append(scale)
+    capacity = csr_matrix((caps, (rows, cols)), shape=(n, n))
+    result = maximum_flow(capacity, source, sink)
+    residual = (capacity - result.flow).tocsr()
+
+    reachable = {source}
+    queue = deque([source])
+    while queue:
+        u = queue.popleft()
+        row = residual.getrow(u)
+        for v, c in zip(row.indices, row.data):
+            if c > 1e-9 and v not in reachable:
+                reachable.add(v)
+                queue.append(v)
+
+    n_state2 = (sum(1 for v in side_a if idx_a[v] not in reachable)
+                + sum(1 for v in side_b if idx_b[v] in reachable))
+    n_violated = 0
+    for a, b in edges:
+        u, w = (a, b) if a in idx_a else (b, a)
+        x_u = idx_a[u] not in reachable
+        x_w = idx_b[w] in reachable
+        if x_u == x_w:
+            n_violated += 1
+    return n_state2, n_violated
+
+
+def full_state_via_mincut(lattice, D3, scale=10000):
+    """See energy_via_mincut's docstring first: for D3>0 this shares its
+    r1-fixed restriction and the same open reliability question. Exact
+    at D3=0 only.
+
+    Same exact optimum as state2_and_violations_via_mincut, but
+    returning the full per-site state assignment and the actual list of
+    violated (still-matching, active r2-r3) bonds, rather than just their
+    counts -- what you need to draw the ground state, not just quote its
+    energy.
+
+    Returns (states, violated_bonds).
+    """
+    edges, side_a, side_b, non_bipartite = conflict_graph_bipartition(lattice)
+    if non_bipartite:
+        raise ValueError(
+            f"conflict graph has {non_bipartite} non-bipartite component(s); "
+            "the min-cut reduction here assumes bipartite (no odd cycles)."
+        )
+    idx_a = {v: i + 1 for i, v in enumerate(side_a)}
+    idx_b = {v: i + 1 + len(side_a) for i, v in enumerate(side_b)}
+    n = len(side_a) + len(side_b) + 2
+    source, sink = 0, n - 1
+    rows, cols, caps = [], [], []
+    cap_d3 = int(round(D3 * scale))
+    for v in side_a:
+        rows.append(source); cols.append(idx_a[v]); caps.append(cap_d3)
+    for v in side_b:
+        rows.append(idx_b[v]); cols.append(sink); caps.append(cap_d3)
+    for a, b in edges:
+        u, w = (a, b) if a in idx_a else (b, a)
+        rows.append(idx_a[u]); cols.append(idx_b[w]); caps.append(scale)
+        rows.append(idx_b[w]); cols.append(idx_a[u]); caps.append(scale)
+    capacity = csr_matrix((caps, (rows, cols)), shape=(n, n))
+    result = maximum_flow(capacity, source, sink)
+    residual = (capacity - result.flow).tocsr()
+
+    reachable = {source}
+    queue = deque([source])
+    while queue:
+        u = queue.popleft()
+        row = residual.getrow(u)
+        for v, c in zip(row.indices, row.data):
+            if c > 1e-9 and v not in reachable:
+                reachable.add(v)
+                queue.append(v)
+
+    pos, sub_of = lattice.site_positions()
+    states = np.where(sub_of == "r1", 0, 1).astype(int)
+    for v in side_a:
+        if idx_a[v] not in reachable:
+            states[v] = 2
+    for v in side_b:
+        if idx_b[v] in reachable:
+            states[v] = 2
+
+    violated_bonds = [b for b in lattice.bonds
+                       if b["type"] == "r2r3" and b["J"] != 0.0 and states[b["i"]] == states[b["j"]]]
+    return states, violated_bonds
 
 
 def heat_bath_sweep(lattice, states, D, T, rng):

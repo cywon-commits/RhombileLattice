@@ -1,0 +1,4 @@
+wrote results/long/long_L96_d21_T0.522_s1.npz
+wrote results/long/long_L96_d21_T0.528_s1.npz
+wrote results/long/long_L96_d21_T0.524_s1.npz
+wrote results/long/long_L96_d21_T0.526_s1.npz

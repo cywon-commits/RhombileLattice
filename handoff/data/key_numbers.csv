@@ -1,0 +1,26 @@
+# quantity,mu,T,value,error,status,source
+T_c,0,,0.528,0.002,confirmed,fss_d21_summary.txt (Binder crossing L=48/64; exponents 3-state Potts)
+T_c_TAFM_fixed_bond(h/J=1),,,0.4713,0.0010,confirmed,tafm_fss_summary.txt (T_c/J=0.9426)
+T_c_TAFM_fixed_bond(h/J=3),,,0.6718,0.0010,confirmed,tafm_fss_summary.txt (T_c/J=1.3436; CTMRG 1.3440)
+T_c,0.5,,0.620,0.007,confirmed,fss_mu_summary.txt
+T_c,1,,0.696,0.004,confirmed,fss_mu_summary.txt
+T_c,2,,0.80,0.03,approximate,fss_mu_spin_summary.txt
+T_c,3,,0.95,0.03,approximate,fss_mu_spin_summary.txt
+T_c,5,,1.05,0.03,approximate,fss_mu_spin_summary.txt (1.03-1.07)
+T_c,10,,1.141,0.003,confirmed(Binder crossing),fss_mu_spin_summary.txt
+T_c_dice_Ising(reference),,,1.2027,,literature,pristine dice-lattice Ising
+S0_per_tri_D1eqD2,,,0.16153,,exact,Wannier / honeycomb dimer entropy
+defect_activation_annealed,0,,3.0-3.8,,measured,tafm_defects_L24_s1.txt (TAFM 1.5-1.6)
+xi_slope_dlnxi_d(1/T)_annealed,0,,1.98,0.01,measured,d1d2_summary.txt (TAFM ~1.0-1.3)
+eta_fit_psi_s,3,0.78,0.108,0.055,finite-size effective,seeds_summary.txt
+eta_fit_psi_s,3,0.83,0.103,0.026,finite-size effective,seeds_summary.txt
+eta_fit_psi_s,3,0.88,0.272,0.044,finite-size effective,seeds_summary.txt
+eta_fit_psi_s,5,0.86,0.139,0.028,finite-size effective,seeds_summary.txt
+eta_fit_psi_s,5,0.93,0.300,0.035,finite-size effective,seeds_summary.txt
+eta_fit_psi_s,5,1.00,0.355,0.037,finite-size effective (L<=64),seeds_summary.txt
+eta_fit_psi_s,10,1.04,0.394,0.037,finite-size effective,mechanism_summary.txt (mu=10 block)
+eta_fit_psi_s,10,1.08,0.404,0.049,finite-size effective,mechanism_summary.txt
+eta_fit_psi_s,10,1.12,0.476,0.061,finite-size effective,mechanism_summary.txt
+eta_fit_psi_s,10,1.14,0.574,0.119,finite-size effective,mechanism_summary.txt
+cos3theta_mu10,10,1.02-1.10,0.3-0.45,,no decay L=24-96,clock_mu10.txt
+cos6theta_mu10,10,1.02-1.10,0.1-0.2,,no decay L=24-96,clock_mu10.txt

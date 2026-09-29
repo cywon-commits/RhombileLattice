@@ -1,0 +1,6 @@
+D1=D2 (D2=0, D3=10, mu=0) parallel tempering, T in [0.33, 1.0], 4 seeds per L, 1e5 PT steps.
+C_max/N_tri (no growth -> crossover):  L=8 0.647(3)  L=12 0.642(2)  L=16 0.638(5)  L=24 0.635(4)  L=32 0.636(3), at T~0.53-0.57
+xi (2nd moment, sqrt3 x sqrt3 wavevector K), L=32: ln xi ~ 2/T (slope 1.98-1.99 over 0.43<T<0.63); saturates as xi -> L/2 below T~0.37
+xi/L and Binder U of phi(K) decrease monotonically with L at every T >= 0.33 (no crossing) -> no finite-T transition;
+consistent with the TAFM-like T=0 critical point (the T=0 ensemble is the TAFM ground-state ensemble).
+Frustrated-triangle density ~ exp(-1/T) (0.126 at T=0.46, 0.055 at T=0.34): monomers far more abundant than 1/xi^2, yet spin correlations survive -> confined pairs.

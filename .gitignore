@@ -1,3 +1,15 @@
 __pycache__/
 *.pyc
 .claude/
+results/long/ckpt_*.npz
+results/long/ckpt_*.tmp.npz
+results/*/*_s99*.npz
+results/tafm/ckpt_*.npz
+results/long/log_mu_big.txt
+results/jobs_mu_big.log
+results/long/log_mu_c.txt
+results/jobs_mu_c.log
+results/long/log_seeds.txt
+results/jobs_seeds.log
+results/jobs_l96b.log
+results/jobs_l96_mu0.log

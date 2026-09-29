@@ -1,0 +1,4 @@
+python3 annealed_long.py 96 0.522 1200000 10 10000 1 | tail -n 1 >> results/long/log_L96.txt
+python3 annealed_long.py 96 0.524 1200000 10 10000 1 | tail -n 1 >> results/long/log_L96.txt
+python3 annealed_long.py 96 0.526 1200000 10 10000 1 | tail -n 1 >> results/long/log_L96.txt
+python3 annealed_long.py 96 0.528 1200000 10 10000 1 | tail -n 1 >> results/long/log_L96.txt
