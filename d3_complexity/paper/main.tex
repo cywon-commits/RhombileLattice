@@ -127,7 +127,15 @@ $\Delta=\max_v d(v)$. A configuration is $s:V\to\{1,2,3\}$ with energy
 E(s)=\#\{uv\in E:\ s_u=s_v\}+D_3\,\#\{v:\ s_v=3\},
 \label{eq:H}
 \end{equation}
-with $D_3\ge 0$, i.e.\ the antiferromagnetic three-state Potts model with single-ion anisotropy $(0,0,D_3)$.
+with $D_3\ge 0$. In the usual notation,
+\begin{equation}
+E(s)=J\sum_{\langle uv\rangle}\delta_{s_us_v}+\sum_u D_{s_u}
+\label{eq:Hstd}
+\end{equation}
+with $J=1$ and $(D_1,D_2,D_3)=(0,0,D_3)$, i.e.\ the antiferromagnetic three-state Potts model with a single-ion (on-site) anisotropy that
+raises the energy of state 3. For two states the bond term is the Ising one,
+$J\delta_{s_us_v}=\tfrac J2(\sigma_u\sigma_v+1)$ with $\sigma=\pm1$, so each frustrated bond costs
+$J=1$ in both descriptions.
 State 3 is a genuine state, not a vacancy: two adjacent sites in state 3 cost one unit.
 Write $\OPT(D_3)=\min_s E(s)$ and $\fr(G)=\min_{t:V\to\{1,2\}}\#\{uv:\ t_u=t_v\}$, the number of
 frustrated bonds of the Ising (two-state) ground state; $\fr(G)=|E|-\mathrm{maxcut}(G)$.
