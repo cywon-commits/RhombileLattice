@@ -486,8 +486,9 @@ classification~\cite{KazdaKolmogorovRolinek2018,FullaZivny2017}. At coordination
 at coordination four it does not, because a state-3 site can relieve two bonds and the choice of
 which sites to use carries information.
 
-\paragraph*{Open problems.} (1) A constructive version of Theorem~\ref{thm:healing-full}: greedy
-augmentation (Lemma~\ref{lem:aug}) never got stuck in our tests; does it always succeed? (2) Decide the complexity of the window
+\paragraph*{Open problems.} (1) A constructive version of Theorem~\ref{thm:healing-full} holds
+(Proposition~\ref{prop:constructive}), but it uses fr of many subgraphs; can a ground state be
+built from a single Ising ground state by local moves alone? (2) Decide the complexity of the window
 $2\le D_3<\lfloor\Delta/2\rfloor$ for $\Delta\ge6$, e.g.\ on subgraphs of the triangular lattice.
 (3) The intermediate kinks of the Penrose face-adjacency graph in the thermodynamic limit. (4) Finite temperature: the rigid local structure of
 Theorem~\ref{thm:local} suggests constrained low-energy excitations below the threshold.
@@ -566,7 +567,9 @@ frustrated matching. Only $K_4$ fails.
 healable. The obstruction consists of two triangles joined by a frustrated bond whose own
 frustrated bonds point to opposite sides.
 \paragraph*{Further checks.} Random connected subcubic graphs with 12--20 vertices: greedy
-augmentation (Lemma~\ref{lem:aug}) reached $\fr(G-S)=0$ in all 972 runs. Exact optimisation on
+augmentation (Lemma~\ref{lem:aug}) reached $\fr(G-S)=0$ in all 972 runs; exhaustively, stuck
+tight sets with $\fr(G-S)\ge1$ first occur at 12 vertices, where the exchange step of
+Proposition~\ref{prop:constructive} resolves them. Exact optimisation on
 251 further graphs with up to 60 vertices (cubic, triangle-rich, truncated, and reduction graphs
 $G_\varphi$) gave $\ioct=\fr$ in every case. For Theorem~\ref{thm:hard4}, 307 planar 3-SAT formulas
 gave planar $G_\varphi$ under the ordering rule, and the energy criterion was confirmed by exact

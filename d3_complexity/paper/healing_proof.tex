@@ -131,6 +131,39 @@ size (I1) and $G\ne K_4$. By (I2) the paths $R_1,R_2,\dots$ of an infinite chain
 distinct components of the finite graph $G-S$, a contradiction. Hence $\fr(G-S)=0$ for a maximum
 tight set $S$, which is therefore an independent odd cycle transversal of size $\fr(G)$.
 
+\paragraph*{Constructive version.}
+Call a tight set $T$ \emph{augmentable} if $T+v$ is independent and tight for some $v$, and
+\emph{stuck} otherwise. The tight sets of size $s$ are all stuck if and only if no tight set of
+size $s+1$ exists (removing any vertex from a tight set of size $s+1$ leaves an augmentable tight
+set of size $s$), so ``maximum size'' in the proof above is the statement that all tight sets of
+size $|S|$ are stuck. The proof, however, uses this only for explicitly given sets: the current
+set $T_j$ of a chain and the sets $T_j-t+y$ obtained by exchanging a vertex $y$ of the odd cycle
+$Y_j$ with its $T_j$-neighbour $t$ (Lemma~\ref{lem:stuck} and Lemma~\ref{lem:exchange} applied to
+them, including the exchanges at $y^\pm$ and at $z^\pm$ and the one used in the proof of (I2)).
+This gives:
+
+\begin{proposition}\label{prop:constructive}
+Let $G\ne K_4$ be connected of maximum degree at most three, and let $S$ be a stuck tight set
+with $\fr(G-S)\ge1$. Run the chain from an odd-cycle component $Z$ of $G-S$, and at each stage $j$
+test all exchanges $T_j-t+y$, $y\in Y_j$. Within at most $c$ stages, $c$ the number of components
+of $G-S$, one of these exchanges is an augmentable tight set of size $|S|$.
+\end{proposition}
+\begin{proof}
+If none is augmentable, every set to which the proof applies maximality is stuck, so
+Lemmas~\ref{lem:stuck}--\ref{lem:chain} and the conclusion hold verbatim with ``maximum size''
+replaced by ``stuck'', and (I2) bounds the length of the chain by $c$, while the conclusion
+extends it; a contradiction.
+\end{proof}
+
+Hence the following procedure constructs an independent odd cycle transversal of size $\fr(G)$:
+starting from $S=\emptyset$, add a vertex whenever $S$ is augmentable, and when $S$ is stuck with
+$\fr(G-S)\ge1$ move to an augmentable tight set of the same size by
+Proposition~\ref{prop:constructive}. Each of the $\fr(G)$ rounds uses $O(n^2)$ evaluations of
+$\fr$ on subgraphs of $G$, so on planar lattices the ground state itself, not only its energy, is
+obtained in polynomial time. The exchange step is necessary: pure greedy augmentation gets stuck
+with $\fr(G-S)\ge1$ on some graphs with 12 vertices (e.g.\ the planar graph with graph6 code
+\texttt{K?`D@`ae?iH\_} and $S=\{4,8,10\}$), although never on graphs with at most 11 vertices.
+
 \paragraph*{Energy.} For $0<D_3\le1$ Theorem~\ref{thm:sandwich} and $\ioct=\fr$ give
 $\OPT=D_3\fr$. For $D_3\ge1$, $\OPT\le\fr$ (no state 3) and
 $E=m_{12}+e(S)+D_3|S|\ge m_{12}+|S|\ge\fr$ by the re-insertion argument. For $D_3=0$ the
