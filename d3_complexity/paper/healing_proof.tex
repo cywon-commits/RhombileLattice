@@ -164,6 +164,33 @@ obtained in polynomial time. The exchange step is necessary: pure greedy augment
 with $\fr(G-S)\ge1$ on some graphs with 12 vertices (e.g.\ the planar graph with graph6 code
 \texttt{K?`D@`ae?iH\_} and $S=\{4,8,10\}$), although never on graphs with at most 11 vertices.
 
+\begin{corollary}\label{cor:one-ground-state}
+Given one optimal 2-colouring (Ising ground state) of $G$, an independent odd cycle transversal of
+size $\fr(G)$, and hence a ground state for every $D_3$, is obtained in polynomial time without
+any further maximum-cut computation.
+\end{corollary}
+\begin{proof}
+Maintain a tight set $S$ together with an optimal colouring $c$ of $G-S$, $k=\fr(G-S)$.
+\emph{Augmentation or certificate.} From a monochromatic edge $uv$ follow the walk in the proof of
+Lemma~\ref{lem:stuck}, recolouring as there, which keeps $c$ optimal. Either it meets a vertex $x$
+without neighbour in $S$; $x$ is an endpoint of a monochromatic edge of $c$, so $S+x$ is tight
+(Lemma~\ref{lem:aug}), and $c$ restricted to $G-S-x$ has at most $k-1$ monochromatic edges while
+$\fr(G-S-x)\ge k-1$ by (F1), so it is optimal. Or the walk closes and certifies that the component
+is an odd cycle all of whose vertices have a neighbour in $S$. If every frustrated component is
+certified, $S$ is stuck: every other vertex either has a neighbour in $S$ or lies in a bipartite
+component, whose removal does not lower $\fr(G-S)$.
+\emph{Exchange.} For $T'=T-t+y$ as in Lemma~\ref{lem:exchange}, colour the path $Y-y$ properly and
+give $t$ the colour opposite to the majority of its at most two neighbours in $G-T'$. This colouring
+of $G-T'$ has at most $(k-1)+1$ monochromatic edges and is optimal because $T'$ is tight.
+Thus the procedure after Proposition~\ref{prop:constructive} runs on colourings alone; each walk,
+exchange and certificate takes linear time, so the total time is polynomial.
+\end{proof}
+
+For planar lattices the Ising ground state is a minimum $T$-join; the healing step itself then
+takes about one second for $4\times10^3$ sites in our implementation, a small fraction of the
+matching time (Appendix~\ref{app:numerics}). Unlike the 2-SAT certificate of
+Sec.~\ref{sec:exact}, which may fail for a particular ground state, this procedure always succeeds.
+
 \paragraph*{Energy.} For $0<D_3\le1$ Theorem~\ref{thm:sandwich} and $\ioct=\fr$ give
 $\OPT=D_3\fr$. For $D_3\ge1$, $\OPT\le\fr$ (no state 3) and
 $E=m_{12}+e(S)+D_3|S|\ge m_{12}+|S|\ge\fr$ by the re-insertion argument. For $D_3=0$ the

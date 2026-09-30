@@ -143,6 +143,95 @@ class Healer:
             S.add(v)
 
 
+
+# ---------------------------------------------------------------- one ground state suffices
+# (strengthening; theorem_C_constructive.md Sec. 6; adapted from reviews/constructive_single_groundstate.py)
+def _mono(G, S, col):
+    return [(a, b) for a, b in G.edges() if a not in S and b not in S and col[a] == col[b]]
+
+
+def _walk(G, S, col, u, v):
+    """Proof of Lemma stuck as an algorithm. ('aug', x) or ('cycle', vertices). Keeps col optimal."""
+    free = lambda x: not any(w in S for w in G[x])
+    if free(u):
+        return "aug", u
+    prev, a, seen = u, v, [u]
+    while True:
+        if free(a):
+            return "aug", a
+        others = [b for b in G[a] if b not in S and b != prev]
+        if len(others) != 1 or col[others[0]] == col[a]:
+            raise RuntimeError("colouring not optimal")
+        b = others[0]
+        col[a] ^= 1; seen.append(a)                  # now a-b is the monochromatic edge
+        if b == u:
+            return "cycle", set(seen)
+        prev, a = a, b
+
+
+def _find_aug(G, S, col):
+    cert, cycles = set(), []
+    while True:
+        m = [e for e in _mono(G, S, col) if e[0] not in cert]
+        if not m:
+            return "stuck", cycles
+        kind, x = _walk(G, S, col, *m[0])
+        if kind == "aug":
+            return "aug", x
+        cert |= x; cycles.append(x)
+
+
+def _exchange(G, T, col, Y, y):
+    t = next(w for w in G[y] if w in T)
+    T2 = (T - {t}) | {y}; c2 = dict(col); del c2[y]
+    end = next(x for x in Y if x != y and sum(1 for z in G[x] if z in Y and z != y) == 1)
+    for i, x in enumerate(nx.dfs_preorder_nodes(G.subgraph(Y - {y}), end)):
+        c2[x] = i % 2                                # Y - y is a path: colour it properly
+    nb = [c2[w] for w in G[t] if w not in T2]
+    c2[t] = 0 if 2 * sum(nb) > len(nb) else 1        # t opposite to the majority of its <= 2 neighbours
+    return T2, c2, t
+
+
+def heal_from_ground_state(G, col):
+    """Independent odd cycle transversal of size fr(G) from ONE optimal 2-colouring col of G
+    (dict vertex -> 0/1). No further max-cut computation. Returns (S, stats)."""
+    S, col = set(), dict(col)
+    stats = dict(augment=0, stuck=0, advances=0, max_stage=0)
+    k0 = len(_mono(G, S, col))
+    while True:
+        kind, x = _find_aug(G, S, col)
+        if kind == "aug":
+            S.add(x); del col[x]; stats["augment"] += 1
+            continue
+        if not x:                                     # no frustrated component: done
+            break
+        stats["stuck"] += 1
+        H = G.copy(); H.remove_nodes_from(S); c = nx.number_connected_components(H)
+        T, tc, Y, w, found = set(S), dict(col), set(x[0]), None, None
+        for stage in range(c + 1):
+            nxt = None
+            for y in sorted(Y, key=str):
+                T2, c2, t = _exchange(G, T, tc, Y, y)
+                c3 = dict(c2)
+                kind2, v = _find_aug(G, T2, c3)
+                if kind2 == "aug":
+                    found = (T2, c3, v); break
+                if y != w and nxt is None:
+                    nxt = (T2, c2, t)
+            if found:
+                break
+            T, tc, w = nxt
+            Hc = G.copy(); Hc.remove_nodes_from(T); Y = set(nx.node_connected_component(Hc, w))
+            stats["advances"] += 1
+        if not found:
+            raise RuntimeError("chain exceeded c stages: contradicts the proof")
+        stats["max_stage"] = max(stats["max_stage"], stage)
+        S, col, v = found
+        S.add(v); del col[v]; stats["augment"] += 1
+    if len(S) != k0:
+        raise RuntimeError("size differs from fr")
+    return S, stats
+
 def check(G, S, fr0):
     assert all(not G.has_edge(a, b) for a, b in itertools.combinations(S, 2)), "not independent"
     H = G.copy(); H.remove_nodes_from(S)
@@ -182,6 +271,21 @@ if __name__ == "__main__":
             for key, val in h.stats.items():
                 tot[key] += val
         print(json.dumps(tot))
+    elif mode == "timing":
+        from lattices3 import truncated_penrose, random_cubic, defect_honeycomb
+        from ising_tjoin import ising_ground_state_tjoin
+        for fam, arg, fn in (("truncated_penrose", 8, lambda: truncated_penrose(8, seed=0)),
+                             ("truncated_penrose", 12, lambda: truncated_penrose(12, seed=0)),
+                             ("voronoi_foam", 1000, lambda: random_cubic(1000, seed=1)),
+                             ("voronoi_foam", 2000, lambda: random_cubic(2000, seed=1)),
+                             ("defect_honeycomb", 30, lambda: defect_honeycomb(30, 0.05, seed=2))):
+            n, E, pos, info = fn()
+            G = nx.Graph(); G.add_nodes_from(range(n)); G.add_edges_from(E)
+            t0 = time.time(); f, c = ising_ground_state_tjoin(n, E); t1 = time.time()
+            S, st = heal_from_ground_state(G, {i: int(c[i]) % 2 for i in range(n)}); t2 = time.time()
+            check(G, S, f)
+            print(json.dumps(dict(fam=fam, arg=arg, n=n, fr=f, t_groundstate=round(t1 - t0, 2),
+                                  t_heal=round(t2 - t1, 2), **st)), flush=True)
     elif mode == "lattices":
         from lattices3 import truncated_penrose, random_cubic, defect_honeycomb
         for name, fn in (("truncated_penrose", lambda: truncated_penrose(3.2, seed=0)),
