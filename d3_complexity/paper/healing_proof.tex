@@ -8,6 +8,14 @@ Let $G$ be a graph of maximum degree at most three with no connected component i
 $K_4$. Then $\ioct(G)=\fr(G)$. Consequently $\OPT(D_3)=\min(D_3,1)\,\fr(G)$ for every $D_3\ge0$.
 \end{theorem}
 
+\begin{remark}\label{rem:K4}
+In a graph of maximum degree three, a subgraph isomorphic to $K_4$ uses all three bonds of each
+of its four sites, so it is always an entire connected component. The hypothesis of
+Theorem~\ref{thm:healing-full} therefore holds automatically for every connected lattice with
+more than four sites; for such lattices the theorem has no exception. The exception is real only
+for an isolated $K_4$, where $\OPT(D_3)=\min(2,1+D_3)>\min(D_3,1)\,\fr$ for $0<D_3<1$.
+\end{remark}
+
 \paragraph*{Preliminaries.}
 (F1) For every $X\subseteq V$, $\varphi(X):=|X|+\fr(G-X)\ge\fr(G)$: re-insert the vertices of $X$
 one at a time, each on the side opposite to the majority of its already present neighbours;
