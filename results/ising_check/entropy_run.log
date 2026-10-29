@@ -1,0 +1,10 @@
+# Pure-Ising annealed model, D2=0, mu=0, L=12: entropy by thermodynamic integration
+# anchor s(beta=0) = 0.5 ln2 + lnM = 0.9284 (lnM/N_tri = 0.5818); e(beta=0) = 0.59984
+# lozenge-tiling (TAFM ground-state) entropy per triangle: 0.16153
+# T  beta  E/Ntri(Ising)  E/Ntri(D3=10 same T)  C/Ntri  n_mon/Ntri  S/Ntri(Ising)
+0.0632 15.8312 0.000000 0.000000 0.00000 0.00000 0.16133
+0.0623 16.0401 0.000000 0.000000 0.00000 0.00000 0.16133
+0.0615 16.2489 0.000000 0.000000 0.00000 0.00000 0.16133
+0.0608 16.4578 0.000000 0.000000 0.00000 0.00000 0.16133
+0.0600 16.6667 0.000000 0.000000 0.00000 0.00000 0.16133
+# S(T=0.060) = 0.1613   (D3=10 integration: 0.150; exact T=0 value 0.1615)
