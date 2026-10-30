@@ -8,7 +8,7 @@ multi-histogram reweighting of annealed_fss_analysis.py; errors come from a
 jackknife over NB time blocks (block b of every run is dropped together),
 which replaces the seed-group jackknife of the PT analysis.
 
-Usage: [DIR=results/tafm] [ORDER=spin] [MU=<mu>] [TC=<T_c>] [DISCARD=100000] [NB=8] [CKPT=1] \
+Usage: [DIR=results/tafm] [ORDER=spin] [ISING=1] [MU=<mu>] [TC=<T_c>] [DISCARD=100000] [NB=8] [CKPT=1] \
        python3 annealed_long_analysis.py <D2> L1 L2 ...
 CKPT=1 also reads unfinished checkpoints (monitoring only).
 """
@@ -28,6 +28,8 @@ DIR = os.environ.get("DIR", "results/long")   # results/tafm for the fixed-bond 
 # ORDER=spin: use the spin order parameter psi_s (minority-spin fraction per sublattice; stored as
 # sre/sim by annealed_long.py) instead of the hub order parameter psi (re/im)
 ORDER = os.environ.get("ORDER", "hub")
+# ISING=1: only the pure-Ising runs (*_ising.npz); otherwise they are left out
+ISING = os.environ.get("ISING") == "1"
 
 
 def tau_int(x):
@@ -50,7 +52,8 @@ def files(D2, L):
     if USE_CKPT:
         done = {f.replace("long_", "ckpt_") for f in fs}
         fs += [f for f in sorted(glob.glob(f"{DIR}/ckpt_{tag}*_s*.npz")) if f not in done]
-    return [f for f in fs if "_random" not in f and not f.endswith(".tmp.npz")]
+    return [f for f in fs if "_random" not in f and not f.endswith(".tmp.npz")
+            and ("_ising" in f) == ISING]
 
 
 def read(f):

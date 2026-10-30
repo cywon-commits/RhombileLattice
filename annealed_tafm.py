@@ -15,8 +15,9 @@ minority (state-1) sites on sublattice k, psi = sum_k m_k w^k. Records are in
 the annealed_long.py format (E, re, im, nm; nm = n_1) so the same WHAM
 analysis applies (annealed_long_analysis.py with PREFIX=results/tafm/long_).
 
-Usage: python3 annealed_tafm.py <L> <T> <n_total> <thin> <chunk> <seed> [D2]
-Writes results/tafm/long_L<L>_d2<D2>_T<T>_s<seed>.npz (checkpointed).
+Usage: python3 annealed_tafm.py <L> <T> <n_total> <thin> <chunk> <seed> [D2] [start]
+Writes results/tafm/long_L<L>_d2<D2>_T<T>_s<seed>[_<start>].npz (checkpointed).
+start = ordered (default; the exact ground state) or random (random spins).
 """
 import os
 import sys
@@ -93,7 +94,8 @@ def main():
     L, T, n_total, thin = int(sys.argv[1]), float(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4])
     chunk, seed = int(sys.argv[5]), int(sys.argv[6])
     D2 = float(sys.argv[7]) if len(sys.argv) > 7 else 1.0
-    tag = f"L{L}_d2{D2:g}_T{T:g}_s{seed}"
+    start = sys.argv[8] if len(sys.argv) > 8 else "ordered"
+    tag = f"L{L}_d2{D2:g}_T{T:g}_s{seed}" + ("" if start == "ordered" else f"_{start}")
     os.makedirs("results/tafm", exist_ok=True)
     ck, fn = f"results/tafm/ckpt_{tag}.npz", f"results/tafm/long_{tag}.npz"
     if os.path.exists(fn):
@@ -110,7 +112,10 @@ def main():
             a[:rec] = d[k][:rec]
         _seed(seed * 1000003 + it // chunk)
     else:
-        s = np.where(A["sub"] == 0, 1, 0).astype(np.int64)      # ordered start: minority on sublattice 0
+        if start == "ordered":                                    # minority on sublattice 0
+            s = np.where(A["sub"] == 0, 1, 0).astype(np.int64)
+        else:
+            s = np.random.default_rng(seed).integers(2, size=A["ns"]).astype(np.int64)
         it, rec = 0, 0
         _seed(seed)
     E = energy(s, nbr, D2)
@@ -125,7 +130,7 @@ def main():
         os.replace(tmp, ck)
     f32 = lambda a: a[:rec, None].astype(np.float32)
     np.savez_compressed(fn, betas=np.array([1.0 / T]), T=T, L=L, N_site=A["ns"], N_tri=A["nt"], D2=D2, mu=0.0,
-                        thin=thin, start="ordered", E=f32(oE), re=f32(ore), im=f32(oim), nm=f32(onm))
+                        thin=thin, start=start, E=f32(oE), re=f32(ore), im=f32(oim), nm=f32(onm))
     os.remove(ck)
     p2 = ore[:rec] ** 2 + oim[:rec] ** 2
     print(f"{tag}: {time.time() - t0:.0f}s <psi2>={p2[rec // 10:].mean():.4f} "
