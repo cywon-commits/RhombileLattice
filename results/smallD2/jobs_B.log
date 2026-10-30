@@ -175,3 +175,29 @@ L24_d20.3_T0.33_s2_ising: 300000/300000 sweeps, 172s, last-chunk <psi2>=0.0108 E
 wrote results/long/long_L24_d20.3_T0.33_s2_ising.npz
 L24_d20.3_T0.345_s2_ising: 300000/300000 sweeps, 166s, last-chunk <psi2>=0.0089 E/Ntri=0.09910
 wrote results/long/long_L24_d20.3_T0.345_s2_ising.npz
+L24_d20.3_T0.36_s2_ising: 300000/300000 sweeps, 163s, last-chunk <psi2>=0.0100 E/Ntri=0.10541
+wrote results/long/long_L24_d20.3_T0.36_s2_ising.npz
+L24_d20.3_T0.375_s2_ising: 300000/300000 sweeps, 142s, last-chunk <psi2>=0.0080 E/Ntri=0.11120
+wrote results/long/long_L24_d20.3_T0.375_s2_ising.npz
+L24_d20.3_T0.39_s2_ising: 300000/300000 sweeps, 137s, last-chunk <psi2>=0.0054 E/Ntri=0.11970
+wrote results/long/long_L24_d20.3_T0.39_s2_ising.npz
+L64_d20.3_T0.39_s1_ising: 300000/300000 sweeps, 1590s, last-chunk <psi2>=0.0015 E/Ntri=0.11970
+wrote results/long/long_L64_d20.3_T0.39_s1_ising.npz
+L24_d20.3_T0.405_s2_ising: 300000/300000 sweeps, 134s, last-chunk <psi2>=0.0069 E/Ntri=0.12567
+wrote results/long/long_L24_d20.3_T0.405_s2_ising.npz
+L24_d20.3_T0.42_s2_ising: 300000/300000 sweeps, 135s, last-chunk <psi2>=0.0041 E/Ntri=0.13898
+wrote results/long/long_L24_d20.3_T0.42_s2_ising.npz
+L32_d20.3_T0.33_s2_ising: 300000/300000 sweeps, 256s, last-chunk <psi2>=0.0099 E/Ntri=0.09561
+wrote results/long/long_L32_d20.3_T0.33_s2_ising.npz
+L32_d20.3_T0.345_s2_ising: 300000/300000 sweeps, 252s, last-chunk <psi2>=0.0078 E/Ntri=0.10509
+wrote results/long/long_L32_d20.3_T0.345_s2_ising.npz
+L64_d20.3_T0.405_s1_ising: 300000/300000 sweeps, 1426s, last-chunk <psi2>=0.0030 E/Ntri=0.12252
+wrote results/long/long_L64_d20.3_T0.405_s1_ising.npz
+L64_d20.3_T0.42_s1_ising: 300000/300000 sweeps, 1394s, last-chunk <psi2>=0.0008 E/Ntri=0.13380
+wrote results/long/long_L64_d20.3_T0.42_s1_ising.npz
+L32_d20.3_T0.36_s2_ising: 300000/300000 sweeps, 248s, last-chunk <psi2>=0.0051 E/Ntri=0.10459
+wrote results/long/long_L32_d20.3_T0.36_s2_ising.npz
+L32_d20.3_T0.375_s2_ising: 300000/300000 sweeps, 245s, last-chunk <psi2>=0.0065 E/Ntri=0.11318
+wrote results/long/long_L32_d20.3_T0.375_s2_ising.npz
+L32_d20.3_T0.39_s2_ising: 300000/300000 sweeps, 250s, last-chunk <psi2>=0.0047 E/Ntri=0.12243
+wrote results/long/long_L32_d20.3_T0.39_s2_ising.npz
