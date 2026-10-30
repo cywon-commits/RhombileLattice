@@ -173,3 +173,5 @@ L64_d20.3_T0.375_s1_ising: 300000/300000 sweeps, 1723s, last-chunk <psi2>=0.0014
 wrote results/long/long_L64_d20.3_T0.375_s1_ising.npz
 L24_d20.3_T0.33_s2_ising: 300000/300000 sweeps, 172s, last-chunk <psi2>=0.0108 E/Ntri=0.10298
 wrote results/long/long_L24_d20.3_T0.33_s2_ising.npz
+L24_d20.3_T0.345_s2_ising: 300000/300000 sweeps, 166s, last-chunk <psi2>=0.0089 E/Ntri=0.09910
+wrote results/long/long_L24_d20.3_T0.345_s2_ising.npz
