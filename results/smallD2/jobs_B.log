@@ -1,0 +1,4 @@
+L48_d20.5_T0.32_s1: 58s <psi2>=0.4385 E/Ntri=0.60880 -> results/tafm/long_L48_d20.5_T0.32_s1.npz
+L48_d20.5_T0.3_s1: 59s <psi2>=0.5435 E/Ntri=0.60644 -> results/tafm/long_L48_d20.5_T0.3_s1.npz
+L48_d20.5_T0.31_s1: 59s <psi2>=0.4801 E/Ntri=0.60765 -> results/tafm/long_L48_d20.5_T0.31_s1.npz
+L48_d20.5_T0.33_s1: 61s <psi2>=0.3468 E/Ntri=0.61016 -> results/tafm/long_L48_d20.5_T0.33_s1.npz
