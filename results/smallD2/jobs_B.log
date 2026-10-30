@@ -107,3 +107,69 @@ L48_d20.5_T0.455_s1_ising: 300000/300000 sweeps, 759s, last-chunk <psi2>=0.0041 
 wrote results/long/long_L48_d20.5_T0.455_s1_ising.npz
 L48_d20.5_T0.47_s1_ising: 300000/300000 sweeps, 768s, last-chunk <psi2>=0.0028 E/Ntri=0.20085
 wrote results/long/long_L48_d20.5_T0.47_s1_ising.npz
+L64_d20.5_T0.38_s1_ising: 300000/300000 sweeps, 1652s, last-chunk <psi2>=0.0368 E/Ntri=0.15538
+wrote results/long/long_L64_d20.5_T0.38_s1_ising.npz
+L64_d20.5_T0.395_s1_ising: 300000/300000 sweeps, 1649s, last-chunk <psi2>=0.0208 E/Ntri=0.16298
+wrote results/long/long_L64_d20.5_T0.395_s1_ising.npz
+L64_d20.5_T0.41_s1_ising: 300000/300000 sweeps, 1629s, last-chunk <psi2>=0.0062 E/Ntri=0.16956
+wrote results/long/long_L64_d20.5_T0.41_s1_ising.npz
+L64_d20.5_T0.425_s1_ising: 300000/300000 sweeps, 1645s, last-chunk <psi2>=0.0081 E/Ntri=0.17955
+wrote results/long/long_L64_d20.5_T0.425_s1_ising.npz
+L24_d20.5_T0.38_s2_ising: 300000/300000 sweeps, 163s, last-chunk <psi2>=0.0418 E/Ntri=0.15336
+wrote results/long/long_L24_d20.5_T0.38_s2_ising.npz
+L24_d20.5_T0.395_s2_ising: 300000/300000 sweeps, 163s, last-chunk <psi2>=0.0304 E/Ntri=0.16073
+wrote results/long/long_L24_d20.5_T0.395_s2_ising.npz
+L24_d20.5_T0.41_s2_ising: 300000/300000 sweeps, 162s, last-chunk <psi2>=0.0343 E/Ntri=0.16565
+wrote results/long/long_L24_d20.5_T0.41_s2_ising.npz
+L24_d20.5_T0.425_s2_ising: 300000/300000 sweeps, 160s, last-chunk <psi2>=0.0177 E/Ntri=0.17665
+wrote results/long/long_L24_d20.5_T0.425_s2_ising.npz
+L24_d20.5_T0.44_s2_ising: 300000/300000 sweeps, 168s, last-chunk <psi2>=0.0175 E/Ntri=0.17911
+wrote results/long/long_L24_d20.5_T0.44_s2_ising.npz
+L24_d20.5_T0.455_s2_ising: 300000/300000 sweeps, 162s, last-chunk <psi2>=0.0096 E/Ntri=0.18562
+wrote results/long/long_L24_d20.5_T0.455_s2_ising.npz
+L64_d20.5_T0.44_s1_ising: 300000/300000 sweeps, 1646s, last-chunk <psi2>=0.0050 E/Ntri=0.18628
+wrote results/long/long_L64_d20.5_T0.44_s1_ising.npz
+L24_d20.5_T0.47_s2_ising: 300000/300000 sweeps, 173s, last-chunk <psi2>=0.0121 E/Ntri=0.19647
+wrote results/long/long_L24_d20.5_T0.47_s2_ising.npz
+L32_d20.5_T0.38_s2_ising: 300000/300000 sweeps, 322s, last-chunk <psi2>=0.0405 E/Ntri=0.15609
+wrote results/long/long_L32_d20.5_T0.38_s2_ising.npz
+L32_d20.5_T0.395_s2_ising: 300000/300000 sweeps, 328s, last-chunk <psi2>=0.0297 E/Ntri=0.16089
+wrote results/long/long_L32_d20.5_T0.395_s2_ising.npz
+L64_d20.5_T0.47_s1_ising: 300000/300000 sweeps, 1650s, last-chunk <psi2>=0.0016 E/Ntri=0.20555
+wrote results/long/long_L64_d20.5_T0.47_s1_ising.npz
+L64_d20.5_T0.455_s1_ising: 300000/300000 sweeps, 1658s, last-chunk <psi2>=0.0016 E/Ntri=0.19326
+wrote results/long/long_L64_d20.5_T0.455_s1_ising.npz
+L32_d20.5_T0.41_s2_ising: 300000/300000 sweeps, 323s, last-chunk <psi2>=0.0244 E/Ntri=0.17318
+wrote results/long/long_L32_d20.5_T0.41_s2_ising.npz
+L32_d20.5_T0.425_s2_ising: 300000/300000 sweeps, 317s, last-chunk <psi2>=0.0156 E/Ntri=0.18433
+wrote results/long/long_L32_d20.5_T0.425_s2_ising.npz
+L32_d20.5_T0.44_s2_ising: 300000/300000 sweeps, 319s, last-chunk <psi2>=0.0119 E/Ntri=0.18595
+wrote results/long/long_L32_d20.5_T0.44_s2_ising.npz
+L32_d20.5_T0.455_s2_ising: 300000/300000 sweeps, 320s, last-chunk <psi2>=0.0094 E/Ntri=0.19108
+wrote results/long/long_L32_d20.5_T0.455_s2_ising.npz
+L32_d20.5_T0.47_s2_ising: 300000/300000 sweeps, 326s, last-chunk <psi2>=0.0039 E/Ntri=0.20361
+wrote results/long/long_L32_d20.5_T0.47_s2_ising.npz
+L48_d20.3_T0.33_s1_ising: 300000/300000 sweeps, 810s, last-chunk <psi2>=0.0100 E/Ntri=0.09697
+wrote results/long/long_L48_d20.3_T0.33_s1_ising.npz
+L48_d20.3_T0.36_s1_ising: 300000/300000 sweeps, 806s, last-chunk <psi2>=0.0076 E/Ntri=0.10771
+wrote results/long/long_L48_d20.3_T0.36_s1_ising.npz
+L48_d20.3_T0.345_s1_ising: 300000/300000 sweeps, 817s, last-chunk <psi2>=0.0081 E/Ntri=0.10394
+wrote results/long/long_L48_d20.3_T0.345_s1_ising.npz
+L48_d20.3_T0.375_s1_ising: 300000/300000 sweeps, 807s, last-chunk <psi2>=0.0017 E/Ntri=0.10940
+wrote results/long/long_L48_d20.3_T0.375_s1_ising.npz
+L48_d20.3_T0.39_s1_ising: 300000/300000 sweeps, 762s, last-chunk <psi2>=0.0049 E/Ntri=0.11724
+wrote results/long/long_L48_d20.3_T0.39_s1_ising.npz
+L48_d20.3_T0.405_s1_ising: 300000/300000 sweeps, 774s, last-chunk <psi2>=0.0044 E/Ntri=0.12185
+wrote results/long/long_L48_d20.3_T0.405_s1_ising.npz
+L48_d20.3_T0.42_s1_ising: 300000/300000 sweeps, 786s, last-chunk <psi2>=0.0039 E/Ntri=0.13304
+wrote results/long/long_L48_d20.3_T0.42_s1_ising.npz
+L64_d20.3_T0.33_s1_ising: 300000/300000 sweeps, 1690s, last-chunk <psi2>=0.0045 E/Ntri=0.09756
+wrote results/long/long_L64_d20.3_T0.33_s1_ising.npz
+L64_d20.3_T0.345_s1_ising: 300000/300000 sweeps, 1717s, last-chunk <psi2>=0.0016 E/Ntri=0.10140
+wrote results/long/long_L64_d20.3_T0.345_s1_ising.npz
+L64_d20.3_T0.36_s1_ising: 300000/300000 sweeps, 1735s, last-chunk <psi2>=0.0024 E/Ntri=0.10949
+wrote results/long/long_L64_d20.3_T0.36_s1_ising.npz
+L64_d20.3_T0.375_s1_ising: 300000/300000 sweeps, 1723s, last-chunk <psi2>=0.0014 E/Ntri=0.11594
+wrote results/long/long_L64_d20.3_T0.375_s1_ising.npz
+L24_d20.3_T0.33_s2_ising: 300000/300000 sweeps, 172s, last-chunk <psi2>=0.0108 E/Ntri=0.10298
+wrote results/long/long_L24_d20.3_T0.33_s2_ising.npz
