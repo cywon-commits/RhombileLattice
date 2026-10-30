@@ -81,7 +81,7 @@ def n3_density(mu, T):
 
 
 def main():
-    rows = []
+    rows, skipped = [], []
     for fi in sorted(glob.glob("results/long/long_L*_d21*_s1_ising.npz")):
         fr = fi.replace("_ising.npz", ".npz")
         if not os.path.exists(fr):
@@ -90,6 +90,9 @@ def main():
         L = int(name.split("_")[1][1:])
         mu = float(name.split("_mu")[1].split("_")[0]) if "_mu" in name else 0.0
         T = float(name.split("_T")[1].split("_")[0])
+        if not all("sre" in np.load(f).files for f in (fi, fr)):
+            skipped.append(name)                     # reference predates the spin order parameter
+            continue
         rows.append((mu, T, L, measure(fi), measure(fr)))
     rows.sort()
     lines = []
@@ -130,6 +133,8 @@ def main():
     w(f"# {n_pass}/{n_tot} (mu, T, L) points pass (U4, psi_s^2 and E-D3*n3 all within 2 x {SEED_FACTOR:g} x combined error)")
     w("# z = (Ising - D3=10) / combined jackknife error (not inflated); sweeps per run as in the files")
     w("")
+    if skipped:
+        w("# skipped (reference run has no spin order parameter): " + ", ".join(skipped))
     w("# third-state density per site of the D3=10 model (short L=32 runs, seed 77):")
     for mu, T in sorted({(r[0], r[1]) for r in rows} | {(10.0, 1.04), (10.0, 1.08)}):
         n3 = n3_density(mu, T)
