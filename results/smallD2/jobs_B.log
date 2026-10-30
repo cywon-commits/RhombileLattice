@@ -105,3 +105,5 @@ L48_d20.5_T0.44_s1_ising: 300000/300000 sweeps, 762s, last-chunk <psi2>=0.0093 E
 wrote results/long/long_L48_d20.5_T0.44_s1_ising.npz
 L48_d20.5_T0.455_s1_ising: 300000/300000 sweeps, 759s, last-chunk <psi2>=0.0041 E/Ntri=0.19148
 wrote results/long/long_L48_d20.5_T0.455_s1_ising.npz
+L48_d20.5_T0.47_s1_ising: 300000/300000 sweeps, 768s, last-chunk <psi2>=0.0028 E/Ntri=0.20085
+wrote results/long/long_L48_d20.5_T0.47_s1_ising.npz
