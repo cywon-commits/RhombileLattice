@@ -1,0 +1,37 @@
+# per-run diagnostics (discard 20000 sweeps): T, kept sweeps, tau(psi2), tau(E) [sweeps], n_tau, <psi2>, drift(psi2) in sigma, <E>/N_tri
+  L= 24 T=0.2200 kept=   80000 tau_psi=    306 tau_E=    28 n_tau= 261.4 <psi2>=0.2901 drift= -0.4 E=0.54631
+  L= 24 T=0.2400 kept=   80000 tau_psi=    171 tau_E=    25 n_tau= 468.1 <psi2>=0.2557 drift= -0.2 E=0.54685
+  L= 24 T=0.2600 kept=   80000 tau_psi=    180 tau_E=    29 n_tau= 444.2 <psi2>=0.2400 drift= -1.5 E=0.54741
+  L= 24 T=0.2800 kept=   80000 tau_psi=    377 tau_E=    78 n_tau= 211.9 <psi2>=0.1987 drift= -1.5 E=0.54822
+  L= 24 T=0.2000 kept=   80000 tau_psi=    193 tau_E=    10 n_tau= 413.5 <psi2>=0.3149 drift= -0.0 E=0.54578
+  L= 24 T=0.3200 kept=   80000 tau_psi=    258 tau_E=    36 n_tau= 309.7 <psi2>=0.1403 drift= +1.3 E=0.55018
+  L= 24 T=0.3400 kept=   80000 tau_psi=    144 tau_E=    19 n_tau= 556.8 <psi2>=0.1102 drift= -0.2 E=0.55142
+  L= 24 T=0.3000 kept=   80000 tau_psi=    208 tau_E=    48 n_tau= 384.6 <psi2>=0.1746 drift= -0.3 E=0.54909
+  L= 32 T=0.2200 kept=   80000 tau_psi=    311 tau_E=    16 n_tau= 257.5 <psi2>=0.2588 drift= +0.6 E=0.54631
+  L= 32 T=0.2400 kept=   80000 tau_psi=    366 tau_E=    31 n_tau= 218.5 <psi2>=0.2112 drift= +0.7 E=0.54688
+  L= 32 T=0.2600 kept=   80000 tau_psi=    672 tau_E=    59 n_tau= 119.1 <psi2>=0.1744 drift= -0.1 E=0.54754
+  L= 32 T=0.2800 kept=   80000 tau_psi=    301 tau_E=    68 n_tau= 266.2 <psi2>=0.1454 drift= -0.3 E=0.54832
+  L= 32 T=0.2000 kept=   80000 tau_psi=    434 tau_E=    12 n_tau= 184.3 <psi2>=0.2857 drift= -0.2 E=0.54581
+  L= 32 T=0.3200 kept=   80000 tau_psi=    303 tau_E=    31 n_tau= 264.1 <psi2>=0.0869 drift= +0.9 E=0.55027
+  L= 32 T=0.3400 kept=   80000 tau_psi=    158 tau_E=    24 n_tau= 506.4 <psi2>=0.0676 drift= -0.5 E=0.55154
+  L= 32 T=0.3000 kept=   80000 tau_psi=    372 tau_E=    43 n_tau= 215.1 <psi2>=0.1187 drift= -0.8 E=0.54918
+D2=0.2  sizes [24, 32]  seeds per size 8
+  Binder crossing L=24/32: T = 0.2096 +- 0.0072
+  T_c (largest pair) = 0.2096 +- 0.0072
+  1/nu (max dU)          = 0.512 +- 0.850
+  1/nu (dU at T_c)       = 1.946 +- 0.907
+  gamma/nu (max chi')    = 1.893 +- 0.286
+  gamma/nu (chi at T_c)  = 1.598 +- 0.053
+  2beta/nu               = 0.402 +- 0.053
+  alpha/nu               = -0.021 +- 0.089
+  candidates (1/nu, gamma/nu, 2beta/nu, alpha/nu):
+    2D 3-state Potts   1.200 1.733 0.267 0.400
+    2D Ising           1.000 1.750 0.250 0.000
+    first order        2.000 2.000 0.000 2.000
+  per L: max dU/dbeta, dU/dbeta(T_c), max chi', chi(T_c), <|psi|^2>(T_c), C_max, min U4
+    L= 24     0.254     0.011     84.620    2483.34  0.30119  0.0653  +0.273
+    L= 32     0.294     0.019    145.878    3932.66  0.26830  0.0649  +0.194
+  energy distribution at the C peak: T_peak, #maxima, barrier ln(Pmax/Pmin_between)
+    L= 24  T=0.3400  maxima=1  barrier=0.000
+    L= 32  T=0.3400  maxima=1  barrier=0.000
+saved results/smallD2/fss_tafm_d20.2.png

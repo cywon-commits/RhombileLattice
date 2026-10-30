@@ -113,3 +113,155 @@ L24_d20.1_T0.32_s1_ising: 100000/100000 sweeps, 45s, last-chunk <psi2>=0.0015 E/
 wrote results/long/long_L24_d20.1_T0.32_s1_ising.npz
 L24_d20.1_T0.35_s1_ising: 100000/100000 sweeps, 49s, last-chunk <psi2>=0.0013 E/Ntri=0.05677
 wrote results/long/long_L24_d20.1_T0.35_s1_ising.npz
+L24_d20.1_T0.38_s1_ising: 100000/100000 sweeps, 49s, last-chunk <psi2>=0.0012 E/Ntri=0.07517
+wrote results/long/long_L24_d20.1_T0.38_s1_ising.npz
+L24_d20.1_T0.41_s1_ising: 100000/100000 sweeps, 49s, last-chunk <psi2>=0.0011 E/Ntri=0.08707
+wrote results/long/long_L24_d20.1_T0.41_s1_ising.npz
+L24_d20.1_T0.44_s1_ising: 100000/100000 sweeps, 46s, last-chunk <psi2>=0.0008 E/Ntri=0.09659
+wrote results/long/long_L24_d20.1_T0.44_s1_ising.npz
+L32_d20.5_T0.3_s1: 13s <psi2>=0.5482 E/Ntri=0.60641 -> results/tafm/long_L32_d20.5_T0.3_s1.npz
+L32_d20.5_T0.315_s1: 11s <psi2>=0.4900 E/Ntri=0.60809 -> results/tafm/long_L32_d20.5_T0.315_s1.npz
+L32_d20.5_T0.33_s1: 10s <psi2>=0.3671 E/Ntri=0.61021 -> results/tafm/long_L32_d20.5_T0.33_s1.npz
+L32_d20.5_T0.345_s1: 11s <psi2>=0.2772 E/Ntri=0.61225 -> results/tafm/long_L32_d20.5_T0.345_s1.npz
+L32_d20.5_T0.36_s1: 12s <psi2>=0.2009 E/Ntri=0.61430 -> results/tafm/long_L32_d20.5_T0.36_s1.npz
+L32_d20.5_T0.375_s1: 12s <psi2>=0.1336 E/Ntri=0.61652 -> results/tafm/long_L32_d20.5_T0.375_s1.npz
+L32_d20.5_T0.39_s1: 11s <psi2>=0.0782 E/Ntri=0.61861 -> results/tafm/long_L32_d20.5_T0.39_s1.npz
+L32_d20.5_T0.405_s1: 11s <psi2>=0.0636 E/Ntri=0.62053 -> results/tafm/long_L32_d20.5_T0.405_s1.npz
+L32_d20.5_T0.42_s1: 12s <psi2>=0.0487 E/Ntri=0.62250 -> results/tafm/long_L32_d20.5_T0.42_s1.npz
+L32_d20.5_T0.435_s1: 12s <psi2>=0.0357 E/Ntri=0.62442 -> results/tafm/long_L32_d20.5_T0.435_s1.npz
+L32_d20.5_T0.38_s1_ising: 100000/100000 sweeps, 94s, last-chunk <psi2>=0.0466 E/Ntri=0.15771
+wrote results/long/long_L32_d20.5_T0.38_s1_ising.npz
+L32_d20.5_T0.395_s1_ising: 100000/100000 sweeps, 90s, last-chunk <psi2>=0.0228 E/Ntri=0.15837
+wrote results/long/long_L32_d20.5_T0.395_s1_ising.npz
+L32_d20.5_T0.41_s1_ising: 100000/100000 sweeps, 90s, last-chunk <psi2>=0.0279 E/Ntri=0.17106
+wrote results/long/long_L32_d20.5_T0.41_s1_ising.npz
+L32_d20.5_T0.425_s1_ising: 100000/100000 sweeps, 92s, last-chunk <psi2>=0.0270 E/Ntri=0.18058
+wrote results/long/long_L32_d20.5_T0.425_s1_ising.npz
+L32_d20.5_T0.44_s1_ising: 100000/100000 sweeps, 89s, last-chunk <psi2>=0.0160 E/Ntri=0.18652
+wrote results/long/long_L32_d20.5_T0.44_s1_ising.npz
+L32_d20.5_T0.455_s1_ising: 100000/100000 sweeps, 91s, last-chunk <psi2>=0.0081 E/Ntri=0.19930
+wrote results/long/long_L32_d20.5_T0.455_s1_ising.npz
+L32_d20.5_T0.47_s1_ising: 100000/100000 sweeps, 88s, last-chunk <psi2>=0.0057 E/Ntri=0.20679
+wrote results/long/long_L32_d20.5_T0.47_s1_ising.npz
+L32_d20.5_T0.485_s1_ising: 100000/100000 sweeps, 91s, last-chunk <psi2>=0.0032 E/Ntri=0.21631
+wrote results/long/long_L32_d20.5_T0.485_s1_ising.npz
+L32_d20.5_T0.5_s1_ising: 100000/100000 sweeps, 89s, last-chunk <psi2>=0.0018 E/Ntri=0.21493
+wrote results/long/long_L32_d20.5_T0.5_s1_ising.npz
+L32_d20.5_T0.515_s1_ising: 100000/100000 sweeps, 89s, last-chunk <psi2>=0.0029 E/Ntri=0.22656
+wrote results/long/long_L32_d20.5_T0.515_s1_ising.npz
+L32_d20.5_T0.53_s1_ising: 100000/100000 sweeps, 91s, last-chunk <psi2>=0.0017 E/Ntri=0.23250
+wrote results/long/long_L32_d20.5_T0.53_s1_ising.npz
+L32_d20.3_T0.24_s1: 12s <psi2>=0.3462 E/Ntri=0.56703 -> results/tafm/long_L32_d20.3_T0.24_s1.npz
+L32_d20.3_T0.255_s1: 11s <psi2>=0.3399 E/Ntri=0.56775 -> results/tafm/long_L32_d20.3_T0.255_s1.npz
+L32_d20.3_T0.27_s1: 12s <psi2>=0.2526 E/Ntri=0.56864 -> results/tafm/long_L32_d20.3_T0.27_s1.npz
+L32_d20.3_T0.285_s1: 13s <psi2>=0.2170 E/Ntri=0.56948 -> results/tafm/long_L32_d20.3_T0.285_s1.npz
+L32_d20.3_T0.3_s1: 12s <psi2>=0.1560 E/Ntri=0.57054 -> results/tafm/long_L32_d20.3_T0.3_s1.npz
+L32_d20.3_T0.315_s1: 11s <psi2>=0.1411 E/Ntri=0.57144 -> results/tafm/long_L32_d20.3_T0.315_s1.npz
+L32_d20.3_T0.33_s1: 11s <psi2>=0.1081 E/Ntri=0.57256 -> results/tafm/long_L32_d20.3_T0.33_s1.npz
+L32_d20.3_T0.345_s1: 10s <psi2>=0.0807 E/Ntri=0.57372 -> results/tafm/long_L32_d20.3_T0.345_s1.npz
+L32_d20.3_T0.36_s1: 11s <psi2>=0.0685 E/Ntri=0.57494 -> results/tafm/long_L32_d20.3_T0.36_s1.npz
+L32_d20.3_T0.375_s1: 12s <psi2>=0.0520 E/Ntri=0.57622 -> results/tafm/long_L32_d20.3_T0.375_s1.npz
+L32_d20.3_T0.34_s1_ising: 100000/100000 sweeps, 85s, last-chunk <psi2>=0.0080 E/Ntri=0.09723
+wrote results/long/long_L32_d20.3_T0.34_s1_ising.npz
+L32_d20.3_T0.355_s1_ising: 100000/100000 sweeps, 93s, last-chunk <psi2>=0.0086 E/Ntri=0.10374
+wrote results/long/long_L32_d20.3_T0.355_s1_ising.npz
+L32_d20.3_T0.37_s1_ising: 100000/100000 sweeps, 93s, last-chunk <psi2>=0.0073 E/Ntri=0.11164
+wrote results/long/long_L32_d20.3_T0.37_s1_ising.npz
+L32_d20.3_T0.385_s1_ising: 100000/100000 sweeps, 92s, last-chunk <psi2>=0.0044 E/Ntri=0.11890
+wrote results/long/long_L32_d20.3_T0.385_s1_ising.npz
+L32_d20.3_T0.4_s1_ising: 100000/100000 sweeps, 86s, last-chunk <psi2>=0.0036 E/Ntri=0.12318
+wrote results/long/long_L32_d20.3_T0.4_s1_ising.npz
+L32_d20.3_T0.415_s1_ising: 100000/100000 sweeps, 90s, last-chunk <psi2>=0.0023 E/Ntri=0.13485
+wrote results/long/long_L32_d20.3_T0.415_s1_ising.npz
+L32_d20.3_T0.43_s1_ising: 100000/100000 sweeps, 96s, last-chunk <psi2>=0.0038 E/Ntri=0.14059
+wrote results/long/long_L32_d20.3_T0.43_s1_ising.npz
+L32_d20.3_T0.445_s1_ising: 100000/100000 sweeps, 97s, last-chunk <psi2>=0.0017 E/Ntri=0.14805
+wrote results/long/long_L32_d20.3_T0.445_s1_ising.npz
+L32_d20.3_T0.46_s1_ising: 100000/100000 sweeps, 94s, last-chunk <psi2>=0.0019 E/Ntri=0.16090
+wrote results/long/long_L32_d20.3_T0.46_s1_ising.npz
+L32_d20.3_T0.475_s1_ising: 100000/100000 sweeps, 91s, last-chunk <psi2>=0.0013 E/Ntri=0.16483
+wrote results/long/long_L32_d20.3_T0.475_s1_ising.npz
+L32_d20.3_T0.49_s1_ising: 100000/100000 sweeps, 88s, last-chunk <psi2>=0.0008 E/Ntri=0.17025
+wrote results/long/long_L32_d20.3_T0.49_s1_ising.npz
+L32_d20.2_T0.2_s1: 12s <psi2>=0.2852 E/Ntri=0.54581 -> results/tafm/long_L32_d20.2_T0.2_s1.npz
+L32_d20.2_T0.22_s1: 10s <psi2>=0.2558 E/Ntri=0.54632 -> results/tafm/long_L32_d20.2_T0.22_s1.npz
+L32_d20.2_T0.24_s1: 11s <psi2>=0.2172 E/Ntri=0.54687 -> results/tafm/long_L32_d20.2_T0.24_s1.npz
+L32_d20.2_T0.26_s1: 12s <psi2>=0.1776 E/Ntri=0.54752 -> results/tafm/long_L32_d20.2_T0.26_s1.npz
+L32_d20.2_T0.28_s1: 12s <psi2>=0.1403 E/Ntri=0.54833 -> results/tafm/long_L32_d20.2_T0.28_s1.npz
+L32_d20.2_T0.3_s1: 12s <psi2>=0.1209 E/Ntri=0.54916 -> results/tafm/long_L32_d20.2_T0.3_s1.npz
+L32_d20.2_T0.32_s1: 12s <psi2>=0.0909 E/Ntri=0.55026 -> results/tafm/long_L32_d20.2_T0.32_s1.npz
+L32_d20.2_T0.34_s1: 11s <psi2>=0.0672 E/Ntri=0.55153 -> results/tafm/long_L32_d20.2_T0.34_s1.npz
+L32_d20.2_T0.3_s1_ising: 100000/100000 sweeps, 89s, last-chunk <psi2>=0.0052 E/Ntri=0.06501
+wrote results/long/long_L32_d20.2_T0.3_s1_ising.npz
+L32_d20.2_T0.32_s1_ising: 100000/100000 sweeps, 92s, last-chunk <psi2>=0.0040 E/Ntri=0.07181
+wrote results/long/long_L32_d20.2_T0.32_s1_ising.npz
+L32_d20.2_T0.34_s1_ising: 100000/100000 sweeps, 91s, last-chunk <psi2>=0.0030 E/Ntri=0.07874
+wrote results/long/long_L32_d20.2_T0.34_s1_ising.npz
+L32_d20.2_T0.36_s1_ising: 100000/100000 sweeps, 88s, last-chunk <psi2>=0.0027 E/Ntri=0.08685
+wrote results/long/long_L32_d20.2_T0.36_s1_ising.npz
+L32_d20.2_T0.38_s1_ising: 100000/100000 sweeps, 86s, last-chunk <psi2>=0.0022 E/Ntri=0.09382
+wrote results/long/long_L32_d20.2_T0.38_s1_ising.npz
+L32_d20.2_T0.4_s1_ising: 100000/100000 sweeps, 93s, last-chunk <psi2>=0.0017 E/Ntri=0.10417
+wrote results/long/long_L32_d20.2_T0.4_s1_ising.npz
+L32_d20.2_T0.42_s1_ising: 100000/100000 sweeps, 90s, last-chunk <psi2>=0.0010 E/Ntri=0.10703
+wrote results/long/long_L32_d20.2_T0.42_s1_ising.npz
+L32_d20.2_T0.44_s1_ising: 100000/100000 sweeps, 94s, last-chunk <psi2>=0.0012 E/Ntri=0.11494
+wrote results/long/long_L32_d20.2_T0.44_s1_ising.npz
+L32_d20.2_T0.46_s1_ising: 100000/100000 sweeps, 94s, last-chunk <psi2>=0.0009 E/Ntri=0.12194
+wrote results/long/long_L32_d20.2_T0.46_s1_ising.npz
+L32_d20.2_T0.48_s1_ising: 100000/100000 sweeps, 94s, last-chunk <psi2>=0.0006 E/Ntri=0.14583
+wrote results/long/long_L32_d20.2_T0.48_s1_ising.npz
+L32_d20.2_T0.5_s1_ising: 100000/100000 sweeps, 91s, last-chunk <psi2>=0.0006 E/Ntri=0.15641
+wrote results/long/long_L32_d20.2_T0.5_s1_ising.npz
+L32_d20.1_T0.14_s1: 12s <psi2>=0.2319 E/Ntri=0.52352 -> results/tafm/long_L32_d20.1_T0.14_s1.npz
+L32_d20.1_T0.16_s1: 12s <psi2>=0.2193 E/Ntri=0.52371 -> results/tafm/long_L32_d20.1_T0.16_s1.npz
+L32_d20.1_T0.18_s1: 11s <psi2>=0.2226 E/Ntri=0.52388 -> results/tafm/long_L32_d20.1_T0.18_s1.npz
+L32_d20.1_T0.2_s1: 12s <psi2>=0.1964 E/Ntri=0.52406 -> results/tafm/long_L32_d20.1_T0.2_s1.npz
+L32_d20.1_T0.22_s1: 13s <psi2>=0.1882 E/Ntri=0.52427 -> results/tafm/long_L32_d20.1_T0.22_s1.npz
+L32_d20.1_T0.24_s1: 12s <psi2>=0.1758 E/Ntri=0.52455 -> results/tafm/long_L32_d20.1_T0.24_s1.npz
+L32_d20.1_T0.26_s1: 12s <psi2>=0.1381 E/Ntri=0.52505 -> results/tafm/long_L32_d20.1_T0.26_s1.npz
+L32_d20.1_T0.28_s1: 12s <psi2>=0.1196 E/Ntri=0.52562 -> results/tafm/long_L32_d20.1_T0.28_s1.npz
+L32_d20.1_T0.3_s1: 12s <psi2>=0.0917 E/Ntri=0.52637 -> results/tafm/long_L32_d20.1_T0.3_s1.npz
+L32_d20.1_T0.2_s1_ising: 100000/100000 sweeps, 90s, last-chunk <psi2>=0.0022 E/Ntri=0.02708
+wrote results/long/long_L32_d20.1_T0.2_s1_ising.npz
+L32_d20.1_T0.23_s1_ising: 100000/100000 sweeps, 99s, last-chunk <psi2>=0.0015 E/Ntri=0.02974
+wrote results/long/long_L32_d20.1_T0.23_s1_ising.npz
+L32_d20.1_T0.26_s1_ising: 100000/100000 sweeps, 95s, last-chunk <psi2>=0.0014 E/Ntri=0.03534
+wrote results/long/long_L32_d20.1_T0.26_s1_ising.npz
+L32_d20.1_T0.29_s1_ising: 100000/100000 sweeps, 96s, last-chunk <psi2>=0.0011 E/Ntri=0.04266
+wrote results/long/long_L32_d20.1_T0.29_s1_ising.npz
+L32_d20.1_T0.32_s1_ising: 100000/100000 sweeps, 88s, last-chunk <psi2>=0.0011 E/Ntri=0.05286
+wrote results/long/long_L32_d20.1_T0.32_s1_ising.npz
+L32_d20.1_T0.35_s1_ising: 100000/100000 sweeps, 92s, last-chunk <psi2>=0.0009 E/Ntri=0.06479
+wrote results/long/long_L32_d20.1_T0.35_s1_ising.npz
+L32_d20.1_T0.38_s1_ising: 100000/100000 sweeps, 91s, last-chunk <psi2>=0.0007 E/Ntri=0.06756
+wrote results/long/long_L32_d20.1_T0.38_s1_ising.npz
+L32_d20.1_T0.41_s1_ising: 100000/100000 sweeps, 92s, last-chunk <psi2>=0.0008 E/Ntri=0.08141
+wrote results/long/long_L32_d20.1_T0.41_s1_ising.npz
+L32_d20.1_T0.44_s1_ising: 100000/100000 sweeps, 94s, last-chunk <psi2>=0.0007 E/Ntri=0.09777
+wrote results/long/long_L32_d20.1_T0.44_s1_ising.npz
+L32_d20.5_T0.3_s1_random: 12s <psi2>=0.5297 E/Ntri=0.60653 -> results/tafm/long_L32_d20.5_T0.3_s1_random.npz
+L32_d20.5_T0.375_s1_random: 12s <psi2>=0.1021 E/Ntri=0.61667 -> results/tafm/long_L32_d20.5_T0.375_s1_random.npz
+L32_d20.5_T0.38_s1_random_ising: 100000/100000 sweeps, 94s, last-chunk <psi2>=0.0386 E/Ntri=0.15422
+wrote results/long/long_L32_d20.5_T0.38_s1_random_ising.npz
+L32_d20.5_T0.455_s1_random_ising: 100000/100000 sweeps, 93s, last-chunk <psi2>=0.0095 E/Ntri=0.19686
+wrote results/long/long_L32_d20.5_T0.455_s1_random_ising.npz
+L32_d20.3_T0.24_s1_random: 11s <psi2>=0.3695 E/Ntri=0.56698 -> results/tafm/long_L32_d20.3_T0.24_s1_random.npz
+L32_d20.3_T0.315_s1_random: 12s <psi2>=0.1448 E/Ntri=0.57145 -> results/tafm/long_L32_d20.3_T0.315_s1_random.npz
+L32_d20.3_T0.34_s1_random_ising: 100000/100000 sweeps, 92s, last-chunk <psi2>=0.0085 E/Ntri=0.10129
+wrote results/long/long_L32_d20.3_T0.34_s1_random_ising.npz
+L32_d20.3_T0.415_s1_random_ising: 100000/100000 sweeps, 97s, last-chunk <psi2>=0.0031 E/Ntri=0.12926
+wrote results/long/long_L32_d20.3_T0.415_s1_random_ising.npz
+L32_d20.2_T0.2_s1_random: 12s <psi2>=0.2819 E/Ntri=0.54581 -> results/tafm/long_L32_d20.2_T0.2_s1_random.npz
+L32_d20.2_T0.28_s1_random: 12s <psi2>=0.1446 E/Ntri=0.54832 -> results/tafm/long_L32_d20.2_T0.28_s1_random.npz
+L32_d20.2_T0.3_s1_random_ising: 100000/100000 sweeps, 93s, last-chunk <psi2>=0.0039 E/Ntri=0.06510
+wrote results/long/long_L32_d20.2_T0.3_s1_random_ising.npz
+L32_d20.2_T0.4_s1_random_ising: 100000/100000 sweeps, 90s, last-chunk <psi2>=0.0018 E/Ntri=0.10137
+wrote results/long/long_L32_d20.2_T0.4_s1_random_ising.npz
+L32_d20.1_T0.14_s1_random: 12s <psi2>=0.2388 E/Ntri=0.52351 -> results/tafm/long_L32_d20.1_T0.14_s1_random.npz
+L32_d20.1_T0.22_s1_random: 13s <psi2>=0.1908 E/Ntri=0.52425 -> results/tafm/long_L32_d20.1_T0.22_s1_random.npz
+L32_d20.1_T0.2_s1_random_ising: 100000/100000 sweeps, 97s, last-chunk <psi2>=0.0017 E/Ntri=0.02679
+wrote results/long/long_L32_d20.1_T0.2_s1_random_ising.npz
+L32_d20.1_T0.32_s1_random_ising: 100000/100000 sweeps, 90s, last-chunk <psi2>=0.0012 E/Ntri=0.04787
+wrote results/long/long_L32_d20.1_T0.32_s1_random_ising.npz
+queue results/smallD2/jobs_A.txt finished

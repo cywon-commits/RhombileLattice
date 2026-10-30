@@ -1,0 +1,41 @@
+# per-run diagnostics (discard 20000 sweeps): T, kept sweeps, tau(psi2), tau(E) [sweeps], n_tau, <psi2>, drift(psi2) in sigma, <E>/N_tri
+  L= 24 T=0.3150 kept=   80000 tau_psi=    330 tau_E=    38 n_tau= 242.1 <psi2>=0.4966 drift= +0.1 E=0.60815
+  L= 24 T=0.3300 kept=   80000 tau_psi=    314 tau_E=    60 n_tau= 255.2 <psi2>=0.4367 drift= -0.6 E=0.60983
+  L= 24 T=0.3450 kept=   80000 tau_psi=    495 tau_E=    93 n_tau= 161.5 <psi2>=0.3619 drift= +2.1 E=0.61171
+  L= 24 T=0.3600 kept=   80000 tau_psi=    480 tau_E=    99 n_tau= 166.6 <psi2>=0.2700 drift= -1.3 E=0.61401
+  L= 24 T=0.3750 kept=   80000 tau_psi=    463 tau_E=    84 n_tau= 172.9 <psi2>=0.2009 drift= +0.3 E=0.61612
+  L= 24 T=0.3900 kept=   80000 tau_psi=    238 tau_E=    42 n_tau= 336.2 <psi2>=0.1199 drift= -0.1 E=0.61853
+  L= 24 T=0.3000 kept=   80000 tau_psi=    312 tau_E=    37 n_tau= 256.2 <psi2>=0.5435 drift= -1.1 E=0.60646
+  L= 24 T=0.4050 kept=   80000 tau_psi=    243 tau_E=    33 n_tau= 329.6 <psi2>=0.1102 drift= -0.3 E=0.62038
+  L= 24 T=0.4200 kept=   80000 tau_psi=    151 tau_E=    20 n_tau= 529.6 <psi2>=0.0838 drift= +1.8 E=0.62241
+  L= 24 T=0.4350 kept=   80000 tau_psi=    153 tau_E=    18 n_tau= 521.9 <psi2>=0.0672 drift= -0.2 E=0.62438
+  L= 32 T=0.3150 kept=   80000 tau_psi=    313 tau_E=    31 n_tau= 255.9 <psi2>=0.4929 drift= -0.6 E=0.60806
+  L= 32 T=0.3300 kept=   80000 tau_psi=   1808 tau_E=   265 n_tau=  44.2 <psi2>=0.3616 drift= +0.6 E=0.61024
+  L= 32 T=0.3450 kept=   80000 tau_psi=   1373 tau_E=   319 n_tau=  58.2 <psi2>=0.2786 drift= +1.4 E=0.61225
+  L= 32 T=0.3600 kept=   80000 tau_psi=   2681 tau_E=   152 n_tau=  29.8 <psi2>=0.1995 drift= -1.2 E=0.61430
+  L= 32 T=0.3750 kept=   80000 tau_psi=    546 tau_E=    91 n_tau= 146.6 <psi2>=0.1379 drift= -1.6 E=0.61650
+  L= 32 T=0.3900 kept=   80000 tau_psi=    345 tau_E=    39 n_tau= 231.7 <psi2>=0.0802 drift= -0.5 E=0.61857
+  L= 32 T=0.3000 kept=   80000 tau_psi=    301 tau_E=    35 n_tau= 265.9 <psi2>=0.5489 drift= -0.7 E=0.60640
+  L= 32 T=0.4050 kept=   80000 tau_psi=    326 tau_E=    30 n_tau= 245.7 <psi2>=0.0654 drift= -0.3 E=0.62051
+  L= 32 T=0.4200 kept=   80000 tau_psi=    257 tau_E=    19 n_tau= 310.9 <psi2>=0.0489 drift= -1.8 E=0.62250
+  L= 32 T=0.4350 kept=   80000 tau_psi=    133 tau_E=    14 n_tau= 603.2 <psi2>=0.0343 drift= -0.9 E=0.62446
+D2=0.5  sizes [24, 32]  seeds per size 8
+  Binder crossing L=24/32: T = 0.3165 +- 0.0044
+  T_c (largest pair) = 0.3165 +- 0.0044
+  1/nu (max dU)          = 0.235 +- 0.743
+  1/nu (dU at T_c)       = 2.088 +- 0.683
+  gamma/nu (max chi')    = 1.914 +- 0.221
+  gamma/nu (chi at T_c)  = 1.879 +- 0.051
+  2beta/nu               = 0.121 +- 0.051
+  alpha/nu               = -0.176 +- 0.118
+  candidates (1/nu, gamma/nu, 2beta/nu, alpha/nu):
+    2D 3-state Potts   1.200 1.733 0.267 0.400
+    2D Ising           1.000 1.750 0.250 0.000
+    first order        2.000 2.000 0.000 2.000
+  per L: max dU/dbeta, dU/dbeta(T_c), max chi', chi(T_c), <|psi|^2>(T_c), C_max, min U4
+    L= 24     0.726     0.081    109.962    2664.40  0.48794  0.1500  +0.108
+    L= 32     0.776     0.147    190.709    4574.62  0.47124  0.1425  +0.058
+  energy distribution at the C peak: T_peak, #maxima, barrier ln(Pmax/Pmin_between)
+    L= 24  T=0.3682  maxima=1  barrier=0.000
+    L= 32  T=0.3626  maxima=1  barrier=0.000
+saved results/smallD2/fss_tafm_d20.5.png
