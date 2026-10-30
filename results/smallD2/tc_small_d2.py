@@ -1,53 +1,97 @@
 """Part IX task 2b: T_c(D2) at small D2, annealed model (pure Ising sweep, mu=0)
 vs the fixed-bond TAFM, from Binder crossings of the SPIN order parameter psi_s.
 
-For every (D2, model) the long single-T runs of all sizes are combined per L by
-multi-histogram reweighting (annealed_long_analysis.py: ISING=1 ORDER=spin for
-the annealed runs in results/long, DIR=results/tafm for the TAFM, whose re/im
-already are the spin order parameter). Errors: jackknife over NB time blocks.
+For every (D2, model, L, T) the U4 of psi_s is measured directly (seeds pooled,
+jackknife over 8 time blocks); the annealed runs are results/long/*_ising.npz
+(sre/sim), the TAFM runs results/tafm (re/im already is the spin order parameter).
+Crossings of successive sizes are interpolated on the common T grid (see
+crossing()); histogram reweighting is not used because at L>=48 the T spacing
+exceeds the energy-distribution width.
 Also checks ordered vs random starts (L=32, files *_random.npz) run by run.
 
 Usage (repo root): [DISCARD=20000] python3 results/smallD2/tc_small_d2.py
-Writes results/smallD2/summary.txt, results/smallD2/crossings_<model>_d2<D2>.txt,
+Writes results/smallD2/summary.txt, results/smallD2/u4_<model>_d2<D2>.txt,
 results/smallD2/tc_vs_D2.png
 """
 import glob
 import os
 import re
-import subprocess
 
 import numpy as np
 
 HC = 0.266                     # TAFM ground-state KT field (Bloete-Nightingale)
 D2S = [0.5, 0.3, 0.2, 0.1]
 DISCARD = os.environ.get("DISCARD", "20000")
+NB = 8
 OUT = "results/smallD2"
 KNOWN = {("tafm", 1.0): (0.4713, 0.0010), ("ann", 1.0): (0.528, 0.002), ("tafm", 3.0): (0.6718, 0.0007)}
 
 
-def sizes(model, D2):
-    pat = (f"results/long/long_L*_d2{D2:g}_T*_s1_ising.npz" if model == "ann"
-           else f"results/tafm/long_L*_d2{D2:g}_T*_s1.npz")
-    Ls = sorted({int(re.search(r"long_L(\d+)_", f).group(1)) for f in glob.glob(pat)})
-    return [L for L in Ls if len(glob.glob(pat.replace("L*", f"L{L}"))) >= 3]
+def u4_points(model, D2):
+    """{L: {T: (U4, err)}}: all seeds of one (L, T) pooled; error from a jackknife over
+    8 time blocks per run (blocks of all seeds dropped together)."""
+    pat = (f"results/long/long_L*_d2{D2:g}_T*_s*_ising.npz" if model == "ann"
+           else f"results/tafm/long_L*_d2{D2:g}_T*_s*.npz")
+    runs = {}
+    for f in glob.glob(pat):
+        if "_random" in f:
+            continue
+        d = np.load(f)
+        k = int(DISCARD) // int(d["thin"])
+        re_, im_ = (d["sre"], d["sim"]) if "sre" in d.files else (d["re"], d["im"])
+        p2 = re_[k:, 0].astype(float) ** 2 + im_[k:, 0].astype(float) ** 2
+        n = len(p2) // NB * NB
+        runs.setdefault((int(d["L"]), round(float(d["T"]), 4)), []).append(p2[:n].reshape(NB, -1))
+    U = lambda x: 1 - np.mean(x ** 2) / (2 * np.mean(x) ** 2)
+    out = {}
+    for (L, T), bl in runs.items():
+        full = U(np.concatenate([b.ravel() for b in bl]))
+        jk = np.array([U(np.concatenate([np.delete(b, i, 0).ravel() for b in bl])) for i in range(NB)])
+        out.setdefault(L, {})[T] = (full, float(np.sqrt((NB - 1) / NB * np.sum((jk - jk.mean()) ** 2))), len(bl))
+    return out
+
+
+def crossing(a, b, nmc=2000, seed=0):
+    """Crossing of U4(L_b) and U4(L_a), L_b > L_a, on their common T grid: the highest T
+    at which d = U4(L_b) - U4(L_a) changes from >= 0 (larger L more ordered) to < 0,
+    linearly interpolated. Median and 68% range over Gaussian resamplings of the points."""
+    Ts = sorted(set(a) & set(b))
+    if len(Ts) < 3:
+        return np.nan, np.nan, np.nan
+    d0 = np.array([b[T][0] - a[T][0] for T in Ts])
+    e = np.array([np.hypot(b[T][1], a[T][1]) for T in Ts])
+    rng = np.random.default_rng(seed)
+    Tarr = np.array(Ts)
+    res = []
+    for _ in range(nmc):
+        d = d0 + e * rng.standard_normal(len(Ts))
+        idx = [i for i in range(len(Ts) - 1) if d[i] >= 0 > d[i + 1]]
+        if not idx:
+            res.append(Tarr[0] if d[0] < 0 else np.nan)
+            continue
+        i = idx[-1]
+        res.append(Tarr[i] + d[i] * (Tarr[i + 1] - Tarr[i]) / (d[i] - d[i + 1]))
+    res = np.array(res, float)
+    ok = res[np.isfinite(res)]
+    if len(ok) < nmc / 2:
+        return np.nan, np.nan, np.nan
+    lo, med, hi = np.percentile(ok, [16, 50, 84])
+    return med, (hi - lo) / 2, np.mean(ok == Tarr[0])
 
 
 def crossings(model, D2):
-    Ls = sizes(model, D2)
-    if len(Ls) < 2:
-        return Ls, [], None
-    env = dict(os.environ, DISCARD=DISCARD, FIG=f"{OUT}/fss_{model}_d2{D2:g}.png")
-    if model == "ann":
-        env.update(ISING="1", ORDER="spin", DIR="results/long")
-    else:
-        env.update(DIR="results/tafm")
-        env.pop("ISING", None)
-    txt = subprocess.run(["python3", "annealed_long_analysis.py", f"{D2:g}"] + [str(L) for L in Ls],
-                         env=env, capture_output=True, text=True).stdout
-    open(f"{OUT}/crossings_{model}_d2{D2:g}.txt", "w").write(txt)
-    pairs = [(int(a), int(b), float(t), float(e)) for a, b, t, e in
-             re.findall(r"Binder crossing L=(\d+)/(\d+): T = (\S+) \+- (\S+)", txt)]
-    return Ls, pairs, txt
+    pts = u4_points(model, D2)
+    Ls = sorted(L for L in pts if len(pts[L]) >= 3)
+    pairs = []
+    for La, Lb in zip(Ls[:-1], Ls[1:]):
+        t, e, edge = crossing(pts[La], pts[Lb])
+        pairs.append((La, Lb, t, e, edge))
+    with open(f"{OUT}/u4_{model}_d2{D2:g}.txt", "w") as fh:
+        fh.write(f"# U4(psi_s) per (L, T), {model}, D2={D2:g}, discard {DISCARD}; value(err)[#seeds]\n")
+        for T in sorted({T for L in Ls for T in pts[L]}):
+            fh.write(f"T={T:<7g} " + "  ".join(f"L{L}:{pts[L][T][0]:+.4f}({pts[L][T][1]:.4f})[{pts[L][T][2]}]"
+                                                 if T in pts[L] else f"L{L}:{'--':>17s}" for L in Ls) + "\n")
+    return Ls, pairs
 
 
 def best(pairs):
@@ -90,15 +134,16 @@ def main():
     lines = []
     w = lines.append
     w("# Part IX 2b: T_c(D2) at small D2 -- annealed (pure Ising sweep, mu=0) vs fixed-bond TAFM")
-    w(f"# Binder crossings of the spin order parameter psi_s; WHAM per L; jackknife over 8 time blocks; discard {DISCARD} sweeps")
+    w(f"# Binder crossings of the spin order parameter psi_s (direct per-T U4, interpolated); jackknife over 8 time blocks; discard {DISCARD} sweeps")
     w(f"# H = D2/(2 T_c) (reduced field; TAFM ground-state KT value H_c = {HC}); asymptote T_c -> D2/(2 H_c) = {1 / (2 * HC):.3f} D2")
     w("")
     res = {}
     for D2 in D2S:
         for model in ("tafm", "ann"):
-            Ls, pairs, _ = crossings(model, D2)
+            Ls, pairs = crossings(model, D2)
             res[(model, D2)] = (Ls, pairs)
-            w(f"D2={D2:g} {model:4s} sizes {Ls}: " + ", ".join(f"L={a}/{b}: {t:.4f}({e:.4f})" for a, b, t, e in pairs))
+            w(f"D2={D2:g} {model:4s} sizes {Ls}: " + ", ".join(
+                f"L={a}/{b}: {t:.3f}({e:.3f})" + (" [at grid edge]" if edge > 0.3 else "") for a, b, t, e, edge in pairs))
     w("")
     hdr = f"{'D2':>4} | {'T_c TAFM':>15} {'pair':>6} | {'T_c ann':>15} {'pair':>6} | {'ann/TAFM':>14} | {'H TAFM':>6} {'H ann':>6} | {'D2/(2Hc)':>8}"
     w(hdr)

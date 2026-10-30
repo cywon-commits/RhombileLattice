@@ -1,0 +1,197 @@
+python3 annealed_tafm.py 48 0.3 200000 10 25000 1 0.5
+python3 annealed_tafm.py 48 0.31 200000 10 25000 1 0.5
+python3 annealed_tafm.py 48 0.32 200000 10 25000 1 0.5
+python3 annealed_tafm.py 48 0.33 200000 10 25000 1 0.5
+python3 annealed_tafm.py 48 0.34 200000 10 25000 1 0.5
+python3 annealed_tafm.py 48 0.35 200000 10 25000 1 0.5
+python3 annealed_tafm.py 48 0.36 200000 10 25000 1 0.5
+python3 annealed_tafm.py 64 0.3 200000 10 25000 1 0.5
+python3 annealed_tafm.py 64 0.31 200000 10 25000 1 0.5
+python3 annealed_tafm.py 64 0.32 200000 10 25000 1 0.5
+python3 annealed_tafm.py 64 0.33 200000 10 25000 1 0.5
+python3 annealed_tafm.py 64 0.34 200000 10 25000 1 0.5
+python3 annealed_tafm.py 64 0.35 200000 10 25000 1 0.5
+python3 annealed_tafm.py 64 0.36 200000 10 25000 1 0.5
+python3 annealed_tafm.py 48 0.23 200000 10 25000 1 0.3
+python3 annealed_tafm.py 48 0.24 200000 10 25000 1 0.3
+python3 annealed_tafm.py 48 0.25 200000 10 25000 1 0.3
+python3 annealed_tafm.py 48 0.26 200000 10 25000 1 0.3
+python3 annealed_tafm.py 48 0.27 200000 10 25000 1 0.3
+python3 annealed_tafm.py 48 0.28 200000 10 25000 1 0.3
+python3 annealed_tafm.py 48 0.29 200000 10 25000 1 0.3
+python3 annealed_tafm.py 64 0.23 200000 10 25000 1 0.3
+python3 annealed_tafm.py 64 0.24 200000 10 25000 1 0.3
+python3 annealed_tafm.py 64 0.25 200000 10 25000 1 0.3
+python3 annealed_tafm.py 64 0.26 200000 10 25000 1 0.3
+python3 annealed_tafm.py 64 0.27 200000 10 25000 1 0.3
+python3 annealed_tafm.py 64 0.28 200000 10 25000 1 0.3
+python3 annealed_tafm.py 64 0.29 200000 10 25000 1 0.3
+python3 annealed_tafm.py 48 0.19 200000 10 25000 1 0.2
+python3 annealed_tafm.py 48 0.2 200000 10 25000 1 0.2
+python3 annealed_tafm.py 48 0.21 200000 10 25000 1 0.2
+python3 annealed_tafm.py 48 0.22 200000 10 25000 1 0.2
+python3 annealed_tafm.py 48 0.23 200000 10 25000 1 0.2
+python3 annealed_tafm.py 48 0.24 200000 10 25000 1 0.2
+python3 annealed_tafm.py 48 0.25 200000 10 25000 1 0.2
+python3 annealed_tafm.py 64 0.19 200000 10 25000 1 0.2
+python3 annealed_tafm.py 64 0.2 200000 10 25000 1 0.2
+python3 annealed_tafm.py 64 0.21 200000 10 25000 1 0.2
+python3 annealed_tafm.py 64 0.22 200000 10 25000 1 0.2
+python3 annealed_tafm.py 64 0.23 200000 10 25000 1 0.2
+python3 annealed_tafm.py 64 0.24 200000 10 25000 1 0.2
+python3 annealed_tafm.py 64 0.25 200000 10 25000 1 0.2
+python3 annealed_tafm.py 48 0.15 200000 10 25000 1 0.1
+python3 annealed_tafm.py 48 0.16 200000 10 25000 1 0.1
+python3 annealed_tafm.py 48 0.17 200000 10 25000 1 0.1
+python3 annealed_tafm.py 48 0.18 200000 10 25000 1 0.1
+python3 annealed_tafm.py 48 0.19 200000 10 25000 1 0.1
+python3 annealed_tafm.py 48 0.2 200000 10 25000 1 0.1
+python3 annealed_tafm.py 48 0.21 200000 10 25000 1 0.1
+python3 annealed_tafm.py 48 0.22 200000 10 25000 1 0.1
+python3 annealed_tafm.py 48 0.23 200000 10 25000 1 0.1
+python3 annealed_tafm.py 64 0.15 200000 10 25000 1 0.1
+python3 annealed_tafm.py 64 0.16 200000 10 25000 1 0.1
+python3 annealed_tafm.py 64 0.17 200000 10 25000 1 0.1
+python3 annealed_tafm.py 64 0.18 200000 10 25000 1 0.1
+python3 annealed_tafm.py 64 0.19 200000 10 25000 1 0.1
+python3 annealed_tafm.py 64 0.2 200000 10 25000 1 0.1
+python3 annealed_tafm.py 64 0.21 200000 10 25000 1 0.1
+python3 annealed_tafm.py 64 0.22 200000 10 25000 1 0.1
+python3 annealed_tafm.py 64 0.23 200000 10 25000 1 0.1
+python3 annealed_tafm.py 24 0.18 200000 10 25000 1 0
+python3 annealed_tafm.py 24 0.22 200000 10 25000 1 0
+python3 annealed_tafm.py 24 0.26 200000 10 25000 1 0
+python3 annealed_tafm.py 24 0.3 200000 10 25000 1 0
+python3 annealed_tafm.py 24 0.34 200000 10 25000 1 0
+python3 annealed_tafm.py 32 0.18 200000 10 25000 1 0
+python3 annealed_tafm.py 32 0.22 200000 10 25000 1 0
+python3 annealed_tafm.py 32 0.26 200000 10 25000 1 0
+python3 annealed_tafm.py 32 0.3 200000 10 25000 1 0
+python3 annealed_tafm.py 32 0.34 200000 10 25000 1 0
+python3 annealed_tafm.py 48 0.18 200000 10 25000 1 0
+python3 annealed_tafm.py 48 0.22 200000 10 25000 1 0
+python3 annealed_tafm.py 48 0.26 200000 10 25000 1 0
+python3 annealed_tafm.py 48 0.3 200000 10 25000 1 0
+python3 annealed_tafm.py 48 0.34 200000 10 25000 1 0
+ISING=1 python3 annealed_long.py 24 0.3 200000 10 25000 1 0 0
+ISING=1 python3 annealed_long.py 24 0.34 200000 10 25000 1 0 0
+ISING=1 python3 annealed_long.py 24 0.38 200000 10 25000 1 0 0
+ISING=1 python3 annealed_long.py 24 0.42 200000 10 25000 1 0 0
+ISING=1 python3 annealed_long.py 24 0.46 200000 10 25000 1 0 0
+ISING=1 python3 annealed_long.py 32 0.3 200000 10 25000 1 0 0
+ISING=1 python3 annealed_long.py 32 0.34 200000 10 25000 1 0 0
+ISING=1 python3 annealed_long.py 32 0.38 200000 10 25000 1 0 0
+ISING=1 python3 annealed_long.py 32 0.42 200000 10 25000 1 0 0
+ISING=1 python3 annealed_long.py 32 0.46 200000 10 25000 1 0 0
+ISING=1 python3 annealed_long.py 48 0.38 300000 10 25000 1 0.5 0
+ISING=1 python3 annealed_long.py 48 0.395 300000 10 25000 1 0.5 0
+ISING=1 python3 annealed_long.py 48 0.41 300000 10 25000 1 0.5 0
+ISING=1 python3 annealed_long.py 48 0.425 300000 10 25000 1 0.5 0
+ISING=1 python3 annealed_long.py 48 0.44 300000 10 25000 1 0.5 0
+ISING=1 python3 annealed_long.py 48 0.455 300000 10 25000 1 0.5 0
+ISING=1 python3 annealed_long.py 48 0.47 300000 10 25000 1 0.5 0
+ISING=1 python3 annealed_long.py 64 0.38 300000 10 25000 1 0.5 0
+ISING=1 python3 annealed_long.py 64 0.395 300000 10 25000 1 0.5 0
+ISING=1 python3 annealed_long.py 64 0.41 300000 10 25000 1 0.5 0
+ISING=1 python3 annealed_long.py 64 0.425 300000 10 25000 1 0.5 0
+ISING=1 python3 annealed_long.py 64 0.44 300000 10 25000 1 0.5 0
+ISING=1 python3 annealed_long.py 64 0.455 300000 10 25000 1 0.5 0
+ISING=1 python3 annealed_long.py 64 0.47 300000 10 25000 1 0.5 0
+ISING=1 python3 annealed_long.py 24 0.38 300000 10 25000 2 0.5 0
+ISING=1 python3 annealed_long.py 24 0.395 300000 10 25000 2 0.5 0
+ISING=1 python3 annealed_long.py 24 0.41 300000 10 25000 2 0.5 0
+ISING=1 python3 annealed_long.py 24 0.425 300000 10 25000 2 0.5 0
+ISING=1 python3 annealed_long.py 24 0.44 300000 10 25000 2 0.5 0
+ISING=1 python3 annealed_long.py 24 0.455 300000 10 25000 2 0.5 0
+ISING=1 python3 annealed_long.py 24 0.47 300000 10 25000 2 0.5 0
+ISING=1 python3 annealed_long.py 32 0.38 300000 10 25000 2 0.5 0
+ISING=1 python3 annealed_long.py 32 0.395 300000 10 25000 2 0.5 0
+ISING=1 python3 annealed_long.py 32 0.41 300000 10 25000 2 0.5 0
+ISING=1 python3 annealed_long.py 32 0.425 300000 10 25000 2 0.5 0
+ISING=1 python3 annealed_long.py 32 0.44 300000 10 25000 2 0.5 0
+ISING=1 python3 annealed_long.py 32 0.455 300000 10 25000 2 0.5 0
+ISING=1 python3 annealed_long.py 32 0.47 300000 10 25000 2 0.5 0
+ISING=1 python3 annealed_long.py 48 0.33 300000 10 25000 1 0.3 0
+ISING=1 python3 annealed_long.py 48 0.345 300000 10 25000 1 0.3 0
+ISING=1 python3 annealed_long.py 48 0.36 300000 10 25000 1 0.3 0
+ISING=1 python3 annealed_long.py 48 0.375 300000 10 25000 1 0.3 0
+ISING=1 python3 annealed_long.py 48 0.39 300000 10 25000 1 0.3 0
+ISING=1 python3 annealed_long.py 48 0.405 300000 10 25000 1 0.3 0
+ISING=1 python3 annealed_long.py 48 0.42 300000 10 25000 1 0.3 0
+ISING=1 python3 annealed_long.py 64 0.33 300000 10 25000 1 0.3 0
+ISING=1 python3 annealed_long.py 64 0.345 300000 10 25000 1 0.3 0
+ISING=1 python3 annealed_long.py 64 0.36 300000 10 25000 1 0.3 0
+ISING=1 python3 annealed_long.py 64 0.375 300000 10 25000 1 0.3 0
+ISING=1 python3 annealed_long.py 64 0.39 300000 10 25000 1 0.3 0
+ISING=1 python3 annealed_long.py 64 0.405 300000 10 25000 1 0.3 0
+ISING=1 python3 annealed_long.py 64 0.42 300000 10 25000 1 0.3 0
+ISING=1 python3 annealed_long.py 24 0.33 300000 10 25000 2 0.3 0
+ISING=1 python3 annealed_long.py 24 0.345 300000 10 25000 2 0.3 0
+ISING=1 python3 annealed_long.py 24 0.36 300000 10 25000 2 0.3 0
+ISING=1 python3 annealed_long.py 24 0.375 300000 10 25000 2 0.3 0
+ISING=1 python3 annealed_long.py 24 0.39 300000 10 25000 2 0.3 0
+ISING=1 python3 annealed_long.py 24 0.405 300000 10 25000 2 0.3 0
+ISING=1 python3 annealed_long.py 24 0.42 300000 10 25000 2 0.3 0
+ISING=1 python3 annealed_long.py 32 0.33 300000 10 25000 2 0.3 0
+ISING=1 python3 annealed_long.py 32 0.345 300000 10 25000 2 0.3 0
+ISING=1 python3 annealed_long.py 32 0.36 300000 10 25000 2 0.3 0
+ISING=1 python3 annealed_long.py 32 0.375 300000 10 25000 2 0.3 0
+ISING=1 python3 annealed_long.py 32 0.39 300000 10 25000 2 0.3 0
+ISING=1 python3 annealed_long.py 32 0.405 300000 10 25000 2 0.3 0
+ISING=1 python3 annealed_long.py 32 0.42 300000 10 25000 2 0.3 0
+ISING=1 python3 annealed_long.py 48 0.3 300000 10 25000 1 0.2 0
+ISING=1 python3 annealed_long.py 48 0.32 300000 10 25000 1 0.2 0
+ISING=1 python3 annealed_long.py 48 0.34 300000 10 25000 1 0.2 0
+ISING=1 python3 annealed_long.py 48 0.36 300000 10 25000 1 0.2 0
+ISING=1 python3 annealed_long.py 48 0.38 300000 10 25000 1 0.2 0
+ISING=1 python3 annealed_long.py 48 0.4 300000 10 25000 1 0.2 0
+ISING=1 python3 annealed_long.py 48 0.42 300000 10 25000 1 0.2 0
+ISING=1 python3 annealed_long.py 64 0.3 300000 10 25000 1 0.2 0
+ISING=1 python3 annealed_long.py 64 0.32 300000 10 25000 1 0.2 0
+ISING=1 python3 annealed_long.py 64 0.34 300000 10 25000 1 0.2 0
+ISING=1 python3 annealed_long.py 64 0.36 300000 10 25000 1 0.2 0
+ISING=1 python3 annealed_long.py 64 0.38 300000 10 25000 1 0.2 0
+ISING=1 python3 annealed_long.py 64 0.4 300000 10 25000 1 0.2 0
+ISING=1 python3 annealed_long.py 64 0.42 300000 10 25000 1 0.2 0
+ISING=1 python3 annealed_long.py 24 0.3 300000 10 25000 2 0.2 0
+ISING=1 python3 annealed_long.py 24 0.32 300000 10 25000 2 0.2 0
+ISING=1 python3 annealed_long.py 24 0.34 300000 10 25000 2 0.2 0
+ISING=1 python3 annealed_long.py 24 0.36 300000 10 25000 2 0.2 0
+ISING=1 python3 annealed_long.py 24 0.38 300000 10 25000 2 0.2 0
+ISING=1 python3 annealed_long.py 24 0.4 300000 10 25000 2 0.2 0
+ISING=1 python3 annealed_long.py 24 0.42 300000 10 25000 2 0.2 0
+ISING=1 python3 annealed_long.py 32 0.3 300000 10 25000 2 0.2 0
+ISING=1 python3 annealed_long.py 32 0.32 300000 10 25000 2 0.2 0
+ISING=1 python3 annealed_long.py 32 0.34 300000 10 25000 2 0.2 0
+ISING=1 python3 annealed_long.py 32 0.36 300000 10 25000 2 0.2 0
+ISING=1 python3 annealed_long.py 32 0.38 300000 10 25000 2 0.2 0
+ISING=1 python3 annealed_long.py 32 0.4 300000 10 25000 2 0.2 0
+ISING=1 python3 annealed_long.py 32 0.42 300000 10 25000 2 0.2 0
+ISING=1 python3 annealed_long.py 48 0.26 300000 10 25000 1 0.1 0
+ISING=1 python3 annealed_long.py 48 0.285 300000 10 25000 1 0.1 0
+ISING=1 python3 annealed_long.py 48 0.31 300000 10 25000 1 0.1 0
+ISING=1 python3 annealed_long.py 48 0.335 300000 10 25000 1 0.1 0
+ISING=1 python3 annealed_long.py 48 0.36 300000 10 25000 1 0.1 0
+ISING=1 python3 annealed_long.py 48 0.385 300000 10 25000 1 0.1 0
+ISING=1 python3 annealed_long.py 48 0.41 300000 10 25000 1 0.1 0
+ISING=1 python3 annealed_long.py 64 0.26 300000 10 25000 1 0.1 0
+ISING=1 python3 annealed_long.py 64 0.285 300000 10 25000 1 0.1 0
+ISING=1 python3 annealed_long.py 64 0.31 300000 10 25000 1 0.1 0
+ISING=1 python3 annealed_long.py 64 0.335 300000 10 25000 1 0.1 0
+ISING=1 python3 annealed_long.py 64 0.36 300000 10 25000 1 0.1 0
+ISING=1 python3 annealed_long.py 64 0.385 300000 10 25000 1 0.1 0
+ISING=1 python3 annealed_long.py 64 0.41 300000 10 25000 1 0.1 0
+ISING=1 python3 annealed_long.py 24 0.26 300000 10 25000 2 0.1 0
+ISING=1 python3 annealed_long.py 24 0.285 300000 10 25000 2 0.1 0
+ISING=1 python3 annealed_long.py 24 0.31 300000 10 25000 2 0.1 0
+ISING=1 python3 annealed_long.py 24 0.335 300000 10 25000 2 0.1 0
+ISING=1 python3 annealed_long.py 24 0.36 300000 10 25000 2 0.1 0
+ISING=1 python3 annealed_long.py 24 0.385 300000 10 25000 2 0.1 0
+ISING=1 python3 annealed_long.py 24 0.41 300000 10 25000 2 0.1 0
+ISING=1 python3 annealed_long.py 32 0.26 300000 10 25000 2 0.1 0
+ISING=1 python3 annealed_long.py 32 0.285 300000 10 25000 2 0.1 0
+ISING=1 python3 annealed_long.py 32 0.31 300000 10 25000 2 0.1 0
+ISING=1 python3 annealed_long.py 32 0.335 300000 10 25000 2 0.1 0
+ISING=1 python3 annealed_long.py 32 0.36 300000 10 25000 2 0.1 0
+ISING=1 python3 annealed_long.py 32 0.385 300000 10 25000 2 0.1 0
+ISING=1 python3 annealed_long.py 32 0.41 300000 10 25000 2 0.1 0
