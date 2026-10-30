@@ -37,3 +37,77 @@ L24_d20.3_T0.285_s1: 6s <psi2>=0.2793 E/Ntri=0.56930 -> results/tafm/long_L24_d2
 L24_d20.3_T0.3_s1: 7s <psi2>=0.2275 E/Ntri=0.57035 -> results/tafm/long_L24_d20.3_T0.3_s1.npz
 L24_d20.3_T0.315_s1: 7s <psi2>=0.1988 E/Ntri=0.57131 -> results/tafm/long_L24_d20.3_T0.315_s1.npz
 L24_d20.3_T0.33_s1: 6s <psi2>=0.1690 E/Ntri=0.57236 -> results/tafm/long_L24_d20.3_T0.33_s1.npz
+L24_d20.3_T0.345_s1: 7s <psi2>=0.1190 E/Ntri=0.57370 -> results/tafm/long_L24_d20.3_T0.345_s1.npz
+L24_d20.3_T0.36_s1: 6s <psi2>=0.1031 E/Ntri=0.57492 -> results/tafm/long_L24_d20.3_T0.36_s1.npz
+L24_d20.3_T0.375_s1: 6s <psi2>=0.0825 E/Ntri=0.57620 -> results/tafm/long_L24_d20.3_T0.375_s1.npz
+L24_d20.3_T0.34_s1_ising: 100000/100000 sweeps, 46s, last-chunk <psi2>=0.0112 E/Ntri=0.09847
+wrote results/long/long_L24_d20.3_T0.34_s1_ising.npz
+L24_d20.3_T0.355_s1_ising: 100000/100000 sweeps, 48s, last-chunk <psi2>=0.0098 E/Ntri=0.10460
+wrote results/long/long_L24_d20.3_T0.355_s1_ising.npz
+L24_d20.3_T0.37_s1_ising: 100000/100000 sweeps, 49s, last-chunk <psi2>=0.0096 E/Ntri=0.10359
+wrote results/long/long_L24_d20.3_T0.37_s1_ising.npz
+L24_d20.3_T0.385_s1_ising: 100000/100000 sweeps, 48s, last-chunk <psi2>=0.0083 E/Ntri=0.11652
+wrote results/long/long_L24_d20.3_T0.385_s1_ising.npz
+L24_d20.3_T0.4_s1_ising: 100000/100000 sweeps, 49s, last-chunk <psi2>=0.0059 E/Ntri=0.12069
+wrote results/long/long_L24_d20.3_T0.4_s1_ising.npz
+L24_d20.3_T0.415_s1_ising: 100000/100000 sweeps, 48s, last-chunk <psi2>=0.0058 E/Ntri=0.13484
+wrote results/long/long_L24_d20.3_T0.415_s1_ising.npz
+L24_d20.3_T0.43_s1_ising: 100000/100000 sweeps, 51s, last-chunk <psi2>=0.0051 E/Ntri=0.14268
+wrote results/long/long_L24_d20.3_T0.43_s1_ising.npz
+L24_d20.3_T0.445_s1_ising: 100000/100000 sweeps, 52s, last-chunk <psi2>=0.0028 E/Ntri=0.14152
+wrote results/long/long_L24_d20.3_T0.445_s1_ising.npz
+L24_d20.3_T0.46_s1_ising: 100000/100000 sweeps, 50s, last-chunk <psi2>=0.0023 E/Ntri=0.15234
+wrote results/long/long_L24_d20.3_T0.46_s1_ising.npz
+L24_d20.3_T0.475_s1_ising: 100000/100000 sweeps, 52s, last-chunk <psi2>=0.0025 E/Ntri=0.16458
+wrote results/long/long_L24_d20.3_T0.475_s1_ising.npz
+L24_d20.3_T0.49_s1_ising: 100000/100000 sweeps, 48s, last-chunk <psi2>=0.0015 E/Ntri=0.16808
+wrote results/long/long_L24_d20.3_T0.49_s1_ising.npz
+L24_d20.2_T0.2_s1: 6s <psi2>=0.3133 E/Ntri=0.54578 -> results/tafm/long_L24_d20.2_T0.2_s1.npz
+L24_d20.2_T0.22_s1: 6s <psi2>=0.2909 E/Ntri=0.54631 -> results/tafm/long_L24_d20.2_T0.22_s1.npz
+L24_d20.2_T0.24_s1: 6s <psi2>=0.2589 E/Ntri=0.54684 -> results/tafm/long_L24_d20.2_T0.24_s1.npz
+L24_d20.2_T0.26_s1: 6s <psi2>=0.2376 E/Ntri=0.54743 -> results/tafm/long_L24_d20.2_T0.26_s1.npz
+L24_d20.2_T0.28_s1: 5s <psi2>=0.1983 E/Ntri=0.54822 -> results/tafm/long_L24_d20.2_T0.28_s1.npz
+L24_d20.2_T0.3_s1: 6s <psi2>=0.1763 E/Ntri=0.54907 -> results/tafm/long_L24_d20.2_T0.3_s1.npz
+L24_d20.2_T0.32_s1: 7s <psi2>=0.1379 E/Ntri=0.55020 -> results/tafm/long_L24_d20.2_T0.32_s1.npz
+L24_d20.2_T0.34_s1: 6s <psi2>=0.1096 E/Ntri=0.55142 -> results/tafm/long_L24_d20.2_T0.34_s1.npz
+L24_d20.2_T0.3_s1_ising: 100000/100000 sweeps, 46s, last-chunk <psi2>=0.0046 E/Ntri=0.06279
+wrote results/long/long_L24_d20.2_T0.3_s1_ising.npz
+L24_d20.2_T0.32_s1_ising: 100000/100000 sweeps, 48s, last-chunk <psi2>=0.0042 E/Ntri=0.07766
+wrote results/long/long_L24_d20.2_T0.32_s1_ising.npz
+L24_d20.2_T0.34_s1_ising: 100000/100000 sweeps, 50s, last-chunk <psi2>=0.0038 E/Ntri=0.08067
+wrote results/long/long_L24_d20.2_T0.34_s1_ising.npz
+L24_d20.2_T0.36_s1_ising: 100000/100000 sweeps, 48s, last-chunk <psi2>=0.0037 E/Ntri=0.08738
+wrote results/long/long_L24_d20.2_T0.36_s1_ising.npz
+L24_d20.2_T0.38_s1_ising: 100000/100000 sweeps, 49s, last-chunk <psi2>=0.0029 E/Ntri=0.09468
+wrote results/long/long_L24_d20.2_T0.38_s1_ising.npz
+L24_d20.2_T0.4_s1_ising: 100000/100000 sweeps, 48s, last-chunk <psi2>=0.0027 E/Ntri=0.10666
+wrote results/long/long_L24_d20.2_T0.4_s1_ising.npz
+L24_d20.2_T0.42_s1_ising: 100000/100000 sweeps, 49s, last-chunk <psi2>=0.0023 E/Ntri=0.10718
+wrote results/long/long_L24_d20.2_T0.42_s1_ising.npz
+L24_d20.2_T0.44_s1_ising: 100000/100000 sweeps, 46s, last-chunk <psi2>=0.0017 E/Ntri=0.11933
+wrote results/long/long_L24_d20.2_T0.44_s1_ising.npz
+L24_d20.2_T0.46_s1_ising: 100000/100000 sweeps, 47s, last-chunk <psi2>=0.0013 E/Ntri=0.12946
+wrote results/long/long_L24_d20.2_T0.46_s1_ising.npz
+L24_d20.2_T0.48_s1_ising: 100000/100000 sweeps, 47s, last-chunk <psi2>=0.0012 E/Ntri=0.14323
+wrote results/long/long_L24_d20.2_T0.48_s1_ising.npz
+L24_d20.2_T0.5_s1_ising: 100000/100000 sweeps, 48s, last-chunk <psi2>=0.0011 E/Ntri=0.15492
+wrote results/long/long_L24_d20.2_T0.5_s1_ising.npz
+L24_d20.1_T0.14_s1: 6s <psi2>=0.2613 E/Ntri=0.52351 -> results/tafm/long_L24_d20.1_T0.14_s1.npz
+L24_d20.1_T0.16_s1: 7s <psi2>=0.1896 E/Ntri=0.52373 -> results/tafm/long_L24_d20.1_T0.16_s1.npz
+L24_d20.1_T0.18_s1: 6s <psi2>=0.2484 E/Ntri=0.52387 -> results/tafm/long_L24_d20.1_T0.18_s1.npz
+L24_d20.1_T0.2_s1: 6s <psi2>=0.2335 E/Ntri=0.52405 -> results/tafm/long_L24_d20.1_T0.2_s1.npz
+L24_d20.1_T0.22_s1: 7s <psi2>=0.2318 E/Ntri=0.52424 -> results/tafm/long_L24_d20.1_T0.22_s1.npz
+L24_d20.1_T0.24_s1: 6s <psi2>=0.2283 E/Ntri=0.52448 -> results/tafm/long_L24_d20.1_T0.24_s1.npz
+L24_d20.1_T0.26_s1: 6s <psi2>=0.1851 E/Ntri=0.52501 -> results/tafm/long_L24_d20.1_T0.26_s1.npz
+L24_d20.1_T0.28_s1: 6s <psi2>=0.1675 E/Ntri=0.52548 -> results/tafm/long_L24_d20.1_T0.28_s1.npz
+L24_d20.1_T0.3_s1: 6s <psi2>=0.1452 E/Ntri=0.52624 -> results/tafm/long_L24_d20.1_T0.3_s1.npz
+L24_d20.1_T0.2_s1_ising: 100000/100000 sweeps, 46s, last-chunk <psi2>=0.0026 E/Ntri=0.02899
+wrote results/long/long_L24_d20.1_T0.2_s1_ising.npz
+L24_d20.1_T0.23_s1_ising: 100000/100000 sweeps, 46s, last-chunk <psi2>=0.0018 E/Ntri=0.03111
+wrote results/long/long_L24_d20.1_T0.23_s1_ising.npz
+L24_d20.1_T0.26_s1_ising: 100000/100000 sweeps, 47s, last-chunk <psi2>=0.0016 E/Ntri=0.03782
+wrote results/long/long_L24_d20.1_T0.26_s1_ising.npz
+L24_d20.1_T0.29_s1_ising: 100000/100000 sweeps, 45s, last-chunk <psi2>=0.0014 E/Ntri=0.04172
+wrote results/long/long_L24_d20.1_T0.29_s1_ising.npz
+L24_d20.1_T0.32_s1_ising: 100000/100000 sweeps, 45s, last-chunk <psi2>=0.0015 E/Ntri=0.05437
+wrote results/long/long_L24_d20.1_T0.32_s1_ising.npz
