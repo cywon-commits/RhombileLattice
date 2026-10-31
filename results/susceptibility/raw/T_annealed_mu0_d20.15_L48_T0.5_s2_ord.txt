@@ -1,0 +1,5 @@
+# annealed mu=0.0 D2=0.15 L=48 T=0.5 seed=2 start=ord neq=10000 nmeas=40000
+m 0.4879949 0.0000252
+Tchi 0.040111 0.000516
+nmon 0.1500377 0.0000790
+time 203

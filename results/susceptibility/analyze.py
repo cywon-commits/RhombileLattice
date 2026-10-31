@@ -13,6 +13,34 @@ import numpy as np
 
 D = "results/susceptibility"
 CW_THETA = {"tafm": 3.0, "annealed": 2.4}
+INTERPRETATION = """## Conclusions
+# 1. chi(T): L=24 and 48 agree at all 19 T (max |z| = 3.1 TAFM, 2.4 annealed; no L=96 needed).
+#    T*chi is flat at the ground-state-manifold value for T <~ 0.26 in both models
+#    (0.0403-0.0410 vs chi0 = 0.0407): chi ~ chi0/T, no exponential decay.
+#    High T: Curie-Weiss theta(T->inf) = 3.00(5) TAFM, 2.35-2.47 annealed mu=0 (expected 3 and 2.4).
+#    Intermediate T (1-2): annealed T*chi larger by 11-15%, as set by theta.
+# 2. chi0(L) = 0.04065(9), 0.04073(8), 0.04069(8) for L = 24, 48, 96: no ln L growth.
+#    S(q) -> chi0 as q -> 0 and S(q) - chi0 grows roughly like q^2 at larger q; the smallest-q
+#    points are too noisy to test the q^2 law sharply.
+# 3. Reduced-field scaling: m_GS(H) is smooth through H_c = 0.266 (slope dm/dH = -2 chi0 at small H;
+#    the KT locking leaves no visible mark on m, as expected for an essential singularity).
+#    Both models collapse on m_GS(H) at T=0.2 (rms deviation 3-4e-5). At every higher T the
+#    annealed model is closer to the reference curve than the TAFM (rms at L=48: T=0.3 4e-5 vs 7e-4,
+#    T=0.4 4e-4 vs 2.6e-3, T=0.5 1.9e-3 vs 5.1e-3) -- the same direction as the higher T_c of the
+#    annealed model (D2=1, and the L<=64 crossings of task 2b).
+#    NOT as anticipated in the task: the deviation does not follow the excitation densities.
+#    The annealed model has 10-20x more excitations (frustrated triangles ~ e^(-1/T)) than the TAFM
+#    (defect triangles), yet deviates less: bound frustrated-triangle pairs hardly disturb n1, the
+#    TAFM defects do.
+# 4. TAFM T*chi dip: robust over 4 seeds and L=24/48: 0.0385-0.0391 at T=0.35-0.5 vs 0.0398-0.0407
+#    annealed (5-7 sigma). It sets in when the TAFM defect-triangle density rises from 2e-3 to 2e-2,
+#    while the annealed model, with far more frustrated triangles, barely dips and mu=2, 10 not at all
+#    (0.0406-0.0412) -- defects (not frustrated triangles) reduce the n1 fluctuations (correlation only).
+# 5. mu = 2, 10 (L=24): low T identical to mu=0 (chi0). Intermediate T=0.7-1: T*chi moves to or below
+#    the TAFM value. High T: theta(inf) = 2.59(8) (mu=2), 2.26(6) (mu=10) -- it does NOT approach 3:
+#    suppressing frustrated triangles adds dimers, i.e. switches OFF more bonds; the full-matching
+#    limit is theta = 3 x (2/3) = 2. (The task's expectation "theta -> 3" had the direction reversed.)
+#    At T=3-10 with mu=10 the matching is not yet complete, hence 2.26 rather than 2."""
 
 
 def read(fn):
@@ -212,6 +240,8 @@ def main():
                 o = o[0]
                 w(f"#   {r['model']:8s} D2={r['D2']:g}: gs {r['m'][0]:.5f}({r['m'][1]:.5f}) ord {o['m'][0]:.5f}({o['m'][1]:.5f}) "
                   f"z={(r['m'][0] - o['m'][0]) / np.hypot(r['m'][1], o['m'][1]):+.1f}")
+    w("")
+    w(INTERPRETATION)
     text = "\n".join(lines) + "\n"
     open(f"{D}/summary.txt", "w").write(text)
     print(text)
@@ -256,23 +286,33 @@ def plots(tchi, sets, chi0, theta, mgs, m3):
     fig.savefig(f"{D}/chi_vs_T.pdf")
     fig.savefig(f"{D}/chi_vs_T.png", dpi=130)
 
-    fig, ax = plt.subplots(1, 2, figsize=(10, 4.2), sharey=True)
+    fig, axes = plt.subplots(2, 2, figsize=(10, 7), sharex=True, gridspec_kw=dict(height_ratios=[1.3, 1]))
     tc = {0.2: "#2b2b8f", 0.3: "#3d7a4f", 0.4: "#c5791f", 0.5: "#a83b3b"}
-    for a, model in zip(ax, ("tafm", "annealed")):
+    for j, model in enumerate(("tafm", "annealed")):
+        a, b = axes[0, j], axes[1, j]
         for L, ls in ((48, "-"), (24, "--")):
             H = sorted(k[1] for k in mgs if k[0] == L and k[2] == "ord")
             if H:
                 a.plot(H, [mgs[(L, h, "ord")][0] for h in H], "k" + ls, lw=1, label=f"$m_{{GS}}(H)$, L={L}")
         for T, c in tc.items():
-            H = sorted(k[3] for k in m3 if k[0] == model and k[1] == 48 and k[2] == T)
+            H = sorted(k[3] for k in m3 if k[0] == model and k[1] == 48 and k[2] == T and (48, k[3], "ord") in mgs)
             if H:
-                a.errorbar(H, [m3[(model, 48, T, h)][0] for h in H], [m3[(model, 48, T, h)][1] for h in H],
-                           fmt="o", ms=3.5, color=c, label=f"T={T} (L=48)")
-        a.axvline(0.266, color="gray", lw=0.7, ls=":")
-        a.set_xlabel(r"$H = D_2/(2T)$")
+                y = np.array([m3[(model, 48, T, h)][0] for h in H])
+                e = np.array([m3[(model, 48, T, h)][1] for h in H])
+                ref = np.array([mgs[(48, h, "ord")][0] for h in H])
+                eref = np.array([mgs[(48, h, "ord")][1] for h in H])
+                a.errorbar(H, y, e, fmt="o", ms=3.5, color=c, label=f"T={T} (L=48)")
+                b.errorbar(H, y - ref, np.hypot(e, eref), fmt="o-", ms=3.5, lw=0.8, color=c, label=f"T={T}")
+        for x in (a, b):
+            x.axvline(0.266, color="gray", lw=0.7, ls=":")
+        b.axhline(0, color="k", lw=0.8)
+        b.set_xlabel(r"$H = D_2/(2T)$")
+        b.set_ylim(-0.002, 0.016)
         a.set_title("fixed-bond TAFM" if model == "tafm" else "annealed (Ising sweep, $\\mu=0$)")
         a.legend(fontsize=7)
-    ax[0].set_ylabel(r"$m = \langle n_1\rangle / N_{\rm site}$")
+        b.legend(fontsize=7)
+    axes[0, 0].set_ylabel(r"$m = \langle n_1\rangle / N_{\rm site}$")
+    axes[1, 0].set_ylabel(r"$m - m_{GS}(H)$  (L=48)")
     fig.tight_layout()
     fig.savefig(f"{D}/m_vs_H.pdf")
     fig.savefig(f"{D}/m_vs_H.png", dpi=130)
