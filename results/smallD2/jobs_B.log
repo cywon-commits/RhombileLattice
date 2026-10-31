@@ -587,3 +587,13 @@ done already: results/long/long_L48_d20.1_T0.31_s1_ising.npz
 done already: results/long/long_L48_d20.1_T0.36_s1_ising.npz
 done already: results/long/long_L48_d20.1_T0.335_s1_ising.npz
 done already: results/long/long_L48_d20.1_T0.385_s1_ising.npz
+L48_d20.1_T0.41_s1_ising: 300000/300000 sweeps, 58s, last-chunk <psi2>=0.0003 E/Ntri=0.08482
+wrote results/long/long_L48_d20.1_T0.41_s1_ising.npz
+L64_d20.1_T0.26_s1_ising: 300000/300000 sweeps, 1073s, last-chunk <psi2>=0.0006 E/Ntri=0.03618
+wrote results/long/long_L64_d20.1_T0.26_s1_ising.npz
+L64_d20.1_T0.285_s1_ising: 300000/300000 sweeps, 1432s, last-chunk <psi2>=0.0007 E/Ntri=0.04096
+wrote results/long/long_L64_d20.1_T0.285_s1_ising.npz
+L64_d20.1_T0.31_s1_ising: 300000/300000 sweeps, 1441s, last-chunk <psi2>=0.0007 E/Ntri=0.04503
+wrote results/long/long_L64_d20.1_T0.31_s1_ising.npz
+L64_d20.1_T0.335_s1_ising: 300000/300000 sweeps, 1429s, last-chunk <psi2>=0.0006 E/Ntri=0.05262
+wrote results/long/long_L64_d20.1_T0.335_s1_ising.npz
