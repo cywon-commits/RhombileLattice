@@ -130,6 +130,9 @@ def start_check():
     return sorted(rows)
 
 
+RES0 = {}
+
+
 def main():
     lines = []
     w = lines.append
@@ -144,6 +147,15 @@ def main():
             res[(model, D2)] = (Ls, pairs)
             w(f"D2={D2:g} {model:4s} sizes {Ls}: " + ", ".join(
                 f"L={a}/{b}: {t:.3f}({e:.3f})" + (" [at grid edge]" if edge > 0.3 else "") for a, b, t, e, edge in pairs))
+    w("")
+    w("# zero-field baseline (D2=0: no transition, only the finite-size drop where xi_0(T) ~ L), same estimator:")
+    for model in ("tafm", "ann"):
+        Ls, pairs = crossings(model, 0.0)
+        res[(model, 0.0)] = (Ls, pairs)
+        w(f"D2=0   {model:4s} sizes {Ls}: " + ", ".join(
+            f"L={a}/{b}: {t:.3f}({e:.3f})" + (" [at grid edge]" if edge > 0.3 else "") for a, b, t, e, edge in pairs))
+    w("# A small-D2 crossing that coincides with the D2=0 one for the same pair is the zero-field")
+    w("# finite-size crossover, not the field-induced T_c (see u4_<model>_d2<D2>.txt and u4_<model>_d20.txt).")
     w("")
     hdr = f"{'D2':>4} | {'T_c TAFM':>15} {'pair':>6} | {'T_c ann':>15} {'pair':>6} | {'ann/TAFM':>14} | {'H TAFM':>6} {'H ann':>6} | {'D2/(2Hc)':>8}"
     w(hdr)
@@ -167,6 +179,7 @@ def main():
     text = "\n".join(lines) + "\n"
     open(f"{OUT}/summary.txt", "w").write(text)
     print(text)
+    RES0.update({m: res[(m, 0.0)][1] for m in ("tafm", "ann")})
     plot(table)
 
 
@@ -175,6 +188,7 @@ def plot(table):
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     t = np.array(table, float)
+    import glob as _g
     fig, ax = plt.subplots(1, 2, figsize=(10, 4.2))
     a = ax[0]
     a.errorbar(t[:, 0], t[:, 1], t[:, 2], fmt="o", color="#3b4ba8", label="fixed-bond TAFM")
@@ -183,6 +197,11 @@ def plot(table):
     a.errorbar([1.0], [0.528], [0.002], fmt="s", mfc="none", color="#c5791f", label="annealed D3=10, earlier runs")
     x = np.linspace(0, 1.05, 50)
     a.plot(x, x / (2 * HC), "k--", lw=1, label=r"$D_2/(2H_c)$, $H_c=0.266$")
+    for m, c in (("tafm", "#3b4ba8"), ("ann", "#c5791f")):
+        z = [p for p in RES0.get(m, []) if np.isfinite(p[2])]
+        if z:
+            a.axhspan(min(p[2] for p in z), max(p[2] for p in z), color=c, alpha=0.12, lw=0,
+                      label=f"D2=0 finite-size drop ({m}, L={z[0][0]}-{z[-1][1]})")
     a.set_xlim(0, 1.05)
     a.set_ylim(0, 0.8)
     a.set_xlabel(r"$D_2$")
