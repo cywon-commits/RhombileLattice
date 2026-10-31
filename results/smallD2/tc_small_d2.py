@@ -131,6 +131,27 @@ def start_check():
 
 
 RES0 = {}
+INTERPRETATION = """# Interpretation (L <= 64)
+# 1. Zero-field baseline: at D2=0 (no transition) the same estimator gives a U4 drop at
+#    T ~ 0.18-0.22 (TAFM, L=24-48) and ~0.40 (annealed, L=24/32): the T where the zero-field
+#    correlation length xi_0(T) reaches L (xi_0 ~ e^(1/T) TAFM, ~ e^(2/T) annealed, HANDOFF result 6).
+#    Below it U4 sits on an L-independent plateau ~0.465 at every D2 <= 0.3, ordered or not.
+# 2. TAFM: D2=0.5 is a genuine transition (U4 rises to 0.49-0.50 with L below T_c; T_c = 0.335(4),
+#    H = 0.75). D2=0.3 (0.26) is marginal; D2 <= 0.2 coincides with the D2=0 drop, so
+#    0.204 / 0.206 are upper-bound-like finite-size values, not T_c.
+# 3. Annealed: the L=48/64 crossings 0.46 / 0.40 / 0.37 / 0.34 (D2 = 0.5 / 0.3 / 0.2 / 0.1) lie
+#    close to the D2=0 drop (0.40 at L=24/32, moving down with L) and, for D2 <= 0.2, at or above
+#    the asymptote D2/(2H_c); no rise of the plateau towards 0.5 with L is seen at any D2 <= 0.3. These are finite-size crossovers of the zero-field
+#    manifold, not T_c. Ordered vs random start disagree at D2=0.1, T=0.2 (z ~ 4-5): not equilibrated.
+# 4. Hence the ratio T_c^ann/T_c^TAFM = 1.4-1.8 here mostly reflects the ratio of the zero-field
+#    crossover temperatures, not of transition temperatures. The three questions of the task
+#    (ratio -> 1?, H -> 0.266?, sign at small D2) cannot be decided at L <= 64.
+#    Required sizes (extrapolating xi_0 from the drops): TAFM at D2=0.1 needs L of a few hundred;
+#    annealed at D2 <= 0.2 needs L ~ 10^4 -- out of reach for direct MC; a ground-state-manifold
+#    (H-only) calculation, e.g. transfer matrix, would be needed.
+# 5. The Sec. 6 statement "annealing raises T_c" is supported at D2 = 1 (and plausibly 0.5:
+#    0.40-0.46 vs 0.335, but the annealed value is not separated from its own zero-field drop);
+#    it should be stated for D2 ~ 0.5-1 only."""
 
 
 def main():
@@ -176,6 +197,8 @@ def main():
         zs = [(a[0] - b[0]) / np.hypot(a[1], b[1]) if np.hypot(a[1], b[1]) > 0 else 0 for a, b in zip(o, r_)]
         w(f"  {model:4s} D2={D2:<4g} L={L} T={T:<6g} U4 {o[0][0]:.3f}/{r_[0][0]:.3f} (z={zs[0]:+.1f})  "
           f"psi2 {o[1][0]:.4f}/{r_[1][0]:.4f} (z={zs[1]:+.1f})  E {o[2][0]:.5f}/{r_[2][0]:.5f} (z={zs[2]:+.1f})")
+    w("")
+    w(INTERPRETATION)
     text = "\n".join(lines) + "\n"
     open(f"{OUT}/summary.txt", "w").write(text)
     print(text)
@@ -191,8 +214,8 @@ def plot(table):
     import glob as _g
     fig, ax = plt.subplots(1, 2, figsize=(10, 4.2))
     a = ax[0]
-    a.errorbar(t[:, 0], t[:, 1], t[:, 2], fmt="o", color="#3b4ba8", label="fixed-bond TAFM")
-    a.errorbar(t[:, 0], t[:, 3], t[:, 4], fmt="s", color="#c5791f", label="annealed (Ising sweep)")
+    a.errorbar(t[:, 0], t[:, 1], t[:, 2], fmt="o", color="#3b4ba8", label="fixed-bond TAFM (L=48/64 crossing)")
+    a.errorbar(t[:, 0], t[:, 3], t[:, 4], fmt="s", color="#c5791f", label="annealed, Ising sweep (L=48/64 crossing)")
     a.errorbar([1.0, 3.0], [0.4713, 0.6718], [0.001, 0.0007], fmt="o", mfc="none", color="#3b4ba8", label="TAFM, earlier runs")
     a.errorbar([1.0], [0.528], [0.002], fmt="s", mfc="none", color="#c5791f", label="annealed D3=10, earlier runs")
     x = np.linspace(0, 1.05, 50)
@@ -200,7 +223,7 @@ def plot(table):
     for m, c in (("tafm", "#3b4ba8"), ("ann", "#c5791f")):
         z = [p for p in RES0.get(m, []) if np.isfinite(p[2])]
         if z:
-            a.axhspan(min(p[2] for p in z), max(p[2] for p in z), color=c, alpha=0.12, lw=0,
+            a.axhspan(min(p[2] - p[3] for p in z), max(p[2] + p[3] for p in z), color=c, alpha=0.12, lw=0,
                       label=f"D2=0 finite-size drop ({m}, L={z[0][0]}-{z[-1][1]})")
     a.set_xlim(0, 1.05)
     a.set_ylim(0, 0.8)
