@@ -273,3 +273,299 @@ done already: results/tafm/long_L32_d20_T0.3_s1.npz
 done already: results/tafm/long_L32_d20_T0.34_s1.npz
 done already: results/tafm/long_L48_d20_T0.18_s1.npz
 done already: results/tafm/long_L48_d20_T0.22_s1.npz
+done already: results/tafm/long_L48_d20_T0.26_s1.npz
+done already: results/tafm/long_L48_d20_T0.3_s1.npz
+done already: results/tafm/long_L48_d20_T0.34_s1.npz
+done already: results/long/long_L24_d20_T0.3_s1_ising.npz
+done already: results/long/long_L24_d20_T0.34_s1_ising.npz
+done already: results/long/long_L24_d20_T0.38_s1_ising.npz
+done already: results/long/long_L24_d20_T0.42_s1_ising.npz
+done already: results/long/long_L24_d20_T0.46_s1_ising.npz
+done already: results/long/long_L32_d20_T0.3_s1_ising.npz
+done already: results/long/long_L32_d20_T0.34_s1_ising.npz
+done already: results/long/long_L32_d20_T0.38_s1_ising.npz
+done already: results/long/long_L32_d20_T0.42_s1_ising.npz
+done already: results/long/long_L32_d20_T0.46_s1_ising.npz
+done already: results/long/long_L48_d20.5_T0.38_s1_ising.npz
+done already: results/long/long_L48_d20.5_T0.395_s1_ising.npz
+done already: results/long/long_L48_d20.5_T0.41_s1_ising.npz
+done already: results/long/long_L48_d20.5_T0.425_s1_ising.npz
+done already: results/long/long_L48_d20.5_T0.44_s1_ising.npz
+done already: results/long/long_L48_d20.5_T0.455_s1_ising.npz
+done already: results/long/long_L48_d20.5_T0.47_s1_ising.npz
+done already: results/long/long_L64_d20.5_T0.38_s1_ising.npz
+done already: results/long/long_L64_d20.5_T0.41_s1_ising.npz
+done already: results/long/long_L64_d20.5_T0.395_s1_ising.npz
+done already: results/long/long_L64_d20.5_T0.425_s1_ising.npz
+done already: results/long/long_L64_d20.5_T0.44_s1_ising.npz
+done already: results/long/long_L64_d20.5_T0.455_s1_ising.npz
+done already: results/long/long_L64_d20.5_T0.47_s1_ising.npz
+done already: results/long/long_L24_d20.5_T0.38_s2_ising.npz
+done already: results/long/long_L24_d20.5_T0.395_s2_ising.npz
+done already: results/long/long_L24_d20.5_T0.41_s2_ising.npz
+done already: results/long/long_L24_d20.5_T0.425_s2_ising.npz
+done already: results/long/long_L24_d20.5_T0.455_s2_ising.npz
+done already: results/long/long_L24_d20.5_T0.44_s2_ising.npz
+done already: results/long/long_L24_d20.5_T0.47_s2_ising.npz
+done already: results/long/long_L32_d20.5_T0.38_s2_ising.npz
+done already: results/long/long_L32_d20.5_T0.395_s2_ising.npz
+done already: results/long/long_L32_d20.5_T0.41_s2_ising.npz
+done already: results/long/long_L32_d20.5_T0.425_s2_ising.npz
+done already: results/long/long_L32_d20.5_T0.44_s2_ising.npz
+done already: results/long/long_L32_d20.5_T0.455_s2_ising.npz
+done already: results/long/long_L32_d20.5_T0.47_s2_ising.npz
+done already: results/long/long_L48_d20.3_T0.33_s1_ising.npz
+done already: results/long/long_L48_d20.3_T0.345_s1_ising.npz
+done already: results/long/long_L48_d20.3_T0.36_s1_ising.npz
+done already: results/long/long_L48_d20.3_T0.375_s1_ising.npz
+done already: results/long/long_L48_d20.3_T0.39_s1_ising.npz
+done already: results/long/long_L48_d20.3_T0.405_s1_ising.npz
+done already: results/long/long_L48_d20.3_T0.42_s1_ising.npz
+done already: results/long/long_L64_d20.3_T0.33_s1_ising.npz
+done already: results/long/long_L64_d20.3_T0.345_s1_ising.npz
+done already: results/long/long_L64_d20.3_T0.36_s1_ising.npz
+done already: results/long/long_L64_d20.3_T0.39_s1_ising.npz
+done already: results/long/long_L64_d20.3_T0.375_s1_ising.npz
+done already: results/long/long_L64_d20.3_T0.405_s1_ising.npz
+done already: results/long/long_L64_d20.3_T0.42_s1_ising.npz
+done already: results/long/long_L24_d20.3_T0.33_s2_ising.npz
+done already: results/long/long_L24_d20.3_T0.345_s2_ising.npz
+done already: results/long/long_L24_d20.3_T0.36_s2_ising.npz
+done already: results/long/long_L24_d20.3_T0.375_s2_ising.npz
+done already: results/long/long_L24_d20.3_T0.39_s2_ising.npz
+done already: results/long/long_L24_d20.3_T0.405_s2_ising.npz
+done already: results/long/long_L24_d20.3_T0.42_s2_ising.npz
+done already: results/long/long_L32_d20.3_T0.33_s2_ising.npz
+done already: results/long/long_L32_d20.3_T0.345_s2_ising.npz
+done already: results/long/long_L32_d20.3_T0.36_s2_ising.npz
+done already: results/long/long_L32_d20.3_T0.375_s2_ising.npz
+done already: results/long/long_L32_d20.3_T0.39_s2_ising.npz
+L32_d20.3_T0.405_s2_ising: 300000/300000 sweeps, 71s, last-chunk <psi2>=0.0047 E/Ntri=0.11847
+wrote results/long/long_L32_d20.3_T0.405_s2_ising.npz
+L32_d20.3_T0.42_s2_ising: 300000/300000 sweeps, 141s, last-chunk <psi2>=0.0039 E/Ntri=0.14085
+wrote results/long/long_L32_d20.3_T0.42_s2_ising.npz
+L48_d20.2_T0.3_s1_ising: 300000/300000 sweeps, 763s, last-chunk <psi2>=0.0025 E/Ntri=0.06681
+wrote results/long/long_L48_d20.2_T0.3_s1_ising.npz
+L48_d20.2_T0.32_s1_ising: 300000/300000 sweeps, 824s, last-chunk <psi2>=0.0021 E/Ntri=0.07180
+wrote results/long/long_L48_d20.2_T0.32_s1_ising.npz
+L48_d20.2_T0.34_s1_ising: 300000/300000 sweeps, 887s, last-chunk <psi2>=0.0021 E/Ntri=0.07815
+wrote results/long/long_L48_d20.2_T0.34_s1_ising.npz
+L48_d20.2_T0.36_s1_ising: 300000/300000 sweeps, 883s, last-chunk <psi2>=0.0019 E/Ntri=0.08448
+wrote results/long/long_L48_d20.2_T0.36_s1_ising.npz
+L48_d20.2_T0.38_s1_ising: 300000/300000 sweeps, 880s, last-chunk <psi2>=0.0016 E/Ntri=0.09543
+wrote results/long/long_L48_d20.2_T0.38_s1_ising.npz
+L48_d20.2_T0.4_s1_ising: 300000/300000 sweeps, 885s, last-chunk <psi2>=0.0014 E/Ntri=0.10174
+wrote results/long/long_L48_d20.2_T0.4_s1_ising.npz
+L48_d20.2_T0.42_s1_ising: 300000/300000 sweeps, 909s, last-chunk <psi2>=0.0006 E/Ntri=0.11269
+wrote results/long/long_L48_d20.2_T0.42_s1_ising.npz
+L64_d20.2_T0.3_s1_ising: 300000/300000 sweeps, 1929s, last-chunk <psi2>=0.0029 E/Ntri=0.06810
+wrote results/long/long_L64_d20.2_T0.3_s1_ising.npz
+L64_d20.2_T0.32_s1_ising: 300000/300000 sweeps, 1910s, last-chunk <psi2>=0.0016 E/Ntri=0.07244
+wrote results/long/long_L64_d20.2_T0.32_s1_ising.npz
+L64_d20.2_T0.34_s1_ising: 300000/300000 sweeps, 1920s, last-chunk <psi2>=0.0020 E/Ntri=0.07821
+wrote results/long/long_L64_d20.2_T0.34_s1_ising.npz
+L64_d20.2_T0.36_s1_ising: 300000/300000 sweeps, 1910s, last-chunk <psi2>=0.0012 E/Ntri=0.08398
+wrote results/long/long_L64_d20.2_T0.36_s1_ising.npz
+L24_d20.2_T0.3_s2_ising: 300000/300000 sweeps, 184s, last-chunk <psi2>=0.0048 E/Ntri=0.06325
+wrote results/long/long_L24_d20.2_T0.3_s2_ising.npz
+L24_d20.2_T0.32_s2_ising: 300000/300000 sweeps, 173s, last-chunk <psi2>=0.0041 E/Ntri=0.07841
+wrote results/long/long_L24_d20.2_T0.32_s2_ising.npz
+L24_d20.2_T0.34_s2_ising: 300000/300000 sweeps, 175s, last-chunk <psi2>=0.0037 E/Ntri=0.07697
+wrote results/long/long_L24_d20.2_T0.34_s2_ising.npz
+L24_d20.2_T0.36_s2_ising: 300000/300000 sweeps, 179s, last-chunk <psi2>=0.0041 E/Ntri=0.08397
+wrote results/long/long_L24_d20.2_T0.36_s2_ising.npz
+L24_d20.2_T0.38_s2_ising: 300000/300000 sweeps, 185s, last-chunk <psi2>=0.0036 E/Ntri=0.09242
+wrote results/long/long_L24_d20.2_T0.38_s2_ising.npz
+L64_d20.2_T0.38_s1_ising: 300000/300000 sweeps, 1741s, last-chunk <psi2>=0.0004 E/Ntri=0.09473
+wrote results/long/long_L64_d20.2_T0.38_s1_ising.npz
+L24_d20.2_T0.4_s2_ising: 300000/300000 sweeps, 187s, last-chunk <psi2>=0.0029 E/Ntri=0.10689
+wrote results/long/long_L24_d20.2_T0.4_s2_ising.npz
+L24_d20.2_T0.42_s2_ising: 300000/300000 sweeps, 188s, last-chunk <psi2>=0.0022 E/Ntri=0.11360
+wrote results/long/long_L24_d20.2_T0.42_s2_ising.npz
+L32_d20.2_T0.3_s2_ising: 300000/300000 sweeps, 370s, last-chunk <psi2>=0.0045 E/Ntri=0.06732
+wrote results/long/long_L32_d20.2_T0.3_s2_ising.npz
+L32_d20.2_T0.32_s2_ising: 300000/300000 sweeps, 368s, last-chunk <psi2>=0.0046 E/Ntri=0.07718
+wrote results/long/long_L32_d20.2_T0.32_s2_ising.npz
+L64_d20.2_T0.4_s1_ising: 300000/300000 sweeps, 1748s, last-chunk <psi2>=0.0004 E/Ntri=0.10046
+wrote results/long/long_L64_d20.2_T0.4_s1_ising.npz
+L64_d20.2_T0.42_s1_ising: 300000/300000 sweeps, 1747s, last-chunk <psi2>=0.0005 E/Ntri=0.11110
+wrote results/long/long_L64_d20.2_T0.42_s1_ising.npz
+L32_d20.2_T0.34_s2_ising: 300000/300000 sweeps, 346s, last-chunk <psi2>=0.0037 E/Ntri=0.08382
+wrote results/long/long_L32_d20.2_T0.34_s2_ising.npz
+L32_d20.2_T0.36_s2_ising: 300000/300000 sweeps, 348s, last-chunk <psi2>=0.0030 E/Ntri=0.08659
+wrote results/long/long_L32_d20.2_T0.36_s2_ising.npz
+L32_d20.2_T0.38_s2_ising: 300000/300000 sweeps, 339s, last-chunk <psi2>=0.0021 E/Ntri=0.08945
+wrote results/long/long_L32_d20.2_T0.38_s2_ising.npz
+L32_d20.2_T0.4_s2_ising: 300000/300000 sweeps, 352s, last-chunk <psi2>=0.0016 E/Ntri=0.09495
+wrote results/long/long_L32_d20.2_T0.4_s2_ising.npz
+L32_d20.2_T0.42_s2_ising: 300000/300000 sweeps, 378s, last-chunk <psi2>=0.0010 E/Ntri=0.11377
+wrote results/long/long_L32_d20.2_T0.42_s2_ising.npz
+L48_d20.1_T0.26_s1_ising: 300000/300000 sweeps, 857s, last-chunk <psi2>=0.0008 E/Ntri=0.03586
+wrote results/long/long_L48_d20.1_T0.26_s1_ising.npz
+L48_d20.1_T0.285_s1_ising: 300000/300000 sweeps, 865s, last-chunk <psi2>=0.0009 E/Ntri=0.03954
+wrote results/long/long_L48_d20.1_T0.285_s1_ising.npz
+L48_d20.1_T0.31_s1_ising: 300000/300000 sweeps, 848s, last-chunk <psi2>=0.0008 E/Ntri=0.04580
+wrote results/long/long_L48_d20.1_T0.31_s1_ising.npz
+L48_d20.1_T0.335_s1_ising: 300000/300000 sweeps, 839s, last-chunk <psi2>=0.0006 E/Ntri=0.05513
+wrote results/long/long_L48_d20.1_T0.335_s1_ising.npz
+L48_d20.1_T0.36_s1_ising: 300000/300000 sweeps, 847s, last-chunk <psi2>=0.0006 E/Ntri=0.06317
+wrote results/long/long_L48_d20.1_T0.36_s1_ising.npz
+L48_d20.1_T0.385_s1_ising: 300000/300000 sweeps, 845s, last-chunk <psi2>=0.0004 E/Ntri=0.06948
+wrote results/long/long_L48_d20.1_T0.385_s1_ising.npz
+done already: results/tafm/long_L48_d20.5_T0.31_s1.npz
+done already: results/tafm/long_L48_d20.5_T0.32_s1.npz
+done already: results/tafm/long_L48_d20.5_T0.3_s1.npz
+done already: results/tafm/long_L48_d20.5_T0.33_s1.npz
+done already: results/tafm/long_L64_d20.5_T0.3_s1.npz
+done already: results/tafm/long_L48_d20.5_T0.34_s1.npz
+done already: results/tafm/long_L48_d20.5_T0.35_s1.npz
+done already: results/tafm/long_L48_d20.5_T0.36_s1.npz
+done already: results/tafm/long_L64_d20.5_T0.33_s1.npz
+done already: results/tafm/long_L64_d20.5_T0.31_s1.npz
+done already: results/tafm/long_L64_d20.5_T0.32_s1.npz
+done already: results/tafm/long_L64_d20.5_T0.34_s1.npz
+done already: results/tafm/long_L64_d20.5_T0.35_s1.npz
+done already: results/tafm/long_L64_d20.5_T0.36_s1.npz
+done already: results/tafm/long_L48_d20.3_T0.23_s1.npz
+done already: results/tafm/long_L48_d20.3_T0.24_s1.npz
+done already: results/tafm/long_L48_d20.3_T0.25_s1.npz
+done already: results/tafm/long_L48_d20.3_T0.26_s1.npz
+done already: results/tafm/long_L48_d20.3_T0.27_s1.npz
+done already: results/tafm/long_L48_d20.3_T0.28_s1.npz
+done already: results/tafm/long_L48_d20.3_T0.29_s1.npz
+done already: results/tafm/long_L64_d20.3_T0.23_s1.npz
+done already: results/tafm/long_L64_d20.3_T0.24_s1.npz
+done already: results/tafm/long_L64_d20.3_T0.25_s1.npz
+done already: results/tafm/long_L64_d20.3_T0.26_s1.npz
+done already: results/tafm/long_L64_d20.3_T0.27_s1.npz
+done already: results/tafm/long_L64_d20.3_T0.28_s1.npz
+done already: results/tafm/long_L64_d20.3_T0.29_s1.npz
+done already: results/tafm/long_L48_d20.2_T0.19_s1.npz
+done already: results/tafm/long_L48_d20.2_T0.2_s1.npz
+done already: results/tafm/long_L48_d20.2_T0.21_s1.npz
+done already: results/tafm/long_L48_d20.2_T0.22_s1.npz
+done already: results/tafm/long_L48_d20.2_T0.23_s1.npz
+done already: results/tafm/long_L48_d20.2_T0.24_s1.npz
+done already: results/tafm/long_L48_d20.2_T0.25_s1.npz
+done already: results/tafm/long_L64_d20.2_T0.19_s1.npz
+done already: results/tafm/long_L64_d20.2_T0.2_s1.npz
+done already: results/tafm/long_L64_d20.2_T0.21_s1.npz
+done already: results/tafm/long_L64_d20.2_T0.23_s1.npz
+done already: results/tafm/long_L64_d20.2_T0.22_s1.npz
+done already: results/tafm/long_L64_d20.2_T0.24_s1.npz
+done already: results/tafm/long_L64_d20.2_T0.25_s1.npz
+done already: results/tafm/long_L48_d20.1_T0.15_s1.npz
+done already: results/tafm/long_L48_d20.1_T0.16_s1.npz
+done already: results/tafm/long_L48_d20.1_T0.17_s1.npz
+done already: results/tafm/long_L48_d20.1_T0.18_s1.npz
+done already: results/tafm/long_L48_d20.1_T0.19_s1.npz
+done already: results/tafm/long_L48_d20.1_T0.2_s1.npz
+done already: results/tafm/long_L48_d20.1_T0.21_s1.npz
+done already: results/tafm/long_L48_d20.1_T0.22_s1.npz
+done already: results/tafm/long_L48_d20.1_T0.23_s1.npz
+done already: results/tafm/long_L64_d20.1_T0.15_s1.npz
+done already: results/tafm/long_L64_d20.1_T0.16_s1.npz
+done already: results/tafm/long_L64_d20.1_T0.17_s1.npz
+done already: results/tafm/long_L64_d20.1_T0.18_s1.npz
+done already: results/tafm/long_L64_d20.1_T0.19_s1.npz
+done already: results/tafm/long_L64_d20.1_T0.2_s1.npz
+done already: results/tafm/long_L64_d20.1_T0.21_s1.npz
+done already: results/tafm/long_L64_d20.1_T0.22_s1.npz
+done already: results/tafm/long_L64_d20.1_T0.23_s1.npz
+done already: results/tafm/long_L24_d20_T0.18_s1.npz
+done already: results/tafm/long_L24_d20_T0.22_s1.npz
+done already: results/tafm/long_L24_d20_T0.3_s1.npz
+done already: results/tafm/long_L24_d20_T0.26_s1.npz
+done already: results/tafm/long_L24_d20_T0.34_s1.npz
+done already: results/tafm/long_L32_d20_T0.18_s1.npz
+done already: results/tafm/long_L32_d20_T0.22_s1.npz
+done already: results/tafm/long_L32_d20_T0.26_s1.npz
+done already: results/tafm/long_L32_d20_T0.3_s1.npz
+done already: results/tafm/long_L32_d20_T0.34_s1.npz
+done already: results/tafm/long_L48_d20_T0.18_s1.npz
+done already: results/tafm/long_L48_d20_T0.22_s1.npz
+done already: results/tafm/long_L48_d20_T0.26_s1.npz
+done already: results/tafm/long_L48_d20_T0.3_s1.npz
+done already: results/tafm/long_L48_d20_T0.34_s1.npz
+done already: results/long/long_L24_d20_T0.3_s1_ising.npz
+done already: results/long/long_L24_d20_T0.34_s1_ising.npz
+done already: results/long/long_L24_d20_T0.38_s1_ising.npz
+done already: results/long/long_L24_d20_T0.42_s1_ising.npz
+done already: results/long/long_L24_d20_T0.46_s1_ising.npz
+done already: results/long/long_L32_d20_T0.3_s1_ising.npz
+done already: results/long/long_L32_d20_T0.34_s1_ising.npz
+done already: results/long/long_L32_d20_T0.38_s1_ising.npz
+done already: results/long/long_L32_d20_T0.42_s1_ising.npz
+done already: results/long/long_L32_d20_T0.46_s1_ising.npz
+done already: results/long/long_L48_d20.5_T0.38_s1_ising.npz
+done already: results/long/long_L48_d20.5_T0.395_s1_ising.npz
+done already: results/long/long_L48_d20.5_T0.41_s1_ising.npz
+done already: results/long/long_L48_d20.5_T0.425_s1_ising.npz
+done already: results/long/long_L48_d20.5_T0.44_s1_ising.npz
+done already: results/long/long_L48_d20.5_T0.455_s1_ising.npz
+done already: results/long/long_L48_d20.5_T0.47_s1_ising.npz
+done already: results/long/long_L64_d20.5_T0.38_s1_ising.npz
+done already: results/long/long_L64_d20.5_T0.395_s1_ising.npz
+done already: results/long/long_L64_d20.5_T0.41_s1_ising.npz
+done already: results/long/long_L64_d20.5_T0.425_s1_ising.npz
+done already: results/long/long_L64_d20.5_T0.44_s1_ising.npz
+done already: results/long/long_L64_d20.5_T0.455_s1_ising.npz
+done already: results/long/long_L64_d20.5_T0.47_s1_ising.npz
+done already: results/long/long_L24_d20.5_T0.38_s2_ising.npz
+done already: results/long/long_L24_d20.5_T0.395_s2_ising.npz
+done already: results/long/long_L24_d20.5_T0.41_s2_ising.npz
+done already: results/long/long_L24_d20.5_T0.425_s2_ising.npz
+done already: results/long/long_L24_d20.5_T0.44_s2_ising.npz
+done already: results/long/long_L24_d20.5_T0.455_s2_ising.npz
+done already: results/long/long_L24_d20.5_T0.47_s2_ising.npz
+done already: results/long/long_L32_d20.5_T0.38_s2_ising.npz
+done already: results/long/long_L32_d20.5_T0.395_s2_ising.npz
+done already: results/long/long_L32_d20.5_T0.41_s2_ising.npz
+done already: results/long/long_L32_d20.5_T0.425_s2_ising.npz
+done already: results/long/long_L32_d20.5_T0.44_s2_ising.npz
+done already: results/long/long_L32_d20.5_T0.455_s2_ising.npz
+done already: results/long/long_L32_d20.5_T0.47_s2_ising.npz
+done already: results/long/long_L48_d20.3_T0.33_s1_ising.npz
+done already: results/long/long_L48_d20.3_T0.345_s1_ising.npz
+done already: results/long/long_L48_d20.3_T0.36_s1_ising.npz
+done already: results/long/long_L48_d20.3_T0.375_s1_ising.npz
+done already: results/long/long_L48_d20.3_T0.39_s1_ising.npz
+done already: results/long/long_L48_d20.3_T0.405_s1_ising.npz
+done already: results/long/long_L48_d20.3_T0.42_s1_ising.npz
+done already: results/long/long_L64_d20.3_T0.33_s1_ising.npz
+done already: results/long/long_L64_d20.3_T0.345_s1_ising.npz
+done already: results/long/long_L64_d20.3_T0.36_s1_ising.npz
+done already: results/long/long_L64_d20.3_T0.375_s1_ising.npz
+done already: results/long/long_L64_d20.3_T0.39_s1_ising.npz
+done already: results/long/long_L64_d20.3_T0.405_s1_ising.npz
+done already: results/long/long_L64_d20.3_T0.42_s1_ising.npz
+done already: results/long/long_L24_d20.3_T0.345_s2_ising.npz
+done already: results/long/long_L24_d20.3_T0.33_s2_ising.npz
+done already: results/long/long_L24_d20.3_T0.36_s2_ising.npz
+done already: results/long/long_L24_d20.3_T0.375_s2_ising.npz
+done already: results/long/long_L24_d20.3_T0.39_s2_ising.npz
+done already: results/long/long_L24_d20.3_T0.405_s2_ising.npz
+done already: results/long/long_L24_d20.3_T0.42_s2_ising.npz
+done already: results/long/long_L32_d20.3_T0.33_s2_ising.npz
+done already: results/long/long_L32_d20.3_T0.36_s2_ising.npz
+done already: results/long/long_L32_d20.3_T0.345_s2_ising.npz
+done already: results/long/long_L32_d20.3_T0.375_s2_ising.npz
+done already: results/long/long_L32_d20.3_T0.39_s2_ising.npz
+done already: results/long/long_L32_d20.3_T0.405_s2_ising.npz
+done already: results/long/long_L32_d20.3_T0.42_s2_ising.npz
+done already: results/long/long_L48_d20.2_T0.3_s1_ising.npz
+done already: results/long/long_L48_d20.2_T0.32_s1_ising.npz
+done already: results/long/long_L48_d20.2_T0.34_s1_ising.npz
+done already: results/long/long_L48_d20.2_T0.36_s1_ising.npz
+done already: results/long/long_L48_d20.2_T0.38_s1_ising.npz
+done already: results/long/long_L48_d20.2_T0.4_s1_ising.npz
+done already: results/long/long_L48_d20.2_T0.42_s1_ising.npz
+done already: results/long/long_L64_d20.2_T0.3_s1_ising.npz
+done already: results/long/long_L64_d20.2_T0.32_s1_ising.npz
+done already: results/long/long_L64_d20.2_T0.36_s1_ising.npz
+done already: results/long/long_L64_d20.2_T0.34_s1_ising.npz
+done already: results/long/long_L64_d20.2_T0.38_s1_ising.npz
+done already: results/long/long_L64_d20.2_T0.4_s1_ising.npz
+done already: results/long/long_L24_d20.2_T0.3_s2_ising.npz
+done already: results/long/long_L64_d20.2_T0.42_s1_ising.npz
+done already: results/long/long_L24_d20.2_T0.32_s2_ising.npz
