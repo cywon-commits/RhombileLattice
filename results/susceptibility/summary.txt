@@ -1,0 +1,36 @@
+# Uniform susceptibility chi = var(n1)/(N_site T) and reduced-field scaling
+# annealed: pure Ising sweep (sweep_ising); TAFM: fixed bonds; all runs start from an exact ground state
+# errors: max(seed scatter, block jackknife); 'n' = number of seeds
+
+## 1. T*chi(T) at D2=0
+     T | 
+---------
+
+# size check L=24 vs L=48 (z = difference / combined error):
+
+# high-T Curie-Weiss check: theta_eff(T) = T/(4 T*chi) - T  (expected TAFM 3, annealed mu=0 ~2.4)
+# theta(T->inf): linear extrapolation of theta_eff in 1/T over T = 3, 5, 10
+
+## 4. Low-T T*chi and excitation densities (L=24 and 48, mu=0)
+#   annealed exc = frustrated triangles / N_tri; TAFM exc = triangles with three equal spins / N_tri
+
+## 2. chi0 = T*chi on the ground-state manifold (H=0, zero-energy flips, tilt-0 sector)
+#   L= 24: chi0 = 0.04065(0.00009)  [4 seeds]
+#   L= 48: chi0 = 0.04073(0.00008)  [4 seeds]
+#   fit chi0 = a + b ln L: b = +0.00011  (log divergence would give b > 0 well outside errors)
+# uniform structure factor S(q_k), q_k = 2 pi k / L (both reciprocal directions averaged), seeds averaged;
+# S(q->0) should approach chi0; height-model picture: S(q) - chi0 ~ q^2 (up to logs)
+#   L= 24: k=1:0.0410(0.0001) k=2:0.0411(0.0002) k=3:0.0416(0.0000) k=4:0.0429(0.0001) k=5:0.0443(0.0002) k=6:0.0459(0.0001)
+#          (S(q)-chi0)/q^2: +0.0046 +0.0018 +0.0016 +0.0020 +0.0021 +0.0021
+#   L= 48: k=1:0.0407(0.0001) k=2:0.0406(0.0000) k=3:0.0408(0.0001) k=4:0.0411(0.0000) k=5:0.0414(0.0001) k=6:0.0416(0.0001)
+#          (S(q)-chi0)/q^2: -0.0046 -0.0019 +0.0003 +0.0015 +0.0015 +0.0015
+
+## 3. Reduced-field scaling: m = <n1>/N_site vs H = D2/(2T)
+# m_GS(H): ground-state manifold with field H; ord / gs = crystal / random-tiling start
+#   H=0     L=24 gs: 0.50000(0.00001)  L=48 gs: 0.50000(0.00001)
+# m(D2, T) of the two models at H = D2/(2T) (ordered start, 2 seeds), deviation from m_GS(H) (same L, ord start)
+# closeness to the reference curve per T (L=48): rms over H of (m - m_GS), TAFM vs annealed
+#   T=0.2: 
+#   T=0.3: 
+#   T=0.4: 
+#   T=0.5: 
